@@ -1,1 +1,39 @@
  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travique | Expenses</title>
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/planner.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <header>
+      <h1>Expense Tracker</h1>
+      <button onclick="window.location.href='dashboard.html'">⬅ Back to Dashboard</button>
+    </header>
+
+    <main>
+      <form id="expense-form">
+        <input type="text" id="expense-name" placeholder="Expense Name" required />
+        <input type="number" id="expense-amount" placeholder="Amount" required />
+        <select id="expense-category">
+          <option value="transport">Transport</option>
+          <option value="food">Food</option>
+          <option value="stay">Accommodation</option>
+          <option value="fun">Entertainment</option>
+          <option value="other">Other</option>
+        </select>
+        <button type="submit">Add Expense</button>
+      </form>
+
+      <div id="expense-list"></div>
+      <h3>Total: $<span id="total-amount">0</span></h3>
+    </main>
+  </div>
+
+  <script type="module" src="js/expenses.js"></script>
+</body>
+</html>

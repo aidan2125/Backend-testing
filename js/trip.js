@@ -1,68 +1,54 @@
  
 let map;
-let tripMarkers = [];
 let directionsService;
 let directionsRenderer;
 
 window.initMap = () => {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 20.0, lng: 0.0 },
+    zoom: 2,
+  });
+
   directionsService = new google.maps.DirectionsService();
   directionsRenderer = new google.maps.DirectionsRenderer();
-
-  map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 40.7128, lng: -74.0060 },
-    zoom: 8,
-  });
-
   directionsRenderer.setMap(map);
 
-  map.addListener("click", (event) => {
-    const marker = new google.maps.Marker({
-      position: event.latLng,
-      map: map,
-    });
-    tripMarkers.push(marker);
-    if (tripMarkers.length > 1) {
-      drawRoute();
-    }
-  });
+  document.getElementById("route-btn").addEventListener("click", handleRoute);
+
+  const fromInput = document.getElementById("from-address");
+  const toInput = document.getElementById("to-address");
+
+  new google.maps.places.Autocomplete(fromInput);
+  new google.maps.places.Autocomplete(toInput);
 };
 
-function drawRoute() {
-  const waypoints = tripMarkers.slice(1, -1).map(marker => ({
-    location: marker.getPosition(),
-    stopover: true
-  }));
+async function handleRoute() {
+  const from = document.getElementById("from-address").value;
+  const to = document.getElementById("to-address").value;
 
-  directionsService.route({
-    origin: tripMarkers[0].getPosition(),
-    destination: tripMarkers[tripMarkers.length - 1].getPosition(),
-    waypoints,
+  if (!from || !to) {
+    alert("Enter both addresses");
+    return;
+  }
+
+  const request = {
+    origin: from,
+    destination: to,
     travelMode: google.maps.TravelMode.DRIVING,
-  }, (response, status) => {
+  };
+
+  directionsService.route(request, (result, status) => {
     if (status === "OK") {
-      directionsRenderer.setDirections(response);
+      directionsRenderer.setDirections(result);
+
+      const distanceMeters = result.routes[0].legs[0].distance.value;
+      const distanceKm = distanceMeters / 1000;
+
+      if (distanceKm > 300) {
+        alert("💡 This might be a good trip to book a flight!");
+      }
+    } else {
+      alert("Could not find route: " + status);
     }
   });
 }
-
-document.getElementById("get-location-btn").addEventListener("click", () => {
-  navigator.geolocation.getCurrentPosition(pos => {
-    const { latitude, longitude } = pos.coords;
-    const userPos = { lat: latitude, lng: longitude };
-    map.setCenter(userPos);
-    map.setZoom(12);
-
-    const marker = new google.maps.Marker({
-      position: userPos,
-      map: map,
-      title: "Your Location",
-    });
-    tripMarkers.push(marker);
-  });
-});
-
-document.getElementById("clear-trip").addEventListener("click", () => {
-  tripMarkers.forEach(marker => marker.setMap(null));
-  tripMarkers = [];
-  directionsRenderer.set('directions', null);
-});

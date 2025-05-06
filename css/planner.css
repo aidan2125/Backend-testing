@@ -1,51 +1,53 @@
- 
 body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f4f4f4;
-  }
-  
-  .planner-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    background-color: #f9f9f9;
   }
   
   header {
     background-color: #1e2a38;
     color: white;
     padding: 20px;
+    text-align: center;
+  }
+  
+  main {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    height: calc(100vh - 80px);
+  }
+  
+  .route-form {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    background-color: #f4f4f4;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .route-form input {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .route-form button {
+    padding: 10px 20px;
+    background-color: #2a2e45;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .route-form button:hover {
+    background-color: #444866;
   }
   
   #map {
     flex: 1;
-    height: 80vh;
-    width: 100%;
-    border: 2px solid #ddd;
-    margin: 10px 0;
-  }
-  
-  .btn-group {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  button {
-    padding: 10px 15px;
-    border: none;
-    background-color: #0077b6;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  button:hover {
-    background-color: #023e8a;
+    height: 100%;
   }
   
