@@ -15,7 +15,11 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
 
-  const { data, error: signupError } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: 'user@example.com',
+    password: 'userpassword'
+  });
+  
 
   if (signupError) {
     alert('Signup failed: ' + signupError.message);
@@ -25,7 +29,7 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
   const userID = data?.user?.id;
 
   const { error: profileError } = await supabase.from('signup').insert([{
-    profileID: userID,
+    profileID: user.user.id,
     name,
     surname,
     phone_number: phone,
