@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travique | Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <header>
+      <h1>Welcome to Travique</h1>
+      <p id="user-email">Loading...</p>
+      <button id="logout-btn">Logout</button>
+    </header>
+
+    <main>
+      <div class="card-grid">
+        <div class="card" onclick="location.href='trip-planner.html'">
+          <h2>🧭 Trip Planner</h2>
+          <p>Plan your next adventure!</p>
+        </div>
+        <div class="card" onclick="location.href='expenses.html'">
+          <h2>💰 Expenses</h2>
+          <p>Track and manage trip spending.</p>
+        </div>
+        <div class="card" onclick="location.href='health.html'">
+          <h2>🏃‍♀️ Health & Fitness</h2>
+          <p>Stay fit while you travel.</p>
+        </div>
+        <div class="card">
+          <h2>💡 Smart Tip</h2>
+          <p id="smart-tip">"Travel light to move freely!"</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>

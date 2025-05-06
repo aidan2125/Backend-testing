@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trip Planner | Travique</title>
+  <link rel="stylesheet" href="css/planner.css" />
+</head>
+<body>
+  <div class="planner-container">
+    <header>
+      <h1>🧭 Plan Your Trip</h1>
+      <button onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
+    </header>
+
+    <main>
+      <div id="map"></div>
+      <div class="btn-group">
+        <button id="get-location-btn">📍 Use My Location</button>
+        <button id="clear-trip">🗑️ Clear Trip</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Google Maps API with your actual key -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvI8oz4lpujGMNdk28vTHf6useyP8a9tc&libraries=places&callback=initMap" async defer></script>
+  <script type="module" src="js/trip.js"></script>
+</body>
+</html>
+
