@@ -9,24 +9,39 @@
 <body>
   <header>
     <h1>🧭 Plan Your Trip</h1>
+    <button onclick="location.href='dashboard.html'">⬅ Back to Dashboard</button>
   </header>
 
   <main>
     <div class="route-form">
-      <!-- ✅ These are the correct input IDs -->
       <input id="from-address" type="text" placeholder="Your current address" />
       <input id="to-address" type="text" placeholder="Destination address" />
-      
-      <textarea id="activities" placeholder="Activities you plan to do"></textarea>
+      <textarea id="activities" placeholder="Activities you plan to do (comma separated)"></textarea>
+
+      <select id="travel-mode">
+        <option value="DRIVING">🚗 Car</option>
+        <option value="TRANSIT">🚉 Transit</option>
+        <option value="FLYING">✈️ Flight</option>
+      </select>
 
       <button id="route-btn">🗺 Get Route</button>
       <button id="save-trip-btn">💾 Save Trip</button>
+    </div>
 
     <div id="map"></div>
+
+    <!-- Trip Summary Modal -->
+    <div id="trip-summary-modal" style="display: none;">
+      <div class="modal-content">
+        <h2>Trip Summary</h2>
+        <p id="summary-text"></p>
+        <button id="confirm-save-btn">✅ Confirm & Save</button>
+        <button onclick="document.getElementById('trip-summary-modal').style.display='none'">❌ Cancel</button>
+      </div>
+    </div>
   </main>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvI8oz4lpujGMNdk28vTHf6useyP8a9tc&libraries=places&callback=initMap" async defer></script>
   <script type="module" src="js/trip.js"></script>
 </body>
 </html>
-

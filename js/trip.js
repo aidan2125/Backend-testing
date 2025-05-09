@@ -1,10 +1,10 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-const supabaseUrl = 'https://lmtvzmagwdegwravdcue.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdHZ6bWFnd2RlZ3dyYXZkY3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0OTMzMTYsImV4cCI6MjA2MTA2OTMxNn0.Kc7eVAIdPTSOnCBaMpFowYBPBjuBgkwyJA6nZD-F2yU';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(
+  'https://lmtvzmagwdegwravdcue.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdHZ6bWFnd2RlZ3dyYXZkY3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0OTMzMTYsImV4cCI6MjA2MTA2OTMxNn0.Kc7eVAIdPTSOnCBaMpFowYBPBjuBgkwyJA6nZD-F2yU'
+);
 
-// Declare globally so all functions can access
 let map, directionsService, directionsRenderer;
 let fromInput, toInput;
 
@@ -24,97 +24,136 @@ window.initMap = function () {
   new google.maps.places.Autocomplete(fromInput);
   new google.maps.places.Autocomplete(toInput);
 
-  // ✅ Add event listener for route button
   document.getElementById("route-btn").addEventListener("click", handleRoute);
+  document.getElementById("confirm-save-btn").addEventListener("click", saveTrip);
 };
 
-// ✅ Define the route handling function
-function handleRoute() {
+let currentTrip = {};
+
+async function handleRoute() {
   const origin = fromInput.value;
   const destination = toInput.value;
+  const travelMode = document.getElementById("travel-mode").value;
 
   if (!origin || !destination) {
     alert('Please enter both addresses.');
     return;
   }
 
+  // If flying, skip route fetch and use estimated values
+  if (travelMode === "FLYING") {
+    const estimatedDistance = 10000; // 👈 You could make this dynamic later
+    const cost = calculateCost(estimatedDistance, travelMode);
+    const activities = document.getElementById("activities").value;
+
+    currentTrip = {
+      from: origin,
+      destination,
+      activities,
+      travelMode,
+      distance: estimatedDistance,
+      cost,
+    };
+
+    document.getElementById("summary-text").innerText = `
+From: ${origin}
+To: ${destination}
+Mode: ${travelMode}
+Distance: ~${estimatedDistance} km (estimated)
+Estimated Cost: $${cost.toFixed(2)}
+Activities: ${activities}
+    `.trim();
+
+    document.getElementById("trip-summary-modal").style.display = "block";
+    return;
+  }
+
+  // Otherwise, use Directions API
   directionsService.route(
     {
       origin,
       destination,
-      travelMode: google.maps.TravelMode.DRIVING,
+      travelMode: travelMode,
     },
     (response, status) => {
       if (status === google.maps.DirectionsStatus.OK) {
         directionsRenderer.setDirections(response);
+        const distance = response.routes[0].legs[0].distance.value / 1000;
+
+        const cost = calculateCost(distance, travelMode);
+        const activities = document.getElementById("activities").value;
+
+        currentTrip = {
+          from: origin,
+          destination,
+          activities,
+          travelMode,
+          distance,
+          cost,
+        };
+
+        document.getElementById("summary-text").innerText = `
+From: ${origin}
+To: ${destination}
+Mode: ${travelMode}
+Distance: ${distance.toFixed(2)} km
+Estimated Cost: $${cost.toFixed(2)}
+Activities: ${activities}
+        `.trim();
+        document.getElementById("trip-summary-modal").style.display = "block";
+      } else if (status === google.maps.DirectionsStatus.ZERO_RESULTS) {
+        alert("We couldn’t find a drivable route. Try switching to FLYING mode.");
       } else {
-        alert('Could not display directions due to: ' + status);
+        alert("Route failed: " + status);
+        console.error("❌ Route error:", status);
       }
     }
   );
 }
 
-// ✅ Save trip to Supabase
-window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('save-trip-btn').addEventListener('click', async () => {
-    const fromAddress = document.getElementById('from-address').value;
-    const destination = document.getElementById('to-address').value;
-    const activities = document.getElementById('activities').value;
+function calculateCost(distance, mode) {
+  const rates = {
+    DRIVING: 0.5,
+    TRANSIT: 0.3,
+    FLYING: 0.8,
+  };
+  return distance * (rates[mode] || 0.5);
+}
 
-    // ✅ Validate fields before saving
-    if (!fromAddress || !destination || !activities) {
-      alert('Please fill in all required fields!');
-      return;
-    }
+async function saveTrip() {
+  document.getElementById("trip-summary-modal").style.display = "none";
 
-    const startDate = new Date().toISOString(); // placeholder
-    const endDate = new Date().toISOString();   // placeholder
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) {
+    alert('Please log in to save a trip.');
+    return;
+  }
 
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+  const { data: profileData, error: profileError } = await supabase
+    .from('signup')
+    .select('profileID')
+    .eq('email', user.email)
+    .single();
 
-    console.log('From Address:', fromAddress);
-    console.log('Destination:', destination);
-    console.log('Activities:', activities);
+  if (profileError || !profileData) {
+    alert('Profile not found or duplicate accounts exist.');
+    return;
+  }
 
-    if (userError || !user) {
-      alert('Please log in to save a trip.');
-      return;
-    }
+  const activitiesArray = currentTrip.activities.split(',').map(a => a.trim());
 
-    // ✅ Log user ID for debugging
-    console.log('User ID:', user.id);
+  const { error: insertError } = await supabase.from('trip_planner').insert([{
+    profileID: profileData.profileID,
+    destination: currentTrip.destination,
+    start_date: new Date().toISOString(),
+    end_date: new Date().toISOString(),
+    activities: activitiesArray,
+  }]);
 
-    // ✅ Fetch profileID from the signup table using the user's email
-    const { data: profileData, error: profileError } = await supabase
-      .from('signup')
-      .select('profileID')
-      .eq('email', user.email) // Assuming the email is unique and linked to the profile
-      .single();
-
-    if (profileError || !profileData) {
-      alert('Profile not found. Please sign up first.');
-      return;
-    }
-
-    const profileID = profileData.profileID; // Extract the profileID
-
-    // ✅ Convert activities to an array (if required by the Supabase schema)
-    const activitiesArray = activities.split(',').map(activity => activity.trim());
-
-    // ✅ Insert the trip data into the trip_planner table with the fetched profileID
-    const { error } = await supabase.from('trip_planner').insert([{
-      profileID: profileID,  // Use profileID from signup table
-      destination,
-      start_date: startDate,
-      end_date: endDate,
-      activities: activitiesArray, // Pass activities as an array
-    }]);
-
-    if (error) {
-      console.error('❌ Error saving trip:', error.message);
-      alert('Failed to save trip.');
-    } else {
-      alert('✅ Trip saved successfully!');
-    }
-  });
-});
+  if (insertError) {
+    console.error('❌ Error saving trip:', insertError.message);
+    alert('Failed to save trip.');
+  } else {
+    alert('✅ Trip saved successfully!');
+  }
+}
