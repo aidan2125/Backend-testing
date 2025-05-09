@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Travique - Live Weather</title>
+  <link rel="stylesheet" href="css/weather.css" />
+</head>
+<body>
+  <header class="landing-header">
+    <nav>
+      <h1 class="logo">Travique</h1>
+      <div class="nav-buttons">
+        <a href="login.html" class="btn">Login</a>
+        <a href="signup.html" class="btn">Sign Up</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Your Smart Travel Companion</h2>
+    <p>Plan smarter, travel better. Personalized itineraries, expense tracking, and health tips – all in one place.</p>
+    <a href="dashboard.html" class="btn main-cta">Get Started</a>
+    <a id="get-started-btn" href="#" class="btn main-cta">Get Started</a>
+  </section>
+
+  <section class="weather-section">
+    <form class="weatherForm">
+      <input type="text" class="cityInput" placeholder="Enter City">
+      <button type="submit">Get Weather</button>
+    </form>
+
+    <div class="card" style="display: none;">
+      <h1 class="cityDisplay"></h1>
+      <p class="tempDisplay"></p>
+      <p class="humidityDisplay"></p>
+      <p class="descDisplay"></p>
+      <p class="weatherEmoji"></p>
+      <p class="errorDisplay"></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Travique. All rights reserved.</p>
+  </footer>
+
+  
+  <!-- Inserted script code here -->
+  <script src="weather.js"></script>
+  <script type="module" src="js/liveLocation.js"></script>
+</body>
+</html>
