@@ -1,6 +1,4 @@
-// expenses.js
-
-import { getCurrentUser, getUserTrips } from './auth.js';  // Make sure to import getUserTrips
+import { getCurrentUser, getUserTrips, supabase } from './auth.js'; // Import your helper functions
 
 const form = document.getElementById('expense-form');
 const list = document.getElementById('expense-list');
@@ -8,32 +6,28 @@ const totalAmount = document.getElementById('total-amount');
 
 let expenses = [];
 
-// Function to fetch and populate the trip dropdown
-const populateTripDropdown = async () => {
-  const user = getCurrentUser();
-  if (!user) return;
+// Fetch the most recent trip for the logged-in user or return null if no trip exists
+const getDefaultTripId = async (profileID) => {
+  const { data, error } = await supabase
+    .from('trip_planner')  // Correct table name where trips are stored
+    .select('trip_id')  // Fetch trip_id
+    .eq('profileID', profileID)  // Filter by logged-in user's profileID
+    .order('start_date', { ascending: false })  // Order by most recent trip (latest start_date)
+    .limit(1);  // Only get the most recent trip
 
-  const trips = await getUserTrips(user.id);  // Fetch trips for the logged-in user
+  if (error) {
+    console.error('Error fetching trip:', error);
+    return null;  // No trip found
+  }
 
-  const tripSelect = document.getElementById('trip-id');
-  tripSelect.innerHTML = '';  // Clear previous trip options
-  const defaultOption = document.createElement('option');
-  defaultOption.value = '';
-  defaultOption.textContent = 'Select a Trip (optional)';
-  tripSelect.appendChild(defaultOption);  // Add default option
-  
-  trips.forEach(trip => {
-    const option = document.createElement('option');
-    option.value = trip.id;
-    option.textContent = trip.name;
-    tripSelect.appendChild(option);
-  });
+  if (data.length > 0) {
+    return data[0].trip_id;  // Return the trip_id of the most recent trip
+  }
+
+  return null;  // No trips available
 };
 
-// Call this function when the page loads or when user logs in
-document.addEventListener('DOMContentLoaded', populateTripDropdown);
-
-// Expense submission logic
+// Function to submit expense, automatically associate with trip if available
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
@@ -46,14 +40,20 @@ form.addEventListener('submit', async (e) => {
   const location = document.getElementById('expense-location')?.value || '';
   const date = document.getElementById('expense-date')?.value || new Date().toISOString();
 
-  // Get trip ID (can be null if user chooses no trip)
-  const tripId = document.getElementById('trip-id')?.value || null;
+  // Automatically fetch the trip_id for the logged-in user
+  const user = await getCurrentUser();  // Fetch user first
+  if (!user) return;
 
-  if (!name || isNaN(amount)) return;
+  const tripId = await getDefaultTripId(user.profileID);  // Automatically fetch the most recent trip
 
-  // Insert expense into Supabase
+  if (!name || isNaN(amount)) {
+    alert('Please enter a valid expense name and amount.');
+    return;
+  }
+
+  // Insert expense into Supabase, automatically associating with the trip_id if available
   const { data, error } = await supabase
-    .from('expenses')
+    .from('expenses')  // Correct table name
     .insert([{
       name,
       amount,
@@ -62,8 +62,8 @@ form.addEventListener('submit', async (e) => {
       nativeamount: nativeAmount,
       location,
       date,
-      trip_id: tripId,  // Set trip_id to null if no trip selected
-      profileID: user.id,  // Get logged-in user ID dynamically
+      trip_id:tripId || null,  // Automatically set trip_id (null if no trip)
+      profileID: user.profileID  // Associate expense with the correct profileID
     }]);
 
   if (error) {
@@ -71,6 +71,7 @@ form.addEventListener('submit', async (e) => {
     return;
   }
 
+  
   expenses.push(data[0]);  // Add inserted expense to local array
   renderExpenses();  // Re-render expenses
   form.reset();  // Reset the form
@@ -87,7 +88,6 @@ function renderExpenses() {
     const div = document.createElement('div');
     div.classList.add('expense-item');
 
-    // Optional: Enhance this to include currency, date, etc.
     div.innerHTML = `
       <strong>${item.name}</strong> ($${item.amount.toFixed(2)}) - ${item.category}
       <button onclick="deleteExpense(${index})">❌</button>
@@ -99,7 +99,18 @@ function renderExpenses() {
 }
 
 // Optional: Add delete functionality for expenses
-window.deleteExpense = (index) => {
-  expenses.splice(index, 1);
-  renderExpenses();
+window.deleteExpense = async (index) => {
+  const { id } = expenses[index];
+
+  const { error } = await supabase
+    .from('expenses')  // Correct table name
+    .delete()
+    .eq('id', id);  // Correct field name for expense id
+
+  if (!error) {
+    expenses.splice(index, 1);
+    renderExpenses();
+  } else {
+    console.error('Failed to delete:', error);
+  }
 };
