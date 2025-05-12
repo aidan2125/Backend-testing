@@ -1,5 +1,4 @@
- 
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -17,8 +16,17 @@
 
     <main>
       <form id="expense-form">
+        <!-- ✅ BASIC FIELDS -->
         <input type="text" id="expense-name" placeholder="Expense Name" required />
-        <input type="number" id="expense-amount" placeholder="Amount" required />
+        <input type="number" id="expense-amount" placeholder="Amount (in selected currency)" required />
+
+        <!-- ✅ NEW FIELD: Currency -->
+        <input type="text" id="expense-currency" placeholder="Currency (e.g., USD)" />
+
+        <!-- ✅ NEW FIELD: Native Amount -->
+        <input type="number" id="expense-nativeamount" placeholder="Native Amount (if converted)" />
+
+        <!-- ✅ CATEGORY SELECT FIELD -->
         <select id="expense-category">
           <option value="transport">Transport</option>
           <option value="food">Food</option>
@@ -26,6 +34,17 @@
           <option value="fun">Entertainment</option>
           <option value="other">Other</option>
         </select>
+
+        <!-- ✅ NEW FIELD: Location -->
+        <input type="text" id="expense-location" placeholder="Location (optional)" />
+
+        <!-- ✅ NEW FIELD: Date -->
+        <input type="datetime-local" id="expense-date" placeholder="Date of Expense" />
+
+        <!-- ✅ NEW HIDDEN FIELDS: Trip ID & Profile ID -->
+        <input type="hidden" id="trip-id" value="your-trip-id-here" />
+        <input type="hidden" id="profile-id" value="your-profile-id-here" />
+
         <button type="submit">Add Expense</button>
       </form>
 
@@ -34,6 +53,8 @@
     </main>
   </div>
 
+  <!-- ✅ SCRIPT ORDER FIXED: Load Supabase first -->
   <script type="module" src="js/expenses.js"></script>
 </body>
 </html>
+
