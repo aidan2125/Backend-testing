@@ -2,7 +2,7 @@
  
 const supabase = createClient(
   'https://lmtvzmagwdegwravdcue.supabase.co',
-  'your-anon-key-here' // replace with a real anon key (ensure RLS is active)
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdHZ6bWFnd2RlZ3dyYXZkY3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0OTMzMTYsImV4cCI6MjA2MTA2OTMxNn0.Kc7eVAIdPTSOnCBaMpFowYBPBjuBgkwyJA6nZD-F2yU' // replace with a real anon key (ensure RLS is active)
 );
  
 let map, directionsService, directionsRenderer;
