@@ -1,82 +1,138 @@
-.trip-planner-container {
-  max-width: 600px;
-  margin: auto;
-  padding: 2rem;
-  background-color: #f4f8fb;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.trip-planner-container h2 {
-  text-align: center;
-  margin-bottom: 1rem;
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f7f9fb;
+  color: #333;
+  line-height: 1.6;
 }
 
-.form input,
-.form textarea,
-.form button {
-  display: block;
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
+header.planner-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10%;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
 }
 
-.form button {
-  background-color: #246071;
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2b6777;
+}
+
+.back-btn {
+  padding: 10px 20px;
+  background-color: #2b6777;
   color: white;
   border: none;
-  cursor: pointer;
-}
-
-.form button:hover {
-  background-color: #1b4d5b;
-}
-
-.suggestions {
-  margin-bottom: 1rem;
-}
-
-.suggestion-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 0.5rem;
-}
-
-.tag {
-  background-color: #e3f2fd;
-  border: none;
-  border-radius: 20px;
-  padding: 6px 14px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s;
-}
-
-.tag:hover {
-  background-color: #bbdefb;
-}
-
-.trip-details {
-  margin-top: 2rem;
-  padding: 1rem;
-  background-color: #fff;
   border-radius: 8px;
-  border: 1px solid #ddd;
-}
-.media-preview {
-  margin: 1rem 0;
-  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.media-preview img,
-.media-preview video {
+.back-btn:hover {
+  background-color: #235c6a;
+}
+
+.route-form {
+  max-width: 600px;
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 10%;
+}
+
+.route-form input,
+.route-form textarea,
+.route-form select {
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.route-form input:focus,
+.route-form textarea:focus,
+.route-form select:focus {
+  border-color: #2b6777;
+  box-shadow: 0 0 0 2px rgba(43, 103, 119, 0.1);
+  outline: none;
+}
+
+.btn-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-group button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2b6777;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-group button:hover {
+  background-color: #235c6a;
+}
+
+/* Map Display */
+#map {
   width: 100%;
-  max-height: 300px;
+  height: 400px;
+  margin: 40px 0;
   border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  color: #2b6777;
+}
+
+.modal-content p {
+  margin-bottom: 30px;
 }

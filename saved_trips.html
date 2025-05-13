@@ -4,35 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Travique | Saved Trips</title>
-  
   <link rel="stylesheet" href="css/saved_trips.css" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header>
-    <h1>🗂 Your Saved Trips</h1>
-    <button onclick="location.href='dashboard.html'">⬅ Back to Dashboard</button>
+    <h1>Saved Trips</h1>
+    <button onclick="location.href='dashboard.html'">Back to Dashboard</button>
   </header>
 
   <main>
     <div id="trips-container">Loading your trips...</div>
   </main>
 
-
-<!-- Trip Details Modal -->
-<div id="trip-modal" class="modal">
+  <!-- Trip Details Modal -->
+  <div id="trip-modal" class="modal">
     <div class="modal-content">
       <span class="close-btn" id="close-modal">&times;</span>
-      <h2 id="modal-destination">Trip to ???</h2>
+      <h2 id="modal-destination">Trip Details</h2>
       <p><strong>Start Date:</strong> <span id="modal-start"></span></p>
       <p><strong>End Date:</strong> <span id="modal-end"></span></p>
       <p><strong>Activities:</strong> <span id="modal-activities"></span></p>
       <p><strong>Notes:</strong> <span id="modal-notes">N/A</span></p>
     </div>
   </div>
-  
 
   <script type="module" src="js/saved_trips.js"></script>
-
 </body>
 </html>

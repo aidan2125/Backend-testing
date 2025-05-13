@@ -5,38 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Travique | Trip Planner</title>
   <link rel="stylesheet" href="css/trip-planner.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header>
-    <h1>🧭 Plan Your Trip</h1>
-    <button onclick="location.href='dashboard.html'">⬅ Back to Dashboard</button>
+  <header class="planner-header">
+    <h1 class="logo">Plan Your Trip</h1>
+    <button class="back-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
   </header>
 
   <main>
-    <div class="route-form">
-      <input id="from-address" type="text" placeholder="Your current address" />
-      <input id="to-address" type="text" placeholder="Destination address" />
+    <section class="route-form">
+      <input id="from-address" type="text" placeholder="Your current location" />
+      <input id="to-address" type="text" placeholder="Destination" />
       <textarea id="activities" placeholder="Activities you plan to do (comma separated)"></textarea>
 
       <select id="travel-mode">
-        <option value="DRIVING">🚗 Car</option>
-        <option value="TRANSIT">🚉 Transit</option>
-        <option value="FLYING">✈️ Flight</option>
+        <option value="DRIVING">Driving</option>
+        <option value="TRANSIT">Public Transit</option>
+        <option value="FLYING">Flying</option>
       </select>
 
-      <button id="route-btn">🗺 Get Route</button>
-      <button id="save-trip-btn">💾 Save Trip</button>
-    </div>
+      <div class="btn-group">
+        <button id="route-btn">Get Route</button>
+        <button id="save-trip-btn">Save Trip</button>
+      </div>
+    </section>
 
     <div id="map"></div>
 
     <!-- Trip Summary Modal -->
-    <div id="trip-summary-modal" style="display: none;">
+    <div id="trip-summary-modal" class="modal hidden">
       <div class="modal-content">
         <h2>Trip Summary</h2>
         <p id="summary-text"></p>
-        <button id="confirm-save-btn">✅ Confirm & Save</button>
-        <button onclick="document.getElementById('trip-summary-modal').style.display='none'">❌ Cancel</button>
+        <div class="btn-group">
+          <button id="confirm-save-btn">Confirm & Save</button>
+          <button onclick="document.getElementById('trip-summary-modal').classList.add('hidden')">Cancel</button>
+        </div>
       </div>
     </div>
   </main>
@@ -44,6 +49,5 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvI8oz4lpujGMNdk28vTHf6useyP8a9tc&libraries=places&callback=initMap" async defer></script>
   <script type="module" src="js/trip.js"></script>
   <script type="module" src="/js/liveLocation.js"></script>
-
 </body>
 </html>
