@@ -1,21 +1,25 @@
+
  <!DOCTYPE html>
+
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Travique | Expenses</title>
-  <link rel="stylesheet" href="css/dashboard.css" />
-  <link rel="stylesheet" href="css/planner.css" />
+  <title>Travique | Smart Expenses</title>
+  <link rel="stylesheet" href="css/expenses.css" />
 </head>
 <body>
-  <div class="dashboard-container">
+  <div class="container">
     <header>
-      <h1>Expense Tracker</h1>
+      <h1>💸 Smart Travel Expenses</h1>
       <button onclick="window.location.href='dashboard.html'">⬅ Back to Dashboard</button>
     </header>
 
-    <main>
+    <section class="form-section">
       <form id="expense-form">
+
         <!-- ✅ BASIC FIELDS -->
         <input type="text" id="expense-name" placeholder="Expense Name" required />
         <input type="number" id="expense-amount" placeholder="Amount (in selected currency)" required />
@@ -27,13 +31,22 @@
         <input type="number" id="expense-nativeamount" placeholder="Native Amount (if converted)" />
 
         <!-- ✅ CATEGORY SELECT FIELD -->
-        <select id="expense-category">
-          <option value="transport">Transport</option>
-          <option value="food">Food</option>
-          <option value="stay">Accommodation</option>
-          <option value="fun">Entertainment</option>
-          <option value="other">Other</option>
+
+        <select id="trip-select" required>
+          <option value="">-- Select Trip --</option>
         </select>
+        
+        <input type="text" id="expense-name" placeholder="e.g. Uber ride" required />
+        <input type="number" id="expense-amount" placeholder="$ Amount" required />
+
+        <select id="expense-category">
+          <option value="transport">🚗 Transport</option>
+          <option value="food">🍔 Food</option>
+          <option value="stay">🏨 Accommodation</option>
+          <option value="fun">🎉 Entertainment</option>
+          <option value="other">🧾 Other</option>
+        </select>
+
 
         <!-- ✅ NEW FIELD: Location -->
         <input type="text" id="expense-location" placeholder="Location (optional)" />
@@ -46,11 +59,19 @@
         <input type="hidden" id="profile-id" value="your-profile-id-here" />
 
         <button type="submit">Add Expense</button>
-      </form>
 
-      <div id="expense-list"></div>
-      <h3>Total: $<span id="total-amount">0</span></h3>
-    </main>
+        <button type="submit">➕ Add Expense</button>
+
+      </form>
+    </section>
+
+    <section class="summary">
+      <h3>Total Spent: $<span id="total-amount">0.00</span></h3>
+    </section>
+
+    <section id="expense-list" class="expense-list">
+      <!-- Expenses will render here -->
+    </section>
   </div>
 
   <!-- ✅ SCRIPT ORDER FIXED: Load Supabase first -->
