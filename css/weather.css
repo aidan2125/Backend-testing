@@ -1,86 +1,42 @@
-body {
-    font-family: sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
+.weather-container {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 1rem;
+  }
+  
+  .weather-form {
+    margin-bottom: 1rem;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-}
-
-.weatherForm {
-    margin: 20px;
-}
-
-.cityInput {
-    padding: 10px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    border-radius: 10px;
-    border:  2px solid #abababa0;
-    margin: 10px;
-    width: 300px;
-}
-
-button[type="submit"] {
-    padding: 10px 20px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    background-color: #006fff;
-    color: #fff;
+    gap: 0.5rem; /* adds space between input and button */
+  }
+  
+  .weather-form input {
+    padding: 0.5rem;
+    width: 70%;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .weather-form button {
+    padding: 0.5rem 1rem;
+    background-color: #246071;
+    color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
-}
-
-button[type="submit"]:hover {
-    background-color: #0060ee;
-}
-
-.card {
-    background: linear-gradient(180deg, #006fff, #fff);
-    padding: 20px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
+  }
+  
+  .weather-result {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f0f0f0;
     border-radius: 10px;
-    min-width: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    font-size: 2.5rem;
-    margin-top: 0;
-    margin-bottom: 25px;
-}
-
-p {
-    font-size: 1rem;
-    margin: 5px 0;
-}
-
-.cityDisplay, .tempDisplay {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 25px;
-}
-
-.humidityDisplay {
-    font-weight: bold;
-    margin-bottom: 25px;
-}
-
-.descDisplay {
-    font-style: italic;
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
-.weatherEmoji {
-    margin-bottom: 25px;
-    font-size: 5rem;
-}
-
-.errorDisplay {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
+  }
+  
+  .error {
+    color: red;
+  }
+  

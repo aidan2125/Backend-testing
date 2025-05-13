@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Travique | Dashboard</title>
   <link rel="stylesheet" href="css/dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <div class="dashboard-container">
     <header>
-      <h1>Welcome to Travique</h1>
+      <h1 class="logo">Travique</h1>
       <p id="user-email">Loading...</p>
       <button id="logout-btn">Logout</button>
     </header>
@@ -17,37 +18,34 @@
     <main>
       <div class="card-grid">
         <div class="card" onclick="location.href='trip-planner.html'">
-          <h2>🧭 Trip Planner</h2>
-          <p>Plan your next adventure!</p>
+          <h2>Trip Planner</h2>
+          <p>Create and manage your custom travel itinerary.</p>
         </div>
         <div class="card" onclick="location.href='expenses.html'">
-          <h2>💰 Expenses</h2>
-          <p>Track and manage trip spending.</p>
+          <h2>Expense Tracker</h2>
+          <p>Track your spending and stay on budget.</p>
         </div>
         <div class="card" onclick="location.href='health.html'">
-          <h2>🏃‍♀️ Health & Fitness</h2>
-          <p>Stay fit while you travel.</p>
+          <h2>Health & Fitness</h2>
+          <p>Maintain wellness throughout your travels.</p>
         </div>
-        <div class="card">
-          <h2>💡 Smart Tip</h2>
+        <div class="card" onclick="location.href='tips.html'">
+          <h2>Smart Travel Tips</h2>
           <p id="smart-tip">"Travel light to move freely!"</p>
         </div>
         <div class="card" onclick="location.href='food.html'">
-          <h2>food</h2>
-          <p>foot finder.</p>
+          <h2>Food Finder</h2>
+          <p>Explore local dining experiences.</p>
         </div>
         <div class="card" onclick="location.href='weather.html'">
-          <h2>check weather</h2>
-          <p>get weather updates</p>
+          <h2>Weather</h2>
+          <p>Check current conditions and forecasts.</p>
+        </div>
+        <div class="card" onclick="location.href='saved_trips.html'">
+          <h2>Saved Trips</h2>
+          <p>Access and manage your previous plans.</p>
         </div>
       </div>
-
-       <!-- ✅ Trip Summary Section -->
-       <div class="card" onclick="location.href='saved_trips.html'">
-        <h2>🗂️ Saved Trips</h2>
-        <p>View and manage your planned adventures.</p>
-      </div>
-      
     </main>
   </div>
 

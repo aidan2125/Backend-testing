@@ -1,1 +1,36 @@
- 
+ .health-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+  }
+  
+  .health-tips-container h2 {
+    text-align: center;
+    color: #246071;
+    margin-bottom: 1rem;
+  }
+  
+  .tip-section {
+    margin-bottom: 1.5rem;
+    background: #ffffff;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  
+  .tip-section h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tip-section ul {
+    list-style-type: none;
+    padding-left: 1rem;
+  }
+  
+  .tip-section li {
+    margin-bottom: 0.5rem;
+  }
+  

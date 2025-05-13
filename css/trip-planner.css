@@ -1,0 +1,82 @@
+.trip-planner-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  background-color: #f4f8fb;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.trip-planner-container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form input,
+.form textarea,
+.form button {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.form button {
+  background-color: #246071;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #1b4d5b;
+}
+
+.suggestions {
+  margin-bottom: 1rem;
+}
+
+.suggestion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.tag {
+  background-color: #e3f2fd;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.tag:hover {
+  background-color: #bbdefb;
+}
+
+.trip-details {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+.media-preview {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.media-preview img,
+.media-preview video {
+  width: 100%;
+  max-height: 300px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
