@@ -1,8 +1,10 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
-const supabaseUrl = 'https://lmtvzmagwdegwravdcue.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdHZ6bWFnd2RlZ3dyYXZkY3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0OTMzMTYsImV4cCI6MjA2MTA2OTMxNn0.Kc7eVAIdPTSOnCBaMpFowYBPBjuBgkwyJA6nZD-F2yU';
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = createClient(
+  'https://lmtvzmagwdegwravdcue.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdHZ6bWFnd2RlZ3dyYXZkY3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0OTMzMTYsImV4cCI6MjA2MTA2OTMxNn0.Kc7eVAIdPTSOnCBaMpFowYBPBjuBgkwyJA6nZD-F2yU'
+);
+
 let map, directionsService, directionsRenderer;
 let fromInput, toInput;
 
@@ -38,13 +40,40 @@ async function handleRoute() {
     return;
   }
 
-  const gmapsMode = travelMode === "FLYING" ? google.maps.TravelMode.DRIVING : travelMode;
+  // If flying, skip route fetch and use estimated values
+  if (travelMode === "FLYING") {
+    const estimatedDistance = 10000; // 👈 You could make this dynamic later
+    const cost = calculateCost(estimatedDistance, travelMode);
+    const activities = document.getElementById("activities").value;
 
+    currentTrip = {
+      from: origin,
+      destination,
+      activities,
+      travelMode,
+      distance: estimatedDistance,
+      cost,
+    };
+
+    document.getElementById("summary-text").innerText = `
+From: ${origin}
+To: ${destination}
+Mode: ${travelMode}
+Distance: ~${estimatedDistance} km (estimated)
+Estimated Cost: $${cost.toFixed(2)}
+Activities: ${activities}
+    `.trim();
+
+    document.getElementById("trip-summary-modal").style.display = "block";
+    return;
+  }
+
+  // Otherwise, use Directions API
   directionsService.route(
     {
       origin,
       destination,
-      travelMode: gmapsMode,
+      travelMode: travelMode,
     },
     (response, status) => {
       if (status === google.maps.DirectionsStatus.OK) {
@@ -53,16 +82,16 @@ async function handleRoute() {
 
         const cost = calculateCost(distance, travelMode);
         const activities = document.getElementById("activities").value;
+
         currentTrip = {
           from: origin,
           destination,
           activities,
           travelMode,
           distance,
-          cost
+          cost,
         };
 
-        // Show trip summary
         document.getElementById("summary-text").innerText = `
 From: ${origin}
 To: ${destination}
@@ -72,8 +101,11 @@ Estimated Cost: $${cost.toFixed(2)}
 Activities: ${activities}
         `.trim();
         document.getElementById("trip-summary-modal").style.display = "block";
+      } else if (status === google.maps.DirectionsStatus.ZERO_RESULTS) {
+        alert("We couldn’t find a drivable route. Try switching to FLYING mode.");
       } else {
-        alert('Route failed: ' + status);
+        alert("Route failed: " + status);
+        console.error("❌ Route error:", status);
       }
     }
   );
@@ -83,7 +115,7 @@ function calculateCost(distance, mode) {
   const rates = {
     DRIVING: 0.5,
     TRANSIT: 0.3,
-    FLYING: 0.8
+    FLYING: 0.8,
   };
   return distance * (rates[mode] || 0.5);
 }
