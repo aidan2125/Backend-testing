@@ -4,7 +4,7 @@ const cityInput = document.querySelector(".cityInput");
 const card = document.querySelector(".card");
 const apiKey = "a0a3fc597b20432fc34aee7fe0c6d97c";
 
-weatherForm.addEventListener("submit", async event => {
+  weatherForm.addEventListener("submit", async event => {
     event.preventDefault();
 
     const city = cityInput.value;
@@ -111,33 +111,34 @@ weatherForm.addEventListener("submit", async event => {
     }
 });
 
-async function getFiveDayForecast(city) {
+  async function getFiveDayForecast(city) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
     const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-        throw new Error("Couldn't fetch forecast data");
-    }
-
+    if (!response.ok) throw new Error("Failed to fetch forecast");
     return await response.json();
-}
+  }
 
-function displayFiveDayForecast(data) {
-    card.innerHTML = "";
+  function getWeatherInfo(data) {
+    card.style.display = "flex";
+    cityDisplay.textContent = data.name;
+    tempDisplay.textContent = `${(data.main.temp - 273.15).toFixed(1)} °C`;
+    humidityDisplay.textContent = `Humidity: ${data.main.humidity}%`;
+    descDisplay.textContent = data.weather[0].description;
+    weatherEmoji.textContent = getWeatherEmoji(data.weather[0].id);
+    errorDisplay.textContent = "";
+  }
+
+  function displayFiveDayForecast(data) {
+    forecastGrid.innerHTML = "";
     card.style.display = "grid";
-    card.style.gridTemplateColumns = "repeat(5, 1fr)";
-    card.style.gap = "1rem";
 
     const forecastMap = {};
-
-    // Filter to one forecast per day around 12:00 PM
     data.list.forEach(forecast => {
-        const date = forecast.dt_txt.split(" ")[0];
-        const time = forecast.dt_txt.split(" ")[1];
-
-        if (time === "12:00:00" && !forecastMap[date]) {
-            forecastMap[date] = forecast;
-        }
+      const date = forecast.dt_txt.split(" ")[0];
+      const time = forecast.dt_txt.split(" ")[1];
+      if (time === "12:00:00" && !forecastMap[date]) {
+        forecastMap[date] = forecast;
+      }
     });
 
     Object.values(forecastMap).slice(0, 5).forEach(forecast => {
@@ -180,12 +181,8 @@ function getWeatherEmoji(weatherId) {
     }
 }
 
-function displayError(message) {
-    card.innerHTML = "";
+  function displayError(message) {
     card.style.display = "flex";
-
-    const errorMsg = document.createElement("p");
-    errorMsg.textContent = message;
-    errorMsg.classList.add("errorDisplay");
-    card.appendChild(errorMsg);
-}
+    errorDisplay.textContent = message;
+  }
+});

@@ -35,49 +35,15 @@ form.addEventListener('submit', async (e) => {
   const name = document.getElementById('expense-name').value;
   const amount = parseFloat(document.getElementById('expense-amount').value);
   const category = document.getElementById('expense-category').value;
-  const currency = document.getElementById('expense-currency')?.value || 'USD';
-  const nativeAmount = parseFloat(document.getElementById('expense-nativeamount')?.value || amount);
-  const location = document.getElementById('expense-location')?.value || '';
-  const date = document.getElementById('expense-date')?.value || new Date().toISOString();
 
-  // Automatically fetch the trip_id for the logged-in user
-  const user = await getCurrentUser();  // Fetch user first
-  if (!user) return;
+  if (!name || isNaN(amount)) return;
 
-  const tripId = await getDefaultTripId(user.profileID);  // Automatically fetch the most recent trip
-
-  if (!name || isNaN(amount)) {
-    alert('Please enter a valid expense name and amount.');
-    return;
-  }
-
-  // Insert expense into Supabase, automatically associating with the trip_id if available
-  const { data, error } = await supabase
-    .from('expenses')  // Correct table name
-    .insert([{
-      name,
-      amount,
-      category,
-      currency,
-      nativeamount: nativeAmount,
-      location,
-      date,
-      trip_id:tripId || null,  // Automatically set trip_id (null if no trip)
-      profileID: user.profileID  // Associate expense with the correct profileID
-    }]);
-
-  if (error) {
-    console.error('Insert error:', error);
-    return;
-  }
-
-  
-  expenses.push(data[0]);  // Add inserted expense to local array
-  renderExpenses();  // Re-render expenses
-  form.reset();  // Reset the form
+  const expense = { name, amount, category };
+  expenses.push(expense);
+  renderExpenses();
+  form.reset();
 });
 
-// Function to render expenses
 function renderExpenses() {
   list.innerHTML = '';
   let total = 0;
@@ -89,13 +55,56 @@ function renderExpenses() {
     div.classList.add('expense-item');
 
     div.innerHTML = `
-      <strong>${item.name}</strong> ($${item.amount.toFixed(2)}) - ${item.category}
-      <button onclick="deleteExpense(${index})">❌</button>
+      <div class="expense-details">
+        <strong>${item.name}</strong> - <span class="expense-amount">$${item.amount.toFixed(2)}</span>
+        <span class="expense-category">${item.category}</span>
+        <span class="expense-date">${new Date(item.date).toLocaleDateString()}</span>
+      </div>
     `;
+
+    // DELETE Button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('btn', 'btn-delete');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.onclick = () => deleteExpense(index);
+    div.appendChild(deleteBtn);
+
+    // VIEW Button
+    const viewBtn = document.createElement('button');
+    viewBtn.classList.add('btn', 'btn-view');
+    viewBtn.textContent = 'View';
+    viewBtn.onclick = () => viewExpense(item);
+    div.appendChild(viewBtn);
+
     list.appendChild(div);
   });
 
   totalAmount.textContent = total.toFixed(2);
+}
+
+// Function to view the expense details in a modal
+function viewExpense(item) {
+  const modal = document.createElement('div');
+  modal.classList.add('expense-modal-overlay');
+
+  modal.innerHTML = `
+    <div class="expense-modal">
+      <h3>${item.name}</h3>
+      <p><strong>Amount:</strong> $${item.amount}</p>
+      <p><strong>Category:</strong> ${item.category}</p>
+      <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p>
+      <p><strong>Location:</strong> ${item.location || 'N/A'}</p>
+      <p><strong>Trip:</strong> ${item.trip_id || 'None'}</p>
+      <button class="btn btn-close">Close</button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Close modal when button clicked
+  modal.querySelector('.btn-close').onclick = () => {
+    modal.remove();
+  };
 }
 
 // Optional: Add delete functionality for expenses
