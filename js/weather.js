@@ -1,4 +1,3 @@
-// WEATHER APP
 
 const weatherForm = document.querySelector(".weatherForm");
 const cityInput = document.querySelector(".cityInput");
@@ -96,6 +95,7 @@ function displayError(message) {
 
 weatherForm.addEventListener("submit", async event => {
     event.preventDefault();
+
     const city = cityInput.value;
 
     if (city) {
@@ -144,7 +144,7 @@ function displayFiveDayForecast(data) {
         const {
             main: { temp, humidity },
             weather: [{ description, id }],
-            dt_txt,
+
         } = forecast;
 
         const dayCard = document.createElement("div");
@@ -164,4 +164,28 @@ function displayFiveDayForecast(data) {
 
         card.appendChild(dayCard);
     });
+}
+
+
+function getWeatherEmoji(weatherId) {
+    switch (true) {
+        case (weatherId >= 200 && weatherId < 300): return "🌩️";
+        case (weatherId >= 300 && weatherId < 400): return "🌧️";
+        case (weatherId >= 500 && weatherId < 600): return "🌧️";
+        case (weatherId >= 600 && weatherId < 700): return "🌨️";
+        case (weatherId >= 700 && weatherId < 800): return "🌫️";
+        case (weatherId === 800): return "☀️";
+        case (weatherId > 800): return "☁️";
+        default: return "❓";
+    }
+}
+
+function displayError(message) {
+    card.innerHTML = "";
+    card.style.display = "flex";
+
+    const errorMsg = document.createElement("p");
+    errorMsg.textContent = message;
+    errorMsg.classList.add("errorDisplay");
+    card.appendChild(errorMsg);
 }
