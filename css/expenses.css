@@ -1,66 +1,95 @@
-expenses-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    background-color: #f9f9f9;
-    border-radius: 12px;
-  }
-  
-  .expenses-container h2 {
-    text-align: center;
-    color: #246071;
-    margin-bottom: 1rem;
-  }
-  
-  .expense-form {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
-  
-  .expense-form input,
-  .expense-form select {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    flex: 1;
-    min-width: 150px;
-  }
-  
-  .expense-form button {
-    padding: 0.5rem 1rem;
-    background-color: #246071;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .expense-list {
-    margin-top: 1rem;
-  }
-  
-  .expense-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.75rem;
-    background-color: #fff;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    box-shadow: 0 0 3px rgba(0,0,0,0.05);
-  }
-  
-  .expense-item .category {
-    color: #666;
-    font-size: 0.9rem;
-  }
-  
-  .total {
-    text-align: right;
-    margin-top: 1rem;
-    font-weight: bold;
-    font-size: 1.2rem;
-    color: #246071;
-  }
-  
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 2rem;
+  color: #333;
+}
+ 
+.dashboard-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+ 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+ 
+header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+ 
+header button {
+  background-color: #eee;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+ 
+header button:hover {
+  background-color: #ddd;
+}
+ 
+form {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+ 
+form input,
+form select {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+ 
+form button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+ 
+form button:hover {
+  background-color: #0056b3;
+}
+ 
+.error-message {
+  display: none;
+  background-color: #ffe0e0;
+  color: #b30000;
+  padding: 1rem;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ffaaaa;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+ 
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  background-color: #f1f1f1;
+  border-radius: 6px;
+}
+ 
+.expense-item strong {
+  margin-right: 0.5rem;
+}

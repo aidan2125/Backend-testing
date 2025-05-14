@@ -1,191 +1,141 @@
+const apiKey = '86f6948b34f7cf32a95cacbb9bffa630';
 
-const weatherForm = document.querySelector(".weatherForm");
-const cityInput = document.querySelector(".cityInput");
-const card = document.querySelector(".card");
-const apiKey = "a0a3fc597b20432fc34aee7fe0c6d97c";
+const searchButton = document.getElementById('searchButton');
+const cityInput = document.getElementById('cityInput');
+const cityName = document.getElementById('cityName');
+const temperature = document.getElementById('temperature');
+const description = document.getElementById('description');
+const humidity = document.getElementById('humidity');
 
-weatherForm.addEventListener("submit", async event => {
-    event.preventDefault();
+function clearWeatherData() {
+    cityName.innerHTML = '';
+    temperature.innerHTML = '';
+    description.innerHTML = '';
+    humidity.innerHTML = '';
 
-    const city = cityInput.value;
+    const forecastContainer = document.querySelector('.forecast');
+    if (forecastContainer) forecastContainer.remove();
+}
 
-    if (city) {
-        try {
-            const weatherData = await getWeatherData(city);
-            getWeatherInfo(weatherData);
-        } catch (error) {
-            console.error(error);
-            displayError(error.message);
-        }
+searchButton.addEventListener('click', () => {
+    const city = cityInput.value.trim();
+    if (!city) return alert("Please enter a city");
+    
+    if (!cityList.includes(city)) {
+        cityList.push(city);
+        displayCityList();
+        clearWeatherData();
+        getWeather(city);
     } else {
-        displayError("Please Enter a City");
+        alert("City is already added");
     }
 });
 
-async function getWeatherData(city) {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
-    const response = await fetch(apiUrl);
+function getWeather(city) {
+    const apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 
-    if (!response.ok) {
-        throw new Error("Couldn't Fetch Data");
-    }
-
-    return await response.json();
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            if (data.cod === '404') {
+                alert("City not found");
+            } else {
+                updateWeatherUI(data);
+                showForecast(data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch weather data');
+        });
 }
 
-function getWeatherInfo(data) {
-    const {
-        name: city,
-        main: { temp, humidity },
-        weather: [{ description, id }],
-    } = data;
+// Get weather by coordinates (for geolocation)
+function getWeatherByCoords(lat, lon) {
+    const apiURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
-    card.textContent = "";
-    card.style.display = "flex";
-
-    const cityDisplay = document.createElement("h1");
-    const tempDisplay = document.createElement("p");
-    const humidityDisplay = document.createElement("p");
-    const descDisplay = document.createElement("p");
-    const weatherEmoji = document.createElement("p");
-
-    cityDisplay.textContent = city;
-    tempDisplay.textContent = `${(temp - 273.15).toFixed(1)} °C`;
-    humidityDisplay.textContent = `Humidity: ${humidity}`;
-    descDisplay.textContent = description;
-    weatherEmoji.textContent = getWeatherEmoji(id);
-
-    cityDisplay.classList.add("cityDisplay");
-    tempDisplay.classList.add("tempDisplay");
-    humidityDisplay.classList.add("humidityDisplay");
-    descDisplay.classList.add("descDisplay");
-    weatherEmoji.classList.add("weatherEmoji");
-
-    card.appendChild(cityDisplay);
-    card.appendChild(tempDisplay);
-    card.appendChild(humidityDisplay);
-    card.appendChild(descDisplay);
-    card.appendChild(weatherEmoji);
+    fetch(apiURL)
+        .then(response => response.json())
+        .then(data => {
+            updateWeatherUI(data);
+            showForecast(data);
+        })
+        .catch(error => {
+            console.error('Error fetching location-based weather:', error);
+        });
 }
 
-function getWeatherEmoji(weatherId) {
-    switch (true) {
-        case (weatherId >= 200 && weatherId < 300): return "🌩️";
-        case (weatherId >= 300 && weatherId < 400): return "🌧️";
-        case (weatherId >= 500 && weatherId < 600): return "🌧️";
-        case (weatherId >= 600 && weatherId < 700): return "🌨️";
-        case (weatherId >= 700 && weatherId < 800): return "🌫️";
-        case (weatherId === 800): return "☀️";
-        case (weatherId > 800): return "☁️";
-        default: return "❓";
-    }
+
+function updateWeatherUI(data) {
+    const today = data.list[0];
+    cityName.innerHTML = `${data.city.name}, ${data.city.country}`;
+    temperature.innerHTML = `Temperature: ${today.main.temp}°C`;
+    description.innerHTML = `Condition: ${today.weather[0].description}`;
+    humidity.innerHTML = `Humidity: ${today.main.humidity}%`;
 }
 
-function displayError(message) {
-    const errorDisplay = document.createElement("p");
-    errorDisplay.textContent = message;
-    errorDisplay.classList.add("errorDisplay");
+function showForecast(data) {
+    // Remove any existing forecast container
+    const existing = document.querySelector('.forecast-container');
+    if (existing) existing.remove();
 
-    card.textContent = "";
-    card.style.display = "flex";
-    card.appendChild(errorDisplay);
-}
+    const forecastContainer = document.createElement("div");
+    forecastContainer.classList.add("forecast-container");
+    document.querySelector('.weather-section').appendChild(forecastContainer);
 
-// Five Day Forecast Code
+    const addedDays = new Set();
 
-weatherForm.addEventListener("submit", async event => {
-    event.preventDefault();
+    data.list.forEach((item) => {
+        const date = new Date(item.dt * 1000);
+        const dayStr = date.toLocaleDateString('en-GB', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long'
+        });
 
-    const city = cityInput.value;
+        if (!addedDays.has(dayStr) && addedDays.size < 5) {
+            addedDays.add(dayStr);
 
-    if (city) {
-        try {
-            const forecastData = await getFiveDayForecast(city);
-            displayFiveDayForecast(forecastData);
-        } catch (error) {
-            console.error(error);
-            displayError("Failed to fetch forecast.");
+            const forecastItem = document.createElement("div");
+            forecastItem.classList.add("forecast-item");
+            forecastItem.innerHTML = `
+                <p>${dayStr}</p>
+                <p>${item.main.temp}°C</p>
+                <p>${item.weather[0].description}</p>
+            `;
+            forecastContainer.appendChild(forecastItem);
         }
-    } else {
-        displayError("Please enter a city.");
-    }
-});
-
-async function getFiveDayForecast(city) {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
-    const response = await fetch(apiUrl);
-
-    if (!response.ok) {
-        throw new Error("Couldn't fetch forecast data");
-    }
-
-    return await response.json();
-}
-
-function displayFiveDayForecast(data) {
-    card.innerHTML = "";
-    card.style.display = "grid";
-    card.style.gridTemplateColumns = "repeat(5, 1fr)";
-    card.style.gap = "1rem";
-
-    const forecastMap = {};
-
-    // Filter to one forecast per day around 12:00 PM
-    data.list.forEach(forecast => {
-        const date = forecast.dt_txt.split(" ")[0];
-        const time = forecast.dt_txt.split(" ")[1];
-
-        if (time === "12:00:00" && !forecastMap[date]) {
-            forecastMap[date] = forecast;
-        }
-    });
-
-    Object.values(forecastMap).slice(0, 5).forEach(forecast => {
-        const {
-            main: { temp, humidity },
-            weather: [{ description, id }],
-
-        } = forecast;
-
-        const dayCard = document.createElement("div");
-        dayCard.classList.add("dayCard");
-
-        const date = new Date(dt_txt).toLocaleDateString(undefined, { weekday: "long" });
-        const tempC = `${(temp - 273.15).toFixed(1)} °C`;
-        const emoji = getWeatherEmoji(id);
-
-        dayCard.innerHTML = `
-            <h3>${date}</h3>
-            <p>${emoji}</p>
-            <p>${description}</p>
-            <p>${tempC}</p>
-            <p>Humidity: ${humidity}%</p>
-        `;
-
-        card.appendChild(dayCard);
     });
 }
 
 
-function getWeatherEmoji(weatherId) {
-    switch (true) {
-        case (weatherId >= 200 && weatherId < 300): return "🌩️";
-        case (weatherId >= 300 && weatherId < 400): return "🌧️";
-        case (weatherId >= 500 && weatherId < 600): return "🌧️";
-        case (weatherId >= 600 && weatherId < 700): return "🌨️";
-        case (weatherId >= 700 && weatherId < 800): return "🌫️";
-        case (weatherId === 800): return "☀️";
-        case (weatherId > 800): return "☁️";
-        default: return "❓";
+
+// Optional: City list tracking
+let cityList = [];
+
+function displayCityList() {
+    const cityListContainer = document.getElementById("cityListContainer");
+    cityListContainer.innerHTML = "";
+    cityList.forEach((city) => {
+        const cityItem = document.createElement("li");
+        cityItem.textContent = city;
+        cityListContainer.appendChild(cityItem);
+    });
+}
+
+// Auto-fetch weather for current location
+window.addEventListener('DOMContentLoaded', () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                getWeatherByCoords(latitude, longitude);
+            },
+            (error) => {
+                console.warn("Geolocation failed or was denied:", error.message);
+            }
+        );
+    } else {
+        console.warn("Geolocation is not supported by this browser.");
     }
-}
-
-function displayError(message) {
-    card.innerHTML = "";
-    card.style.display = "flex";
-
-    const errorMsg = document.createElement("p");
-    errorMsg.textContent = message;
-    errorMsg.classList.add("errorDisplay");
-    card.appendChild(errorMsg);
-}
+});
