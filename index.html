@@ -7,22 +7,32 @@
   <link rel="stylesheet" href="css/home.css" />
 </head>
 <body>
+  <!-- Header Section -->
   <header class="landing-header">
-    <nav>
-      <h1 class="logo">Travique</h1>
+    <div class="header-wrapper">
+      <div class="logo-container">
+        <h1 class="logo-text-large">Travique</h1>
+        <img src="Images/Logo.png" alt="Travique Logo" class="header-logo-image" />
+      </div>
       <div class="nav-buttons">
         <a href="login.html" class="btn">Login</a>
         <a href="signup.html" class="btn">Sign Up</a>
       </div>
-    </nav>
+    </div>
   </header>
-
+ 
+  <!-- Hero Section -->
   <section class="hero">
-    <h2>Your Smart Travel Companion</h2>
-    <p>Plan smarter, travel better. Personalized itineraries, expense tracking, and health tips – all in one place.</p>
-    <a id="get-started-btn" href="#" class="btn main-cta">Get Started</a>
+    <div class="hero-content">
+      <div class="hero-text">
+        <h2>Your Smart Travel Companion</h2>
+        <p>Plan smarter, travel better. Personalized itineraries, expense tracking, and health tips – all in one place.</p>
+        <a id="get-started-btn" href="#" class="btn main-cta">Get Started</a>
+      </div>
+    </div>
   </section>
-
+ 
+  <!-- Features Section -->
   <section class="features">
     <div class="feature-card">
       <h3>Itinerary Planner</h3>
@@ -41,19 +51,20 @@
       <p>Discover hidden gems and personalized activity ideas powered by AI.</p>
     </div>
   </section>
-  
+ 
+  <!-- Supabase Auth Check -->
   <script type="module">
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.5/+esm';
-
+ 
     const supabase = createClient(
       'https://lmtvzmagwdegwravdcue.supabase.co',
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdHZ6bWFnd2RlZ3dyYXZkY3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0OTMzMTYsImV4cCI6MjA2MTA2OTMxNn0.Kc7eVAIdPTSOnCBaMpFowYBPBjuBgkwyJA6nZD-F2yU'
     );
-
+ 
     document.getElementById("get-started-btn").addEventListener("click", async (e) => {
       e.preventDefault();
       const { data: { user } } = await supabase.auth.getUser();
-
+ 
       if (user) {
         window.location.href = "dashboard.html";
       } else {
@@ -61,10 +72,14 @@
       }
     });
   </script>
+ 
+  <!-- Live Location JS -->
   <script type="module" src="/js/liveLocation.js"></script>
-
+ 
+  <!-- Footer -->
   <footer>
     <p>&copy; 2025 Travique. All rights reserved.</p>
   </footer>
 </body>
 </html>
+ 

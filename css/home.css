@@ -1,92 +1,120 @@
-/* Reset & Base Styles */
+/* Reset & Base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
+ 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
-  background-color: #f0f8ff;
-  color: #333;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Header */
-.landing-header {
   background-color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  padding: 20px 40px;
+  color: #333;
+  line-height: 1.6;
 }
-
-nav {
+ 
+/* Header Styling */
+.landing-header {
+  padding: 20px 40px;
+  background-color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+ 
+.header-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
-
-.logo {
-  font-size: 1.8rem;
+ 
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.logo-text-large {
+  font-size: 2rem;
   color: #246071;
   font-weight: bold;
 }
-
-/* Navigation Buttons */
-.nav-buttons .btn {
-  margin-left: 15px;
-  padding: 10px 20px;
-  background-color: #246071;
-  color: #fff;
-  border-radius: 25px;
-  transition: background-color 0.3s ease;
+ 
+.header-logo-image {
+  height: 50px;
+  width: 50px;
+  object-fit: contain;
 }
-
+ 
+/* Nav Buttons */
+.nav-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+ 
+.nav-buttons .btn {
+  padding: 8px 16px;
+  background-color: #246071;
+  color: white;
+  border-radius: 20px;
+  text-align: center;
+  width: 100px;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+}
+ 
 .nav-buttons .btn:hover {
   background-color: #1b4a58;
 }
-
+ 
 /* Hero Section */
 .hero {
-  padding: 80px 20px;
-  text-align: center;
+  padding: 80px 0;
   background: linear-gradient(135deg, #e0f7fa, #ffffff);
 }
-
+ 
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0 20px;
+  gap: 40px;
+}
+ 
+.hero-text {
+  text-align: center;
+  max-width: 700px;
+}
+ 
 .hero h2 {
   font-size: 2.5rem;
-  margin-bottom: 20px;
   color: #1b4a58;
+  margin-bottom: 20px;
 }
-
+ 
 .hero p {
   font-size: 1.1rem;
-  max-width: 600px;
-  margin: 0 auto 30px;
   color: #555;
+  margin-bottom: 30px;
 }
-
-/* CTA Buttons */
+ 
 .main-cta {
   display: inline-block;
-  margin: 10px 10px 0;
-  padding: 14px 32px;
   background-color: #246071;
-  color: #fff;
+  color: white;
+  padding: 14px 32px;
   border-radius: 30px;
   font-size: 1rem;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
 }
-
+ 
 .main-cta:hover {
   background-color: #1b4a58;
   transform: scale(1.05);
 }
-
+ 
 /* Features Section */
 .features {
   display: flex;
@@ -96,36 +124,67 @@ nav {
   padding: 60px 20px;
   background-color: #ffffff;
 }
-
+ 
 .feature-card {
-  background-color: #f9fbfd;
+  background-color: #f1f9ff;
+  padding: 24px;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 24px;
-  width: 250px;
   text-align: center;
+  width: 260px;
   transition: transform 0.3s ease;
 }
-
+ 
 .feature-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-5px);
 }
-
+ 
 .feature-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
+  color: #246071;
+  margin-bottom: 10px;
 }
-
+ 
 .feature-card p {
-  font-size: 0.95rem;
   color: #555;
+  font-size: 0.95rem;
 }
-
+ 
 /* Footer */
 footer {
-  text-align: center;
-  padding: 20px;
   background-color: #e0f0f7;
-  color: #555;
+  padding: 20px;
+  text-align: center;
   font-size: 0.9rem;
+  color: #555;
+}
+ 
+/* Responsive */
+@media (max-width: 768px) {
+  .header-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+ 
+  .logo-container {
+    margin-bottom: 10px;
+  }
+ 
+  .nav-buttons {
+    justify-content: center;
+    margin-top: 10px;
+  }
+ 
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+ 
+  .logo-text-large {
+    font-size: 1.6rem;
+  }
+ 
+  .header-logo-image {
+    height: 40px;
+    width: 40px;
+  }
 }

@@ -44,10 +44,12 @@ function getWeather(city) {
                 showForecast(data);
             }
         })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Failed to fetch weather data');
-        });
+       .catch(error => {
+    console.error('Error:', error);
+    alert('Failed to fetch weather data');
+    document.querySelector('.forecast-container')?.remove();
+});
+
 }
 
 // Get weather by coordinates (for geolocation)
@@ -69,10 +71,13 @@ function getWeatherByCoords(lat, lon) {
 function updateWeatherUI(data) {
     const today = data.list[0];
     cityName.innerHTML = `${data.city.name}, ${data.city.country}`;
-    temperature.innerHTML = `Temperature: ${today.main.temp}°C`;
-    description.innerHTML = `Condition: ${today.weather[0].description}`;
+    temperature.innerHTML = `${today.main.temp.toFixed(1)}°C`;
+    description.innerHTML = `${today.weather[0].description}`;
     humidity.innerHTML = `Humidity: ${today.main.humidity}%`;
+
+    document.querySelector('.weather-app').classList.add('loaded');
 }
+
 
 function showForecast(data) {
     // Remove any existing forecast container

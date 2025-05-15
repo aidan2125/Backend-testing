@@ -1,12 +1,12 @@
 /* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
-
+ 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
+ 
 body {
   font-family: 'Quicksand', sans-serif;
   background: linear-gradient(135deg, #e6f4f1, #ffffff);
@@ -17,31 +17,31 @@ body {
   align-items: flex-start;
   padding: 40px 20px;
 }
-
+ 
 /* Container */
 .dashboard-container {
   max-width: 1200px;
   width: 100%;
 }
-
+ 
 /* Header */
 header {
   text-align: center;
   margin-bottom: 40px;
 }
-
+ 
 header h1 {
   font-size: 2.5rem;
   color: #1b4a58;
   letter-spacing: 1px;
 }
-
+ 
 #user-email {
   margin-top: 8px;
   font-size: 1rem;
   color: #666;
 }
-
+ 
 /* Logout Button */
 #logout-btn {
   margin-top: 20px;
@@ -54,11 +54,11 @@ header h1 {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
+ 
 #logout-btn:hover {
   background-color: #1b4a58;
 }
-
+ 
 /* Grid Layout */
 .card-grid {
   display: grid;
@@ -66,7 +66,7 @@ header h1 {
   gap: 24px;
   margin-bottom: 40px;
 }
-
+ 
 /* Card Styles */
 .card {
   background-color: #ffffff;
@@ -77,35 +77,103 @@ header h1 {
   cursor: pointer;
   text-align: center;
 }
-
+ 
 .card:hover {
   transform: translateY(-6px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .card h2 {
   font-size: 1.3rem;
   color: #246071;
   margin-bottom: 10px;
 }
-
+ 
 .card p {
   font-size: 0.95rem;
   color: #555;
 }
-
+ 
 /* Saved Trips Card (outside grid) */
 main > .card {
   margin-top: 24px;
 }
-
+ 
 /* Responsive Padding */
 @media (max-width: 600px) {
   body {
     padding: 20px 10px;
   }
-
+ 
   header h1 {
     font-size: 2rem;
   }
+}
+ 
+/* Sidebar Styles */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px; /* Hidden by default */
+  width: 250px;
+  height: 100%;
+  background-color: #1b4a58;
+  color: white;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+  z-index: 1000;
+}
+ 
+#sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+ 
+#sidebar ul li {
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+ 
+#sidebar ul li a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  font-weight: 500;
+}
+ 
+#sidebar ul li a:hover {
+  background-color: #246071;
+}
+ 
+/* Hamburger Button */
+#hamburger {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  z-index: 1100;
+  color: #1b4a58;
+}
+ 
+#hamburger:focus {
+  outline: none;
+}
+ 
+/* When sidebar is active */
+#sidebar.active {
+  left: 0;
+}
+ 
+#close-sidebar {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
 }

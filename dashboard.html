@@ -8,13 +8,31 @@
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
+ <!-- Sidebar -->
+<div id="sidebar">
+  <button id="close-sidebar">&times;</button> <!-- Close Button -->
+  <ul>
+    <li><a href="profile.html">User Profile</a></li> <!-- Added this line -->
+    <li><a href="trip-planner.html">Trip Planner</a></li>
+    <li><a href="expenses.html">Expense Tracker</a></li>
+    <li><a href="health.html">Health & Fitness</a></li>
+    <li><a href="tips.html">Smart Travel Tips</a></li>
+    <li><a href="food.html">Food Finder</a></li>
+    <li><a href="weather.html">Weather</a></li>
+    <li><a href="saved_trips.html">Saved Trips</a></li>
+  </ul>
+</div>
+ 
+  <!-- Hamburger Button -->
+  <button id="hamburger">&#9776;</button>
+ 
   <div class="dashboard-container">
     <header>
       <h1 class="logo">Travique</h1>
       <p id="user-email">Loading...</p>
       <button id="logout-btn">Logout</button>
     </header>
-
+ 
     <main>
       <div class="card-grid">
         <div class="card" onclick="location.href='trip-planner.html'">
@@ -48,7 +66,22 @@
       </div>
     </main>
   </div>
-
+ 
+  <!-- Toggle Sidebar Script -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('close-sidebar');
+ 
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+ 
+    closeSidebar.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+    });
+  </script>
+ 
   <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>

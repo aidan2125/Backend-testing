@@ -2,47 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Travique - Live Weather</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
   <link rel="stylesheet" href="css/weather.css" />
 </head>
 <body>
-  <header class="landing-header">
-    <nav>
-      <h1 class="logo">Travique</h1>
-      
-    </nav>
-  </header>
-
-  <section class="hero">
-    <h2>Live Weather Forecast</h2>
-    <p>Check the latest weather for your travel destinations.</p>
-    <a href="dashboard.html" class="btn main-cta">Back to Dashboard</a>
-  </section>
-
-  <section class="weather-section">
-    <form class="weatherForm">
-      <input type="text" id="cityInput" placeholder="Enter City" required />
-      <button id="searchButton" type="button">Get Weather</button>
-    </form>
-
-    <div class="weather-display">
-      <h2 id="cityName"></h2>
-      <p id="temperature"></p>
-      <p id="description"></p>
-      <p id="humidity"></p>
+  <div class="weather-app">
+    <div class="current-weather">
+      <h1 id="cityName">Loading...</h1>
+      <div id="temperature">--°C</div>
+      <div id="description">Condition: --</div>
+      <div id="humidity">Humidity: --%</div>
     </div>
 
-    <div class="forecast-container">
-      <!-- Forecast will be inserted here -->
+    <div class="search-section">
+      <input type="text" id="cityInput" placeholder="Enter city..." />
+      <button id="searchButton">Search</button>
     </div>
 
-    <ul id="cityListContainer"></ul>
-  </section>
+    <ul id="cityListContainer" class="city-list"></ul>
 
-  <footer>
-    <p>&copy; 2025 Travique. All rights reserved.</p>
-  </footer>
+    <div class="weather-section">
+      <!-- Forecast cards will be injected here -->
+    </div>
+  </div>
 
   <script src="js/weather.js"></script>
 </body>
