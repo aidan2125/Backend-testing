@@ -11,25 +11,30 @@ document.getElementById('signup-form')?.addEventListener('submit', async (e) => 
   const name = document.getElementById('name').value.trim();
   const surname = document.getElementById('surname').value.trim();
   const phone = document.getElementById('phone').value.trim();
-  const location = document.getElementById('location').value.trim();
+
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: 'user@example.com',
-    password: 'userpassword'
-  });
-  
+  const { data, error } = await supabase.auth.signUp({
+  email,
+  password
+});
 
-  if (signupError) {
-    alert('Signup failed: ' + signupError.message);
+  if(phone.length < 10) {
+    alert('Phone number must be at least 10 digits long.');
     return;
   }
+
+  if (error) {
+  alert('Signup failed: ' + error.message);
+  return;
+}
+
 
   const userID = data?.user?.id;
 
   const { error: profileError } = await supabase.from('signup').insert([{
-    profileID: user.user.id,
+    profileID: userID,
     name,
     surname,
     phone_number: phone,

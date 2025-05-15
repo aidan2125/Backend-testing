@@ -8,6 +8,7 @@ const supabase = createClient(
 const tripsContainer = document.getElementById('trips-container');
 
 async function loadSavedTrips() {
+  // Check for logged-in user
   const { data: { user }, error: userError } = await supabase.auth.getUser();
 
   if (userError || !user) {
@@ -15,7 +16,7 @@ async function loadSavedTrips() {
     return;
   }
 
-  // Get profile ID
+  // Get profile ID based on email
   const { data: profileRow, error: profileError } = await supabase
     .from('signup')
     .select('profileID')
@@ -29,20 +30,36 @@ async function loadSavedTrips() {
 
   const profileID = profileRow.profileID;
 
-  // Get trips
+  // Get all trips for the user
   const { data: trips, error: tripsError } = await supabase
     .from('trip_planner')
     .select('*')
     .eq('profileID', profileID);
 
-  if (tripsError || trips.length === 0) {
+  if (tripsError || !trips || trips.length === 0) {
     tripsContainer.innerHTML = '<p>You have no saved trips yet.</p>';
     return;
   }
 
-  tripsContainer.innerHTML = ''; // clear loading
+  tripsContainer.innerHTML = ''; // Clear loading indicator
 
-  trips.forEach(trip => {
+  // 🔄 Fetch expenses for each trip and merge into trip data
+  const tripsWithExpenses = await Promise.all(
+    trips.map(async (trip) => {
+      const { data: expenses, error: expensesError } = await supabase
+        .from('expenses')
+        .select('*')
+        .eq('trip_id', trip.trip_id);
+
+      return {
+        ...trip,
+        expenses: expenses || [],
+      };
+    })
+  );
+
+  // 💡 Render each trip card including expense info
+  tripsWithExpenses.forEach(trip => {
     const tripCard = document.createElement('div');
     tripCard.className = 'trip-card';
     tripCard.innerHTML = `
@@ -50,24 +67,37 @@ async function loadSavedTrips() {
       <p><strong>Start:</strong> ${trip.start_date?.split('T')[0]}</p>
       <p><strong>End:</strong> ${trip.end_date?.split('T')[0]}</p>
       <p><strong>Activities:</strong> ${trip.activities?.join(', ') || 'None'}</p>
+      <p><strong>Total Expenses:</strong> ${trip.expenses.length}</p>
       <button class="details-btn">🔍 Details</button>
       <button class="delete-btn" data-id="${trip.trip_id}">🗑 Delete</button>
     `;
 
-    // Show modal on click
+    // 🧾 Show detailed modal with expenses
     tripCard.querySelector('.details-btn').addEventListener('click', () => {
       document.getElementById('modal-destination').textContent = `Trip to ${trip.destination}`;
       document.getElementById('modal-start').textContent = trip.start_date?.split('T')[0];
       document.getElementById('modal-end').textContent = trip.end_date?.split('T')[0];
       document.getElementById('modal-activities').textContent = trip.activities?.join(', ') || 'None';
-      document.getElementById('modal-notes').textContent = trip.notes || 'N/A';
+
+      // 📋 Format expense list in modal
+      const expensesList = trip.expenses.length > 0
+        ? trip.expenses.map(exp => `
+            <li>${exp.name}: ${exp.amount} ${exp.currency || ''} (${exp.category || 'Uncategorized'})</li>
+          `).join('')
+        : '<li>No expenses yet.</li>';
+
+      document.getElementById('modal-notes').innerHTML = `
+        <strong>Expenses:</strong>
+        <ul>${expensesList}</ul>
+      `;
+
       document.getElementById('trip-modal').style.display = 'block';
     });
 
     tripsContainer.appendChild(tripCard);
   });
 
-  // Delete trip
+  // 🗑 Delete trip
   document.querySelectorAll('.delete-btn').forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const tripId = e.target.getAttribute('data-id');
@@ -85,9 +115,10 @@ async function loadSavedTrips() {
   });
 }
 
-// Close modal
+// ❌ Close modal handler
 document.getElementById('close-modal').addEventListener('click', () => {
   document.getElementById('trip-modal').style.display = 'none';
 });
 
+// 🚀 Load all data
 loadSavedTrips();

@@ -1,83 +1,81 @@
-import { getCurrentUser, getUserTrips, supabase } from './auth.js'; // Import your helper functions
+import { getCurrentUser, supabase } from './auth.js'; // Your auth helpers
 
 const form = document.getElementById('expense-form');
 const list = document.getElementById('expense-list');
 const totalAmount = document.getElementById('total-amount');
 
+const convertAmount = document.getElementById('convert-amount');
+const fromCurrency = document.getElementById('from-currency');
+const toCurrency = document.getElementById('to-currency');
+const convertedResult = document.getElementById('converted-result');
+const convertBtn = document.getElementById('convert-btn');
+
 let expenses = [];
 
-// Fetch the most recent trip for the logged-in user or return null if no trip exists
+// Fetch the most recent trip for the logged-in user or null if none
 const getDefaultTripId = async (profileID) => {
   const { data, error } = await supabase
-    .from('trip_planner')  // Correct table name where trips are stored
-    .select('trip_id')  // Fetch trip_id
-    .eq('profileID', profileID)  // Filter by logged-in user's profileID
-    .order('start_date', { ascending: false })  // Order by most recent trip (latest start_date)
-    .limit(1);  // Only get the most recent trip
+    .from('trip_planner')
+    .select('trip_id')
+    .eq('profileID', profileID)
+    .order('start_date', { ascending: false })
+    .limit(1);
 
   if (error) {
     console.error('Error fetching trip:', error);
-    return null;  // No trip found
+    return null;
   }
 
-  if (data.length > 0) {
-    return data[0].trip_id;  // Return the trip_id of the most recent trip
-  }
-
-  return null;  // No trips available
+  return data.length > 0 ? data[0].trip_id : null;
 };
 
-// Function to submit expense, automatically associate with trip if available
+// Add Expense Form Submit Handler
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  // Get expense details from the form
-  const name = document.getElementById('expense-name').value;
+  const name = document.getElementById('expense-name').value.trim();
   const amount = parseFloat(document.getElementById('expense-amount').value);
   const category = document.getElementById('expense-category').value;
-  const currency = document.getElementById('expense-currency')?.value || 'USD';
-  const nativeAmount = parseFloat(document.getElementById('expense-nativeamount')?.value || amount);
-  const location = document.getElementById('expense-location')?.value || '';
-  const date = document.getElementById('expense-date')?.value || new Date().toISOString();
+  const location = document.getElementById('expense-location').value.trim() || '';
+  const date = document.getElementById('expense-date').value || new Date().toISOString();
 
-  // Automatically fetch the trip_id for the logged-in user
-  const user = await getCurrentUser();  // Fetch user first
-  if (!user) return;
+  const user = await getCurrentUser();
+  if (!user) {
+    alert('Please log in to add expenses.');
+    return;
+  }
 
-  const tripId = await getDefaultTripId(user.profileID);  // Automatically fetch the most recent trip
+  const tripId = await getDefaultTripId(user.profileID);
 
   if (!name || isNaN(amount)) {
     alert('Please enter a valid expense name and amount.');
     return;
   }
 
-  // Insert expense into Supabase, automatically associating with the trip_id if available
   const { data, error } = await supabase
-    .from('expenses')  // Correct table name
+    .from('expenses')
     .insert([{
       name,
       amount,
       category,
-      currency,
-      nativeamount: nativeAmount,
       location,
       date,
-      trip_id:tripId || null,  // Automatically set trip_id (null if no trip)
-      profileID: user.profileID  // Associate expense with the correct profileID
+      trip_id: tripId || null,
+      profileID: user.profileID
     }]);
 
   if (error) {
     console.error('Insert error:', error);
+    alert('Failed to add expense.');
     return;
   }
 
-  
-  expenses.push(data[0]);  // Add inserted expense to local array
-  renderExpenses();  // Re-render expenses
-  form.reset();  // Reset the form
+  expenses.push(data[0]);
+  renderExpenses();
+  form.reset();
 });
 
-// Function to render expenses
+// Render Expenses List + Total
 function renderExpenses() {
   list.innerHTML = '';
   let total = 0;
@@ -87,7 +85,6 @@ function renderExpenses() {
 
     const div = document.createElement('div');
     div.classList.add('expense-item');
-
     div.innerHTML = `
       <strong>${item.name}</strong> ($${item.amount.toFixed(2)}) - ${item.category}
       <button onclick="deleteExpense(${index})">❌</button>
@@ -98,19 +95,50 @@ function renderExpenses() {
   totalAmount.textContent = total.toFixed(2);
 }
 
-// Optional: Add delete functionality for expenses
+// Delete expense by index
 window.deleteExpense = async (index) => {
-  const { id } = expenses[index];
+  const expense = expenses[index];
+  if (!expense) return;
 
   const { error } = await supabase
-    .from('expenses')  // Correct table name
+    .from('expenses')
     .delete()
-    .eq('id', id);  // Correct field name for expense id
+    .eq('id', expense.id);
 
   if (!error) {
     expenses.splice(index, 1);
     renderExpenses();
   } else {
-    console.error('Failed to delete:', error);
+    console.error('Failed to delete expense:', error);
   }
 };
+
+// Currency Converter Logic
+convertBtn.addEventListener('click', async (e) => {
+  e.preventDefault();
+
+  const amount = parseFloat(convertAmount.value);
+  const from = fromCurrency.value;
+  const to = toCurrency.value;
+
+  if (isNaN(amount) || !from || !to) {
+    convertedResult.textContent = 'Please enter valid amount and select currencies.';
+    return;
+  }
+
+try {
+  const response = await fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`);
+  const result = await response.json();
+
+  console.log("Conversion API result:", result); // Add this line
+
+  if (result && typeof result.result === 'number') {
+    convertedResult.textContent = `${amount} ${from} = ${result.result.toFixed(2)} ${to}`;
+  } else {
+    convertedResult.textContent = 'Conversion failed.';
+  }
+} catch (err) {
+  console.error('Conversion error:', err);
+  convertedResult.textContent = 'Error fetching rates.';
+}
+});

@@ -1,36 +1,137 @@
- .health-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    background-color: #f8f9fa;
-    border-radius: 12px;
+/* healthtips.css */
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+  background-color: #f9fafb;
+  color: #1f2937;
+  line-height: 1.6;
+}
+
+.health-tips-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #111827;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.destination-selector {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.destination-selector label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.destination-selector select {
+  padding: 0.6rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #ffffff;
+  transition: border 0.2s;
+}
+
+.destination-selector select:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+.tips-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tip-section {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background-color: #f3f4f6;
+}
+
+.tip-section h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #1f2937;
+}
+
+.tip-section ul {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+}
+
+.tip-section li {
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+.source-link {
+  margin-left: 0.3rem;
+  font-size: 0.95rem;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.source-link:hover {
+  text-decoration: underline;
+}
+
+.resources {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.resources h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.resources ul {
+  padding-left: 1.25rem;
+}
+
+.resources li {
+  margin-bottom: 0.75rem;
+}
+
+.resources a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.resources a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .health-tips-container {
+    padding: 1.5rem 1rem;
   }
-  
-  .health-tips-container h2 {
-    text-align: center;
-    color: #246071;
-    margin-bottom: 1rem;
+
+  h2 {
+    font-size: 1.5rem;
   }
-  
-  .tip-section {
-    margin-bottom: 1.5rem;
-    background: #ffffff;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
-  }
-  
+
   .tip-section h3 {
-    color: #333;
-    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
   }
-  
-  .tip-section ul {
-    list-style-type: none;
-    padding-left: 1rem;
-  }
-  
-  .tip-section li {
-    margin-bottom: 0.5rem;
-  }
-  
+}
