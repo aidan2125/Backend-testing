@@ -6,31 +6,34 @@
   <title>Travique | Dashboard</title>
   <link rel="stylesheet" href="css/dashboard.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
- <!-- Sidebar -->
-<div id="sidebar">
-  <button id="close-sidebar">&times;</button> <!-- Close Button -->
-  <ul>
-    <li><a href="profile.html">User Profile</a></li> <!-- Added this line -->
-    <li><a href="trip-planner.html">Trip Planner</a></li>
-    <li><a href="expenses.html">Expense Tracker</a></li>
-    <li><a href="health.html">Health & Fitness</a></li>
-    <li><a href="tips.html">Smart Travel Tips</a></li>
-    <li><a href="food.html">Food Finder</a></li>
-    <li><a href="weather.html">Weather</a></li>
-    <li><a href="saved_trips.html">Saved Trips</a></li>
-  </ul>
-</div>
- 
   <!-- Hamburger Button -->
   <button id="hamburger">&#9776;</button>
+ 
+  <!-- User Profile Area -->
+  <div class="user-profile-area">
+    <div class="profile-pic">
+      <img src="img/default-avatar.png" alt="Profile" id="profile-image">
+    </div>
+    <p id="user-email">Loading...</p>
+  </div>
+ 
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <button id="close-sidebar">&times;</button>
+    <ul>
+      <li><a href="profile.html"><i class="fas fa-user"></i> User Profile</a></li>
+      <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+      <li><a href="help.html"><i class="fas fa-question-circle"></i> Help</a></li>
+      <li id="logout-container"><button id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
+    </ul>
+  </div>
  
   <div class="dashboard-container">
     <header>
       <h1 class="logo">Travique</h1>
-      <p id="user-email">Loading...</p>
-      <button id="logout-btn">Logout</button>
     </header>
  
     <main>
@@ -75,13 +78,28 @@
  
     hamburger.addEventListener('click', () => {
       sidebar.classList.toggle('active');
+      // Hide hamburger when sidebar is active
+      hamburger.style.display = 'none';
     });
  
     closeSidebar.addEventListener('click', () => {
       sidebar.classList.remove('active');
+      // Show hamburger when sidebar is closed
+      hamburger.style.display = 'flex';
+    });
+ 
+    // If user clicks outside sidebar, close it and show hamburger
+    document.addEventListener('click', (e) => {
+      if (sidebar.classList.contains('active') &&
+          !sidebar.contains(e.target) &&
+          e.target !== hamburger) {
+        sidebar.classList.remove('active');
+        hamburger.style.display = 'flex';
+      }
     });
   </script>
  
   <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>
+ 

@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.7",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "tailwindcss": "^4.1.7"
   }
 }

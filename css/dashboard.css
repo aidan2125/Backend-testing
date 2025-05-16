@@ -1,5 +1,5 @@
 /* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
  
 * {
   margin: 0;
@@ -7,15 +7,29 @@
   box-sizing: border-box;
 }
  
+:root {
+  --primary: #246071;
+  --primary-dark: #1b4a58;
+  --primary-light: #e6f3f7;
+  --accent: #ff8c42;
+  --text-dark: #333;
+  --text-light: #666;
+  --background: #f7fbff;
+  --white: #ffffff;
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+ 
 body {
   font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(135deg, #e6f4f1, #ffffff);
-  color: #333;
+  background: linear-gradient(135deg, var(--primary-light), var(--white));
+  color: var(--text-dark);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   padding: 40px 20px;
+  position: relative;
 }
  
 /* Container */
@@ -32,31 +46,45 @@ header {
  
 header h1 {
   font-size: 2.5rem;
-  color: #1b4a58;
+  color: var(--primary-dark);
   letter-spacing: 1px;
+  font-weight: 700;
+}
+ 
+/* User Profile Area */
+.user-profile-area {
+  position: fixed;
+  top: 20px;
+  right: 80px;
+  display: flex;
+  align-items: center;
+  z-index: 990;
+}
+ 
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+  border: 2px solid var(--white);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+ 
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
  
 #user-email {
-  margin-top: 8px;
-  font-size: 1rem;
-  color: #666;
-}
- 
-/* Logout Button */
-#logout-btn {
-  margin-top: 20px;
-  padding: 10px 24px;
-  background-color: #246071;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
- 
-#logout-btn:hover {
-  background-color: #1b4a58;
+  font-size: 0.9rem;
+  color: var(--primary-dark);
+  font-weight: 500;
+  background-color: var(--white);
+  padding: 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
 }
  
 /* Grid Layout */
@@ -69,9 +97,9 @@ header h1 {
  
 /* Card Styles */
 .card {
-  background-color: #ffffff;
+  background-color: var(--white);
   border-radius: 16px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow);
   padding: 24px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -85,13 +113,14 @@ header h1 {
  
 .card h2 {
   font-size: 1.3rem;
-  color: #246071;
+  color: var(--primary);
   margin-bottom: 10px;
+  font-weight: 600;
 }
  
 .card p {
   font-size: 0.95rem;
-  color: #555;
+  color: var(--text-light);
 }
  
 /* Saved Trips Card (outside grid) */
@@ -99,29 +128,53 @@ main > .card {
   margin-top: 24px;
 }
  
-/* Responsive Padding */
-@media (max-width: 600px) {
-  body {
-    padding: 20px 10px;
-  }
+/* Hamburger Button */
+#hamburger {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--white);
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1100;
+  color: var(--primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+}
  
-  header h1 {
-    font-size: 2rem;
-  }
+#hamburger:focus {
+  outline: none;
+}
+ 
+#hamburger:hover {
+  background-color: var(--primary);
+  color: var(--white);
 }
  
 /* Sidebar Styles */
 #sidebar {
   position: fixed;
   top: 0;
-  left: -250px; /* Hidden by default */
-  width: 250px;
+  right: -280px; /* Hidden by default */
+  width: 280px;
   height: 100%;
-  background-color: #1b4a58;
+  background-color: var(--primary-dark);
   color: white;
   padding-top: 60px;
-  transition: left 0.3s ease;
+  transition: right 0.3s ease;
   z-index: 1000;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+}
+ 
+#sidebar.active {
+  right: 0; /* Show when active */
 }
  
 #sidebar ul {
@@ -131,7 +184,7 @@ main > .card {
  
 #sidebar ul li {
   padding: 15px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
  
 #sidebar ul li a {
@@ -139,41 +192,95 @@ main > .card {
   text-decoration: none;
   display: block;
   font-weight: 500;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+ 
+#sidebar ul li a i {
+  margin-right: 10px;
+  font-size: 1.1rem;
 }
  
 #sidebar ul li a:hover {
-  background-color: #246071;
-}
- 
-/* Hamburger Button */
-#hamburger {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  z-index: 1100;
-  color: #1b4a58;
-}
- 
-#hamburger:focus {
-  outline: none;
-}
- 
-/* When sidebar is active */
-#sidebar.active {
-  left: 0;
+  padding-left: 5px;
+  color: var(--accent);
 }
  
 #close-sidebar {
   background: none;
   border: none;
   color: white;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   position: absolute;
-  top: 10px;
+  top: 15px;
   right: 15px;
   cursor: pointer;
+  transition: var(--transition);
 }
+ 
+#close-sidebar:hover {
+  color: var(--accent);
+  transform: rotate(90deg);
+}
+ 
+/* Logout Button */
+#logout-container {
+  margin-top: 20px;
+}
+ 
+#logout-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+#logout-btn i {
+  margin-right: 8px;
+}
+ 
+#logout-btn:hover {
+  background-color: #ff7a29;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
+}
+ 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-profile-area {
+    right: 70px;
+  }
+ 
+  #user-email {
+    display: none;
+  }
+ 
+  header h1 {
+    font-size: 2rem;
+  }
+}
+ 
+@media (max-width: 600px) {
+  body {
+    padding: 20px 10px;
+  }
+ 
+  .user-profile-area {
+    right: 60px;
+  }
+ 
+  #sidebar {
+    width: 260px;
+  }
+}
+ 

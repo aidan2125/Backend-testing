@@ -2,29 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Weather App</title>
-  <link rel="stylesheet" href="css/weather.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fullscreen Weather App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Dynamic sky background classes */
+    body {
+      transition: background 1s ease;
+      margin: 0;
+      padding: 0;
+    }
+    body.clear-day { background: linear-gradient(to top, #87CEEB, #FFD93B); }
+    body.clear-night { background: linear-gradient(to top, #001848, #0a2a66); }
+    body.clouds { background: linear-gradient(to top, #757f9a, #d7dde8); color: #333; }
+    body.rain { background: linear-gradient(to top, #4b6cb7, #182848); }
+    body.snow { background: linear-gradient(to top, #83a4d4, #b6fbff); color: #222; }
+    body.thunderstorm { background: linear-gradient(to top, #373b44, #4286f4); }
+    body.mist, body.fog { background: linear-gradient(to top, #606c88, #3f4c6b); }
+
+    .forecast-container::-webkit-scrollbar { display: none; }
+    .forecast-container { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
-<body>
-  <div class="weather-app">
-    <div class="current-weather">
-      <h1 id="cityName">Loading...</h1>
-      <div id="temperature">--°C</div>
-      <div id="description">Condition: --</div>
-      <div id="humidity">Humidity: --%</div>
+<body class="min-h-screen w-screen flex items-center justify-center font-sans">
+  <div class="w-full h-full p-6">
+    <!-- Header: Current Weather Info -->
+    <header class="text-center mb-6">
+      <h1 id="cityName" class="text-4xl font-bold text-white">Loading...</h1>
+      <div id="temperature" class="text-6xl font-extrabold mt-2 text-white">--°C</div>
+      <div id="description" class="text-2xl mt-1 text-white">Condition: --</div>
+      <div id="humidity" class="text-xl mt-1 text-white">Humidity: --%</div>
+      <div id="weatherIcon" class="mx-auto w-24 h-24 mt-4"></div>
+    </header>
+
+    <!-- Search Section -->
+    <div class="search-section flex gap-4 mb-4">
+      <input type="text" id="cityInput" placeholder="Enter city..." autocomplete="off"
+             class="flex-1 p-3 rounded-lg text-black outline-none shadow-inner">
+      <button id="searchButton" class="px-6 py-3 bg-white/30 hover:bg-white/50 transition rounded-lg font-bold text-white">
+        Search
+      </button>
     </div>
 
-    <div class="search-section">
-      <input type="text" id="cityInput" placeholder="Enter city..." />
-      <button id="searchButton">Search</button>
-    </div>
+    <!-- Saved Cities -->
+    <ul id="cityListContainer" class="flex gap-3 mb-4 overflow-x-auto text-white"></ul>
 
-    <ul id="cityListContainer" class="city-list"></ul>
+    <!-- Forecast Container -->
+    <div class="forecast-container flex gap-4 overflow-x-auto text-white"></div>
+    <!-- Forecast Container fixed at bottom and spread evenly -->
+<div class="forecast-container fixed bottom-0 left-0 w-full px-6 py-4 bg-black/30 backdrop-blur-md flex justify-between gap-4 text-white z-50">
+  <!-- Forecast items will be dynamically inserted here -->
+</div>
 
-    <div class="weather-section">
-      <!-- Forecast cards will be injected here -->
-    </div>
   </div>
 
   <script src="js/weather.js"></script>
