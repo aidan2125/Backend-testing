@@ -2,16 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nearby Food Recommendations</title>
-  <link rel="stylesheet" href="css/food.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nearby Food Finder</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      height: 60vh;
+      width: 100%;
+    }
+    #results {
+      padding: 10px;
+      max-height: 35vh;
+      overflow-y: auto;
+      border-top: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Nearby Food Spots</h1>
-    <p>Finding great places to eat near you...</p>
-    <div id="results"></div>
-  </div>
+  <h1>Find Nearby Food Places</h1>
+  <div id="map"></div>
+  <div id="results"><p>Loading map...</p></div>
+
+  <!-- Your custom script -->
   <script src="js/food.js"></script>
+
+  <!-- Google Maps JS API -->
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvI8oz4lpujGMNdk28vTHf6useyP8a9tc&libraries=places&callback=initMap&v=weekly"
+    async
+    defer
+  ></script>
 </body>
 </html>
