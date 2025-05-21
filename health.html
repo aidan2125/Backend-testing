@@ -8,9 +8,18 @@
   <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body>
-  <div id="root"></div>
+<body class="health-page">
+  <div class="top-bar">
+    <h2>Health & Wellness Tips</h2>
+    <button class="back-btn" onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </button>
+  </div>
+  <main>
+    <div id="root"></div>
+  </main>
   <script type="text/babel">
     const healthTips = {
       General: [
@@ -19,6 +28,13 @@
         { tip: "Get 7–8 hours of sleep to stay alert during travel.", category: "Mental Wellness", source: "General" },
         { tip: "Ensure routine vaccinations (e.g., MMR, flu) are up-to-date.", category: "Vaccinations", source: "CDC" },
         { tip: "Carry travel health insurance for medical emergencies.", category: "Safety", source: "GOV.UK" },
+        { tip: "Keep a copy of important documents (passport, visa, insurance) in a separate place.", category: "Safety", source: "General" },
+        { tip: "Use insect repellent to prevent mosquito bites and reduce risk of diseases.", category: "Insect Protection", source: "CDC" },
+        { tip: "Avoid eating raw or undercooked food to prevent foodborne illnesses.", category: "Food Safety", source: "WHO" },
+        { tip: "Be aware of local emergency numbers and nearest medical facilities.", category: "Emergency Preparedness", source: "General" },
+        { tip: "Wear seat belts in vehicles and helmets when riding bikes or scooters.", category: "Transport Safety", source: "CDC" },
+        { tip: "Protect yourself from the sun with hats, sunglasses, and sunscreen.", category: "Sun Protection", source: "CDC" },
+        { tip: "Respect local customs and laws to avoid misunderstandings.", category: "Cultural Awareness", source: "General" }
       ],
       CapeTown: [
         { tip: "Use sunscreen and stay hydrated due to strong UV rays at the coast.", category: "Sun Protection", source: "CDC" },
@@ -32,46 +48,125 @@
         { tip: "Use insect repellent to prevent mosquito bites.", category: "Insect Protection", source: "CDC" },
         { tip: "Carry a list of local hospitals, as public medical care varies.", category: "Emergency Preparedness", source: "CDC" },
       ],
+      Pretoria: [
+        { tip: "Stay hydrated and use sunscreen, as Pretoria can be hot and sunny.", category: "Sun Protection", source: "CDC" },
+        { tip: "Be cautious of sudden thunderstorms in summer; avoid flooded areas.", category: "Weather Safety", source: "GOV.UK" },
+        { tip: "Use insect repellent to prevent mosquito bites, especially in warmer months.", category: "Insect Protection", source: "CDC" },
+        { tip: "Avoid walking alone at night and keep valuables secure to reduce risk of petty crime.", category: "Personal Safety", source: "Smartraveller" },
+        { tip: "Know the location of nearby hospitals and emergency services.", category: "Emergency Preparedness", source: "General" },
+      ],
+      KrugerNationalPark: [
+        { tip: "Take malaria prophylaxis before, during, and after your visit, especially in the rainy season (Nov–Mar).", category: "Malaria Prevention", source: "CDC" },
+        { tip: "Use insect repellent with DEET and wear long sleeves and pants to prevent mosquito and tick bites.", category: "Insect Protection", source: "CDC" },
+        { tip: "Drink only bottled or purified water; avoid ice in drinks.", category: "Hydration", source: "CDC" },
+        { tip: "Do not swim in rivers or lakes due to risk of bilharzia (schistosomiasis) and wildlife.", category: "Water Safety", source: "WHO" },
+        { tip: "Stay in your vehicle during game drives and follow park rules to avoid dangerous wildlife encounters.", category: "Wildlife Safety", source: "BHTP" },
+        { tip: "Carry a basic first aid kit and any personal medications, as medical facilities may be far.", category: "Emergency Preparedness", source: "General" },
+        { tip: "Protect yourself from the sun with hats, sunglasses, and sunscreen.", category: "Sun Protection", source: "CDC" },
+        { tip: "Drive cautiously and obey speed limits—wildlife may cross roads unexpectedly.", category: "Transport Safety", source: "BHTP" },
+      ],
+      Mpumalanga: [
+        { tip: "Take malaria prophylaxis if visiting Kruger National Park or lowveld areas, especially during rainy season (Nov–Mar).", category: "Malaria Prevention", source: "CDC" },
+        { tip: "Use insect repellent and wear long sleeves to prevent mosquito and tick bites.", category: "Insect Protection", source: "CDC" },
+        { tip: "Drink bottled or purified water, especially in rural or park areas.", category: "Hydration", source: "CDC" },
+        { tip: "Be cautious when driving—watch for wildlife and livestock on rural roads.", category: "Transport Safety", source: "BHTP" },
+        { tip: "Avoid swimming in rivers or lakes due to risk of bilharzia (schistosomiasis).", category: "Water Safety", source: "WHO" },
+        { tip: "Protect yourself from the sun with hats, sunglasses, and sunscreen.", category: "Sun Protection", source: "CDC" },
+      ],
+      Bloemfontein: [
+        { tip: "Stay hydrated and use sunscreen, as Bloemfontein can be hot and dry.", category: "Sun Protection", source: "CDC" },
+        { tip: "Be cautious of sudden thunderstorms in summer; avoid flooded areas.", category: "Weather Safety", source: "GOV.UK" },
+        { tip: "Use insect repellent to prevent mosquito bites, especially in warmer months.", category: "Insect Protection", source: "CDC" },
+        { tip: "Avoid walking alone at night and keep valuables secure to reduce risk of petty crime.", category: "Personal Safety", source: "Smartraveller" },
+        { tip: "Know the location of nearby hospitals and emergency services.", category: "Emergency Preparedness", source: "General" },
+      ],
+      AliwalNorth: [
+        { tip: "Use sunscreen and stay hydrated, as Aliwal North can be hot and sunny.", category: "Sun Protection", source: "CDC" },
+        { tip: "Drink bottled or purified water, especially in rural areas.", category: "Hydration", source: "CDC" },
+        { tip: "Be cautious of sudden thunderstorms in summer; avoid flooded areas.", category: "Weather Safety", source: "GOV.UK" },
+        { tip: "Use insect repellent to prevent mosquito bites, especially in warmer months.", category: "Insect Protection", source: "CDC" },
+        { tip: "Avoid walking alone at night and keep valuables secure to reduce risk of petty crime.", category: "Personal Safety", source: "Smartraveller" },
+        { tip: "Know the location of nearby hospitals and emergency services.", category: "Emergency Preparedness", source: "General" },
+      ],
+      Makhanda: [
+        { tip: "Stay hydrated and use sunscreen, as Makhanda can be hot and sunny.", category: "Sun Protection", source: "CDC" },
+        { tip: "Drink bottled or purified water, especially in rural areas.", category: "Hydration", source: "CDC" },
+        { tip: "Use insect repellent to prevent mosquito bites, especially in warmer months.", category: "Insect Protection", source: "CDC" },
+        { tip: "Be cautious of sudden thunderstorms in summer; avoid flooded areas.", category: "Weather Safety", source: "GOV.UK" },
+        { tip: "Avoid walking alone at night and keep valuables secure to reduce risk of petty crime.", category: "Personal Safety", source: "Smartraveller" },
+        { tip: "Certain areas in and around Makhanda may have higher crime rates—seek local advice and avoid poorly lit or isolated places, especially after dark.", category: "Personal Safety", source: "Smartraveller" },
+        { tip: "Know the location of nearby hospitals and emergency services.", category: "Emergency Preparedness", source: "General" },
+      ],
       EastLondon: [
         { tip: "Use sunscreen and stay hydrated due to strong UV rays at the coast.", category: "Sun Protection", source: "CDC" },
+        { tip: "Drink bottled or purified water, especially in rural or coastal areas.", category: "Hydration", source: "CDC" },
         { tip: "Eat at reputable restaurants to avoid foodborne illnesses.", category: "Food Safety", source: "Travel Doctor" },
-        { tip: "Swim in marked areas to avoid strong ocean currents.", category: "Water Safety", source: "BHTP" },
-        { tip: "Be cautious of petty theft at tourist spots like V&A Waterfront.", category: "Personal Safety", source: "Nomadic Matt" },
+        { tip: "Swim only in designated areas and heed lifeguard warnings to avoid strong ocean currents.", category: "Water Safety", source: "BHTP" },
+        { tip: "Use insect repellent to prevent mosquito bites, especially in warmer months.", category: "Insect Protection", source: "CDC" },
+        { tip: "Be cautious of petty theft at beaches and tourist spots; keep valuables secure.", category: "Personal Safety", source: "Nomadic Matt" },
+        { tip: "Know the location of nearby hospitals and emergency services.", category: "Emergency Preparedness", source: "General" },
       ],
       Gqeberha: [
         { tip: "Use sunscreen and stay hydrated due to strong UV rays at the coast.", category: "Sun Protection", source: "CDC" },
+        { tip: "Drink bottled or purified water, especially in rural or coastal areas.", category: "Hydration", source: "CDC" },
         { tip: "Eat at reputable restaurants to avoid foodborne illnesses.", category: "Food Safety", source: "Travel Doctor" },
-        { tip: "Swim in marked areas to avoid strong ocean currents.", category: "Water Safety", source: "BHTP" },
-        { tip: "Be cautious of petty theft at tourist spots like V&A Waterfront.", category: "Personal Safety", source: "Nomadic Matt" },
+        { tip: "Swim only in designated areas and heed lifeguard warnings to avoid strong ocean currents.", category: "Water Safety", source: "BHTP" },
+        { tip: "Use insect repellent to prevent mosquito bites, especially in warmer months.", category: "Insect Protection", source: "CDC" },
+        { tip: "Be cautious of petty theft at beaches and tourist spots; keep valuables secure.", category: "Personal Safety", source: "Nomadic Matt" },
+        { tip: "Know the location of nearby hospitals and emergency services.", category: "Emergency Preparedness", source: "General" },
       ],
       Durban: [
         { tip: "Use sunscreen and stay hydrated due to strong UV rays at the coast.", category: "Sun Protection", source: "CDC" },
+        { tip: "Drink bottled or purified water, especially in rural or coastal areas.", category: "Hydration", source: "CDC" },
         { tip: "Eat at reputable restaurants to avoid foodborne illnesses.", category: "Food Safety", source: "Travel Doctor" },
-        { tip: "Swim in marked areas to avoid strong ocean currents.", category: "Water Safety", source: "BHTP" },
-        { tip: "Be cautious of petty theft at tourist spots like V&A Waterfront.", category: "Personal Safety", source: "Nomadic Matt" },
-      ],
-      KrugerNationalPark: [
-        { tip: "Take malaria prophylaxis if visiting during rainy season (Nov–Mar).", category: "Malaria Prevention", source: "CDC" },
-        { tip: "Use insect repellent and wear long sleeves to avoid mosquito bites.", category: "Insect Protection", source: "Travel Doctor" },
-        { tip: "Stay in your vehicle during safaris unless guided.", category: "Wildlife Safety", source: "BHTP" },
-        { tip: "Drink bottled water, as tap water may be unsafe in remote areas.", category: "Hydration", source: "CDC" },
+        { tip: "Swim only in designated areas and heed lifeguard warnings to avoid strong ocean currents.", category: "Water Safety", source: "BHTP" },
+        { tip: "Use insect repellent to prevent mosquito bites, especially in warmer months.", category: "Insect Protection", source: "CDC" },
+        { tip: "Be cautious of petty theft at beaches and tourist spots; keep valuables secure.", category: "Personal Safety", source: "Nomadic Matt" },
+        { tip: "Know the location of nearby hospitals and emergency services.", category: "Emergency Preparedness", source: "General" },
       ],
     };
-
-    const destinations = ["General", "CapeTown", "Johannesburg", "KrugerNationalPark", "EastLondon", "Gqeberha", "Durban"];
-
+ 
+    const destinations = ["General", "CapeTown", "Johannesburg", "Pretoria", "KrugerNationalPark", "Mpumalanga", "Bloemfontein", "AliwalNorth", "Makhanda", "EastLondon", "Gqeberha", "Durban"];
+ 
     const HealthTips = () => {
       const [selectedDestination, setSelectedDestination] = React.useState("General");
-
+ 
       const handleDestinationChange = (e) => {
         setSelectedDestination(e.target.value);
       };
-
+ 
       const tips = healthTips[selectedDestination] || [];
-
+ 
+      // Function to get the appropriate Font Awesome icon and color for each category
+      const getCategoryIcon = (category) => {
+        switch (category) {
+          case "Hydration": return <i className="fas fa-tint" style={{ color: '#1E90FF' }}></i>;
+          case "Hygiene": return <i className="fas fa-soap" style={{ color: '#87CEEB' }}></i>;
+          case "Mental Wellness": return <i className="fas fa-brain" style={{ color: '#8A2BE2' }}></i>;
+          case "Vaccinations": return <i className="fas fa-syringe" style={{ color: '#DC143C' }}></i>;
+          case "Safety": return <i className="fas fa-shield-alt" style={{ color: '#696969' }}></i>;
+          case "Insect Protection": return <i className="fas fa-bug" style={{ color: '#228B22' }}></i>;
+          case "Food Safety": return <i className="fas fa-utensils" style={{ color: '#FF8C00' }}></i>;
+          case "Emergency Preparedness": return <i className="fas fa-first-aid" style={{ color: '#FF0000' }}></i>;
+          case "Transport Safety": return <i className="fas fa-car" style={{ color: '#000000' }}></i>;
+          case "Sun Protection": return <i className="fas fa-sun" style={{ color: '#FFD700' }}></i>;
+          case "Cultural Awareness": return <i className="fas fa-globe" style={{ color: '#008080' }}></i>;
+          case "Water Safety": return <i className="fas fa-swimmer" style={{ color: '#4169E1' }}></i>;
+          case "Personal Safety": return <i className="fas fa-user-shield" style={{ color: '#2F4F4F' }}></i>;
+          case "Altitude": return <i className="fas fa-mountain" style={{ color: '#8B4513' }}></i>;
+          case "Malaria Prevention": return <i className="fas fa-pills" style={{ color: '#FF69B4' }}></i>;
+          case "Wildlife Safety": return <i className="fas fa-paw" style={{ color: '#808000' }}></i>;
+          case "Weather Safety": return <i className="fas fa-cloud-rain" style={{ color: '#A9A9A9' }}></i>;
+          default: return <i className="fas fa-info-circle" style={{ color: '#000000' }}></i>;
+        }
+      };
+ 
       return (
         <div className="health-tips-container">
-          <h2>Health & Wellness Tips for Your Trip</h2>
+          <h2>
+            <span className="heading-icon"><i className="fas fa-heart-pulse"></i></span>
+            Health & Wellness Tips for Your Trip
+          </h2>
           <div className="destination-selector">
             <label htmlFor="destination">Select Destination: </label>
             <select id="destination" value={selectedDestination} onChange={handleDestinationChange}>
@@ -82,7 +177,7 @@
               ))}
             </select>
           </div>
-
+ 
           {tips.length > 0 ? (
             <div className="tips-wrapper">
               {Object.entries(
@@ -93,7 +188,10 @@
                 }, {})
               ).map(([category, categoryTips]) => (
                 <div key={category} className="tip-section">
-                  <h3>{category}</h3>
+                  <h3>
+                    <span className="category-icon">{getCategoryIcon(category)}</span>
+                    {category}
+                  </h3>
                   <ul>
                     {categoryTips.map((tip, index) => (
                       <li key={index}>
@@ -133,7 +231,7 @@
           ) : (
             <p>No health tips available for this destination. Please check back later or select another destination.</p>
           )}
-
+ 
           <div className="resources">
             <h3>Additional Resources</h3>
             <ul>
@@ -162,7 +260,7 @@
         </div>
       );
     };
-
+ 
     const root = ReactDOM.createRoot(document.getElementById("root"));
     root.render(<HealthTips />);
   </script>

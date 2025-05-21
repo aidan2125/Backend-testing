@@ -8,7 +8,7 @@ const convertAmount = document.getElementById('convert-amount');
 const fromCurrency = document.getElementById('from-currency');
 const toCurrency = document.getElementById('to-currency');
 const convertedResult = document.getElementById('converted-result');
-const convertBtn = document.getElementById('convert-btn');
+const convertBtn = document.getElementById('convertBtn');
 
 let expenses = [];
 
@@ -30,49 +30,50 @@ const getDefaultTripId = async (profileID) => {
 };
 
 // Add Expense Form Submit Handler
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('expense-category');
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-  const name = document.getElementById('expense-name').value.trim();
-  const amount = parseFloat(document.getElementById('expense-amount').value);
-  const category = document.getElementById('expense-category').value;
-  const location = document.getElementById('expense-location').value.trim() || '';
-  const date = document.getElementById('expense-date').value || new Date().toISOString();
+    const name = document.getElementById('expense-name').value.trim();
+    const amount = parseFloat(document.getElementById('expense-amount').value);
+    const category = document.getElementById('expense-category').value;
+    const location = document.getElementById('expense-location').value.trim() || '';
+    const date = document.getElementById('expense-date').value || new Date().toISOString();
 
-  const user = await getCurrentUser();
-  if (!user) {
-    alert('Please log in to add expenses.');
-    return;
-  }
+    const user = await getCurrentUser();
+    if (!user) {
+      alert('Please log in to add expenses.');
+      return;
+    }
 
-  const tripId = await getDefaultTripId(user.profileID);
+    const tripId = await getDefaultTripId(user.profileID);
 
-  if (!name || isNaN(amount)) {
-    alert('Please enter a valid expense name and amount.');
-    return;
-  }
+    if (!name || isNaN(amount)) {
+      alert('Please enter a valid expense name and amount.');
+      return;
+    }
 
-  const { data, error } = await supabase
-    .from('expenses')
-    .insert([{
-      name,
-      amount,
-      category,
-      location,
-      date,
-      trip_id: tripId || null,
-      profileID: user.profileID
-    }]);
+    const { data, error } = await supabase
+      .from('expenses')
+      .insert([{
+        name,
+        amount,
+        category,
+        location,
+        date,
+        trip_id: tripId || null,
+        profileID: user.profileID
+      }]);
 
-  if (error) {
-    console.error('Insert error:', error);
-    alert('Failed to add expense.');
-    return;
-  }
-
-  expenses.push(data[0]);
-  renderExpenses();
-  form.reset();
+    if (error) {
+      console.error('Insert error:', error);
+      alert('Failed to add expense.');
+    } else {
+      alert('Expense added successfully!');
+      form.reset(); // optional: reset form after submission
+    }
+  });
 });
 
 // Render Expenses List + Total

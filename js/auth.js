@@ -46,11 +46,17 @@ export const loginUser = async (email, password) => {
 // ✅ Sign up
 export const signupUser = async (email, password) => {
   const { data, error } = await supabase.auth.signUp({ email, password });
+
   if (error) {
     console.error('Sign-up error:', error.message);
-    return null;
+    return { user: null, message: 'Sign-up failed. Please try again.' };
   }
-  return data.user;
+
+  // User must verify email first
+  return {
+    user: null,
+    message: 'Sign-up successful! Please check your email to verify your account before logging in.',
+  };
 };
 
 // ✅ Logout

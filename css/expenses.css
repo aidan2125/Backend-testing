@@ -1,95 +1,461 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f9f9f9;
+/* This should be saved as expenses.css */
+ 
+:root {
+  --primary: #246071;
+  --primary-dark: #1b4a58;
+  --primary-light: #e6f3f7;
+  --accent: #ff8c42;
+  --text-dark: #333;
+  --text-light: #666;
+  --background: #f7fbff;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+  --danger: #e74c3c;
+  --warning: #f39c12;
+  --success: #2ecc71;
+  --money-opacity-light: 0.14;
+  --money-opacity-dark: 0.10;
+}
+ 
+* {
+  box-sizing: border-box;
+}
+ 
+body.expenses-page {
+  background-image: none;
+  background-color: var(--white);
   margin: 0;
-  padding: 2rem;
-  color: #333;
+  padding: 0;
+  color: var(--text-dark);
+  font-family: 'Quicksand', sans-serif;
+  min-height: 100vh;
+  position: relative;
 }
  
-.dashboard-container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+body.expenses-page::before {
+  content: none;
 }
  
-header {
+body.expenses-page::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 24 24' fill='none' stroke='rgba(36,96,113,0.14)' stroke-width='1'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M12 6v12M8 10h8M8 14h8'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='none' stroke='rgba(36,96,113,0.10)' stroke-width='1'%3E%3Cpath d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/%3E%3C/svg%3E");
+  background-size: 100px 100px, 80px 80px;
+  background-position: 0 0, 50px 50px;
+  pointer-events: none;
+  animation: floatAnimation 15s infinite ease-in-out;
+  will-change: background-position;
+}
+ 
+@keyframes floatAnimation {
+  0% {
+    background-position: 0 0, 50px 50px;
+    opacity: 0.5;
+  }
+  50% {
+    background-position: 10px -10px, 40px 60px;
+    opacity: 0.7;
+  }
+  100% {
+    background-position: 0 0, 50px 50px;
+    opacity: 0.5;
+  }
+}
+ 
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  body.expenses-page::after {
+    animation: none;
+  }
+}
+ 
+/* Print-specific styles */
+@media print {
+  body.expenses-page::after {
+    display: none;
+  }
+}
+ 
+/* Responsive background sizes */
+@media (max-width: 768px) {
+  body.expenses-page::after {
+    background-size: 70px 70px, 50px 50px;
+  }
+}
+ 
+/* Accessibility - visually hidden */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+ 
+input:focus,
+select:focus,
+button:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+ 
+/* Top Bar */
+.top-bar {
+  width: 100vw;
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 20px 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 4px solid var(--primary-dark);
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+ 
+.top-bar h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+ 
+.back-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background-color: var(--white);
+  color: var(--primary);
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+ 
+.back-btn i {
+  margin-right: 8px;
+}
+ 
+.back-btn:hover {
+  background-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
+}
+ 
+/* Dashboard */
+.dashboard-container {
+  border: 3px solid var(--primary);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 100px auto 40px;
+  max-width: 800px;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  min-height: 500px;
+  position: relative;
+  z-index: 1;
+}
+ 
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin: 6rem 1rem;
+    padding: 1rem;
+  }
+ 
+  .top-bar {
+    padding: 15px 1rem;
+  }
+ 
+  .back-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+ 
+header {
   margin-bottom: 2rem;
 }
  
 header h1 {
   font-size: 1.8rem;
   margin: 0;
+  color: var(--primary);
 }
  
-header button {
-  background-color: #eee;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
+.intro-section {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  color: var(--text-light);
 }
  
-header button:hover {
-  background-color: #ddd;
+/* Form Section */
+.form-section {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
 }
  
 form {
   display: grid;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
  
 form input,
-form select {
-  padding: 0.75rem;
+form select,
+.currency-converter input,
+.currency-converter select {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
+  background-color: var(--white);
+  color: var(--text-dark);
+  box-sizing: border-box;
+  transition: var(--transition);
 }
  
-form button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 0.75rem 1.5rem;
+form input:focus,
+form select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255, 140, 66, 0.2);
+}
+ 
+form label,
+.currency-converter label {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 0.4rem;
+  display: block;
+}
+ 
+.currency-converter fieldset {
   border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-weight: 500;
+  padding: 0;
+  margin: 0;
+}
+ 
+form button,
+#convert-button,
+#reset-button {
+  width: auto;
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: var(--transition);
+  margin-top: 1rem;
 }
  
-form button:hover {
-  background-color: #0056b3;
+#reset-button {
+  background-color: var(--accent);
+  margin-left: 0.5rem;
 }
  
+form button:hover,
+#convert-button:hover,
+#reset-button:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+}
+ 
+#reset-button:hover {
+  background-color: var(--primary);
+}
+ 
+/* Swap Currencies */
+.swap-currencies {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--primary);
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  transition: var(--transition);
+}
+ 
+.swap-currencies:hover {
+  color: var(--accent);
+  transform: rotate(180deg);
+}
+ 
+/* Error Message */
 .error-message {
   display: none;
   background-color: #ffe0e0;
-  color: #b30000;
+  color: var(--danger);
   padding: 1rem;
   margin-top: -1rem;
   margin-bottom: 1rem;
   border: 1px solid #ffaaaa;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
  
+/* Expense list styles */
 .expense-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0.75rem 1rem;
   margin-bottom: 0.5rem;
-  background-color: #f1f1f1;
-  border-radius: 6px;
+  background-color: var(--primary-light);
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+  transition: var(--transition);
+  animation: fadeIn 0.3s ease-out forwards;
+}
+ 
+.expense-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
  
 .expense-item strong {
   margin-right: 0.5rem;
+  color: var(--primary);
+}
+ 
+/* Category color coding */
+.expense-item[data-category="accommodation"] {
+  border-left: 4px solid #3498db;
+}
+ 
+.expense-item[data-category="food"] {
+  border-left: 4px solid #2ecc71;
+}
+ 
+.expense-item[data-category="entertainment"] {
+  border-left: 4px solid #9b59b6;
+}
+ 
+.expense-item[data-category="others"] {
+  border-left: 4px solid #e67e22;
+}
+ 
+/* Expense actions */
+.expense-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+ 
+.expense-actions button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: var(--transition);
+  font-size: 0.9rem;
+  padding: 0.2rem;
+}
+ 
+.expense-actions button:hover {
+  color: var(--accent);
+}
+ 
+/* Total amount display */
+.total-container {
+  background-color: var(--primary-light);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  text-align: center;
+}
+ 
+.total-container h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+ 
+#total-amount {
+  font-size: 1.8rem;
+  color: var(--primary-dark);
+  font-weight: bold;
+}
+ 
+/* Budget warning styles */
+.total-container.over-budget {
+  background-color: rgba(231, 76, 60, 0.1);
+  border: 1px solid var(--danger);
+}
+ 
+.total-container.over-budget #total-amount {
+  color: var(--danger);
+}
+ 
+.total-container.near-budget {
+  background-color: rgba(243, 156, 18, 0.1);
+  border: 1px solid var(--warning);
+}
+ 
+.total-container.near-budget #total-amount {
+  color: var(--warning);
+}
+ 
+/* Currency converter result */
+#result {
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-dark);
+  padding: 1rem;
+  background-color: var(--primary-light);
+  border-radius: 8px;
+  text-align: center;
+}
+ 
+/* Loading animation */
+#loading-container {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+ 
+.loader {
+  border: 3px solid var(--primary-light);
+  border-top: 3px solid var(--primary);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 0.5rem;
+}
+ 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+ 
+/* Animation for expense items */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

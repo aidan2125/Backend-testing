@@ -6,73 +6,91 @@
   <title>Travique | Expenses</title>
   <link rel="stylesheet" href="css/dashboard.css" />
   <link rel="stylesheet" href="css/expenses.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.0/milligram.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-<body>
+<body class="expenses-page">
+  <!-- CONTROL EXPENSES HEADER BAR -->
+  <div class="top-bar">
+    <h2>Control Expenses</h2>
+    <button class="back-btn" onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </button>
+  </div>
+ 
+  <!-- Dashboard container moved down with margin -->
   <div class="dashboard-container">
     <header>
       <h1>Expense Tracker</h1>
-      <button onclick="window.location.href='dashboard.html'">Back to Dashboard</button>
     </header>
-
+ 
     <main>
-      <!-- EXPENSE FORM -->
-      <form id="expense-form">
-        <input type="text" id="expense-name" placeholder="Expense Name" required />
-        <input type="number" id="expense-amount" placeholder="Amount" required />
-
-        <select id="expense-category">
-          <option value="transport">Transport</option>
-          <option value="food">Food</option>
-          <option value="stay">Accommodation</option>
-          <option value="fun">Entertainment</option>
-          <option value="other">Other</option>
-        </select>
-
-        <input type="text" id="expense-location" placeholder="Location (optional)" />
-        <input type="datetime-local" id="expense-date" placeholder="Date of Expense" />
-
-        <input type="hidden" id="trip-id" />
-        <input type="hidden" id="profile-id" />
-        <button type="submit">Add Expense</button>
-      </form>
-
-      <!-- EXPENSES TOTAL & LIST -->
-      <div id="expense-error" class="error-message"></div>
-      <div id="expense-list"></div>
-      <h3>Total Expenses: R<span id="total-amount">0</span></h3>
-
-      <!-- NEW CURRENCY CONVERTER BLOCK -->
+      <!-- INTRO TEXT -->
+      <section class="intro-section">
+        <p>Track and manage your expenses below. Stay on top of your budget during your travels.</p>
+      </section>
+ 
+      <!-- EXPENSE FORM SECTION -->
+      <section class="form-section">
+        <form id="expense-category">
+          <input type="text" id="expense-name" placeholder="Expense Name" required />
+          <input type="number" id="expense-amount" placeholder="Amount" required />
+ 
+          <select id="expense-category" name="category">
+            <option value="accommodation">Accommodation</option>
+            <option value="food">Food</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="others">Others</option>
+          </select>
+ 
+          <input type="text" id="expense-location" placeholder="Location (optional)" />
+          <input type="datetime-local" id="expense-date" placeholder="Date of Expense" />
+ 
+          <input type="hidden" id="trip-id" />
+          <input type="hidden" id="profile-id" />
+          <button type="submit">Add Expense</button>
+        </form>
+      </section>
+ 
+      <!-- EXPENSES TOTAL & LIST SECTION -->
+      <section class="list-section">
+        <div id="expense-error" class="error-message"></div>
+        <div id="expense-list"></div>
+        <div class="total-container">
+          <h3>Total Expenses: R<span id="total-amount"></span></h3>
+        </div>
+      </section>
+ 
+      <!-- CURRENCY CONVERTER SECTION -->
       <hr />
       <section class="currency-converter">
         <h2>Currency Converter</h2>
-        
+ 
         <form action="javascript:;" onsubmit="convert(event)">
           <fieldset>
             <label for="valueField">Amount</label>
             <input type="number" placeholder="0" id="valueField" required>
-            
+ 
             <label for="fromCurrency">From Currency</label>
             <select id="fromCurrency"></select>
-
+ 
             <label for="toCurrency">To Currency</label>
             <select id="toCurrency"></select>
-
-            <input id="convert-button" class="button-primary" type="submit" value="Convert">
+ 
+            <input id="convertBtn" class="button-primary" type="submit" value="Convert">
+            <button id="reset-button" type="button" onclick="resetConverter()">Reset</button>
           </fieldset>
           <div id="loading-container" style="display: none;">
             <div class="loader"></div>
-            <div>&nbsp;&nbsp;Calculating ...</div>
+            <div>Calculating ...</div>
           </div>
           <div id="result"></div>
         </form>
-        
       </section>
     </main>
   </div>
-
-  <script type="module" src="./js/auth.js"></script>
-  <script type="module" src="./js/expenses.js"></script>
-  <script src="./js/converter.js"></script> <!-- This is your new script -->
+ 
+  <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/expenses.js"></script>
+  <script src="js/converter.js"></script>
 </body>
 </html>

@@ -6,33 +6,44 @@
   <title>Travique | Trip Planner</title>
   <link rel="stylesheet" href="css/trip-planner.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <header class="planner-header">
     <h1 class="logo">Plan Your Trip</h1>
-    <button class="back-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
+    <button id="top-right-back-btn" class="back-btn" onclick="location.href='dashboard.html'">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </button>
   </header>
-
+ 
   <main>
     <section class="route-form">
       <input id="from-address" type="text" placeholder="Your current location" />
       <input id="to-address" type="text" placeholder="Destination" />
       <textarea id="activities" placeholder="Activities you plan to do (comma separated)"></textarea>
-
+ 
+      <!-- Trip Dates -->
+      <label for="trip-start">Trip Start Date:</label>
+      <input id="trip-start" type="date" />
+ 
+      <label for="trip-end">Trip End Date:</label>
+      <input id="trip-end" type="date" />
+ 
       <select id="travel-mode">
         <option value="DRIVING">Driving</option>
         <option value="TRANSIT">Public Transit</option>
         <option value="FLYING">Flying</option>
       </select>
-
-      <div class="btn-group">
-        <button id="route-btn">Get Route</button>
-        <button id="save-trip-btn">Save Trip</button>
-      </div>
+ 
+    <!-- Only relevant changes shown below -->
+<div class="btn-group">
+  <button id="route-btn">Get Route</button>
+  <button id="save-trip-btn">Save Trip</button>
+</div>
     </section>
-
+ 
     <div id="map"></div>
-
+ 
     <!-- Trip Summary Modal -->
     <div id="trip-summary-modal" class="modal hidden">
       <div class="modal-content">
@@ -40,14 +51,36 @@
         <p id="summary-text"></p>
         <div class="btn-group">
           <button id="confirm-save-btn">Confirm & Save</button>
-          <button onclick="document.getElementById('trip-summary-modal').classList.add('hidden')">Cancel</button>
+          <button onclick="document.getElementById('trip-summary-modal').style.display = 'none'">Cancel</button>
         </div>
       </div>
     </div>
   </main>
+ 
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvI8oz4lpujGMNdk28vTHf6useyP8a9tc&libraries=places&callback=initMap" async defer></script>
+  <script src="js/map.js"></script>
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap"
+  async
+  defer
+></script>
   <script type="module" src="js/trip.js"></script>
-  <script type="module" src="js/livelocation.js"></script>
+  <script type="module" src="js/liveLocation.js"></script>
+  <script>
+  document.getElementById('save-trip-btn')?.addEventListener('click', () => {
+    // Trigger the custom event used in map.js
+    document.dispatchEvent(new CustomEvent('saveTripRequested', {
+      detail: {
+        from: document.getElementById('from-address').value,
+        destination: document.getElementById('to-address').value,
+        travelMode: document.getElementById('travel-mode').value,
+        distance: 1000, // Replace with actual calculated distance
+        cost: 500,      // Replace with calculated cost
+        activities: document.getElementById('activities').value,
+      }
+    }));
+  });
+</script>
 </body>
 </html>
+

@@ -7,10 +7,13 @@ async function loadCurrencies() {
     const data = await response.json();
     exchangeRates = data.rates;
 
-    const currencySelects = [document.getElementById("fromCurrency"), document.getElementById("toCurrency")];
+    const currencySelects = [
+      document.getElementById("fromCurrency"),
+      document.getElementById("toCurrency"),
+    ];
 
-    Object.keys(exchangeRates).forEach(currency => {
-      currencySelects.forEach(select => {
+    Object.keys(exchangeRates).forEach((currency) => {
+      currencySelects.forEach((select) => {
         const option = document.createElement("option");
         option.value = currency;
         option.textContent = currency;
@@ -28,13 +31,16 @@ async function loadCurrencies() {
 
 async function convert(event) {
   event.preventDefault();
+
   const amount = parseFloat(document.getElementById("valueField").value) || 0;
   const fromCurrency = document.getElementById("fromCurrency").value;
   const toCurrency = document.getElementById("toCurrency").value;
 
-  document.getElementById("convert-button").setAttribute("disabled", "true");
+  const convertButton = document.getElementById("convertBtn");
+  convertButton.setAttribute("disabled", "true");
+
   document.getElementById("loading-container").style.display = "flex";
-  document.getElementById("result").innerText = '';
+  document.getElementById("result").innerText = "";
 
   if (!exchangeRates[fromCurrency] || !exchangeRates[toCurrency]) {
     document.getElementById("result").innerText = "Error fetching exchange rates.";
@@ -45,10 +51,25 @@ async function convert(event) {
     const conversionRate = exchangeRates[toCurrency] / exchangeRates[fromCurrency];
     const convertedAmount = (amount * conversionRate).toFixed(2);
 
-    document.getElementById("convert-button").removeAttribute("disabled");
+    convertButton.removeAttribute("disabled");
     document.getElementById("loading-container").style.display = "none";
     document.getElementById("result").innerText = `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`;
   }, 2000);
 }
 
-loadCurrencies();
+function resetConverter() {
+  document.getElementById("valueField").value = "";
+  document.getElementById("result").innerText = "";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadCurrencies();
+
+  const convertBtn = document.getElementById("convertBtn");
+  if (!convertBtn) {
+    console.error('Element with id "convertBtn" not found.');
+    return;
+  }
+
+  convertBtn.addEventListener("click", convert);
+});

@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+ 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen;
   background: linear-gradient(to top right, #1e3c72, #2a5298);
@@ -13,7 +13,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-
+ 
 .weather-app {
   width: 90%;
   max-width: 500px;
@@ -23,34 +23,34 @@ body {
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
-
+ 
 .current-weather {
   text-align: center;
   margin-bottom: 20px;
 }
-
+ 
 .current-weather h1 {
   font-size: 2rem;
 }
-
+ 
 #temperature {
   font-size: 3rem;
   font-weight: bold;
   margin-top: 10px;
 }
-
+ 
 #description,
 #humidity {
   font-size: 1.1rem;
   margin-top: 5px;
 }
-
+ 
 .search-section {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
 }
-
+ 
 .search-section input {
   flex: 1;
   padding: 10px;
@@ -58,7 +58,7 @@ body {
   border-radius: 10px;
   font-size: 1rem;
 }
-
+ 
 .search-section button {
   padding: 10px 15px;
   border: none;
@@ -68,29 +68,29 @@ body {
   cursor: pointer;
   font-weight: bold;
 }
-
+ 
 .search-section button:hover {
   background-color: #ffffff33;
 }
-
+ 
 .city-list {
   list-style: none;
   margin-bottom: 20px;
 }
-
+ 
 .city-list li {
   padding: 5px 0;
   font-size: 1rem;
   text-align: center;
 }
-
+ 
 .forecast-container {
   display: flex;
   overflow-x: auto;
   gap: 10px;
   padding-top: 10px;
 }
-
+ 
 .forecast-item {
   flex: 0 0 auto;
   width: 120px;
@@ -101,3 +101,67 @@ body {
   backdrop-filter: blur(6px);
   font-size: 0.9rem;
 }
+ 
+ 
+ /* Top Bar */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  padding: 24px 30px; /* ⬅ Increased padding for more height */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+ 
+    .top-bar h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      margin: 0;
+    }
+ 
+    :root {
+  --white: #fff;
+  --primary: #1e3c72;
+  --accent: #ff8c42;
+  --transition: all 0.3s ease;
+}
+ 
+/* ...existing styles... */
+ 
+.back-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background-color: var(--white);
+  color: var(--primary);
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+ 
+.back-btn i {
+  margin-right: 8px;
+}
+ 
+.back-btn:hover {
+  background-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
+}
+ 

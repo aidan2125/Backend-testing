@@ -4,7 +4,7 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+ 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #e0f7fa, #ffffff);
@@ -14,7 +14,7 @@ body {
   height: 100vh;
   color: #333;
 }
-
+ 
 /* Container */
 .container {
   background-color: #ffffff;
@@ -26,7 +26,7 @@ body {
   text-align: center;
   animation: fadeInUp 0.6s ease-out;
 }
-
+ 
 /* Animation */
 @keyframes fadeInUp {
   from {
@@ -38,14 +38,14 @@ body {
     transform: translateY(0);
   }
 }
-
+ 
 /* Heading */
 .container h1 {
   font-size: 2rem;
   margin-bottom: 24px;
   color: #1b4a58;
 }
-
+ 
 /* Form Inputs */
 form input {
   width: 100%;
@@ -56,13 +56,13 @@ form input {
   font-size: 1rem;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
-
+ 
 form input:focus {
   border-color: #246071;
   box-shadow: 0 0 0 3px rgba(36, 96, 113, 0.1);
   outline: none;
 }
-
+ 
 /* Login Button */
 form button {
   width: 100%;
@@ -75,25 +75,27 @@ form button {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
-
+ 
 form button:hover {
   background-color: #1b4a58;
   transform: scale(1.02);
 }
-
+ 
 /* Sign up link */
 .container p {
   margin-top: 20px;
   font-size: 0.95rem;
   color: #555;
 }
-
+ 
 .container a {
   color: #246071;
   text-decoration: none;
   font-weight: 500;
 }
-
+ 
 .container a:hover {
   text-decoration: underline;
 }
+ 
+ 

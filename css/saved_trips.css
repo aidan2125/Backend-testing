@@ -4,7 +4,7 @@ body {
   background-color: #f4f6f8;
   color: #2c3e50;
 }
-
+ 
 header {
   background-color: #1e2a38;
   color: white;
@@ -13,12 +13,12 @@ header {
   justify-content: space-between;
   align-items: center;
 }
-
+ 
 header h1 {
   font-size: 28px;
   font-weight: 600;
 }
-
+ 
 header button {
   padding: 10px 16px;
   background-color: #2563eb;
@@ -29,21 +29,21 @@ header button {
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
+ 
 header button:hover {
   background-color: #1d4ed8;
 }
-
+ 
 main {
   padding: 30px;
 }
-
+ 
 #trips-container {
   display: grid;
   gap: 24px;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
-
+ 
 .trip-card {
   background-color: white;
   border-radius: 12px;
@@ -51,11 +51,11 @@ main {
   padding: 20px;
   transition: transform 0.2s ease;
 }
-
+ 
 .trip-card:hover {
   transform: translateY(-6px);
 }
-
+ 
 .trip-card button {
   margin-top: 12px;
   margin-right: 8px;
@@ -65,25 +65,25 @@ main {
   font-weight: 500;
   cursor: pointer;
 }
-
+ 
 .details-btn {
   background-color: #0f766e;
   color: white;
 }
-
+ 
 .details-btn:hover {
   background-color: #115e59;
 }
-
+ 
 .delete-btn {
   background-color: #dc2626;
   color: white;
 }
-
+ 
 .delete-btn:hover {
   background-color: #b91c1c;
 }
-
+ 
 /* Modal styles */
 .modal {
   display: none;
@@ -96,7 +96,7 @@ main {
   overflow-y: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
-
+ 
 .modal-content {
   background-color: #ffffff;
   margin: 10% auto;
@@ -107,7 +107,7 @@ main {
   position: relative;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
-
+ 
 .close-btn {
   position: absolute;
   right: 16px;
@@ -117,7 +117,66 @@ main {
   cursor: pointer;
   color: #666;
 }
-
+ 
 .close-btn:hover {
   color: #dc2626;
+}
+ 
+:root {
+  --primary: #246071;
+  --primary-dark: #1b4a58;
+  --primary-light: #e6f3f7;
+  --accent: #ff8c42;
+  --text-dark: #333;
+  --text-light: #666;
+  --background: #f7fbff;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+ 
+.top-bar {
+  width: 100vw;
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 20px 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid var(--primary-dark);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  box-sizing: border-box;
+}
+ 
+.top-bar h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+ 
+.back-btn {
+  padding: 10px 20px;
+  background-color: var(--white);
+  color: var(--primary);
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+ 
+.back-btn:hover {
+  background-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
+}
+ 
+main {
+  padding: 30px;
+  margin-top: 100px; /* Pushes content below the fixed top bar */
 }

@@ -1,41 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Nearby Food Finder</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SA Travel Food & Shops Finder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places"></script>
   <style>
-    /* Basic styling */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    #map {
-      height: 60vh;
-      width: 100%;
-    }
-    #results {
-      padding: 10px;
-      max-height: 35vh;
-      overflow-y: auto;
-      border-top: 1px solid #ccc;
-    }
+    #map { height: 400px; width: 100%; }
+    #results { max-height: 400px; overflow-y: auto; }
   </style>
 </head>
-<body>
-  <h1>Find Nearby Food Places</h1>
-  <div id="map"></div>
-  <div id="results"><p>Loading map...</p></div>
-
-  <!-- Your custom script -->
-  <script src="js/food.js"></script>
-
-  <!-- Google Maps JS API -->
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvI8oz4lpujGMNdk28vTHf6useyP8a9tc&libraries=places&callback=initMap&v=weekly"
-    async
-    defer
-  ></script>
+<body class="bg-gray-100 font-sans">
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold text-center mb-4">South Africa Travel: Find Restaurants & Stores</h1>
+    <div class="flex justify-center mb-4">
+      <button id="findRestaurants" class="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600">Find Restaurants</button>
+      <button id="findStores" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Find Stores</button>
+    </div>
+    <div id="map" class="mb-4"></div>
+    <div id="results" class="bg-white p-4 rounded shadow"></div>
+  </div>
+ 
+  <script>
+    let map, service, infowindow, userLocation;
+ 
+    function initMap() {
+      // Default to a central location in South Africa (Johannesburg)
+      const defaultLocation = { lat: -26.2041, lng: 28.0473 };
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: defaultLocation,
+        zoom: 12
+      });
+      infowindow = new google.maps.InfoWindow();
+ 
+      // Get user's location
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            userLocation = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            map.setCenter(userLocation);
+            new google.maps.Marker({
+              position: userLocation,
+              map: map,
+              title: "Your Location",
+              icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
+            });
+          },
+          () => {
+            console.log("Geolocation failed, using default location");
+            userLocation = defaultLocation;
+          }
+        );
+      } else {
+        console.log("Geolocation not supported, using default location");
+        userLocation = defaultLocation;
+      }
+ 
+      service = new google.maps.places.PlacesService(map);
+    }
+ 
+    function searchPlaces(type) {
+      if (!userLocation) {
+        alert("Location not yet available, please try again in a moment.");
+        return;
+      }
+ 
+      const request = {
+        location: userLocation,
+        radius: 5000, // 5km radius
+        type: type // 'restaurant' or 'store'
+      };
+ 
+      service.nearbySearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+          displayResults(results, type);
+          addMarkers(results);
+        } else {
+          document.getElementById('results').innerHTML = `<p class="text-red-500">No ${type}s found nearby.</p>`;
+        }
+      });
+    }
+ 
+    function displayResults(places, type) {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = `<h2 class="text-xl font-semibold mb-2">Nearby ${type.charAt(0).toUpperCase() + type.slice(1)}s</h2>`;
+      places.forEach(place => {
+        const placeDiv = document.createElement('div');
+        placeDiv.className = 'border-b py-2';
+        placeDiv.innerHTML = `
+          <p class="font-bold">${place.name}</p>
+          <p>${place.vicinity}</p>
+          <p>Rating: ${place.rating ? place.rating + '/5' : 'N/A'}</p>
+        `;
+        resultsDiv.appendChild(placeDiv);
+      });
+    }
+ 
+    function addMarkers(places) {
+      places.forEach(place => {
+        const marker = new google.maps.Marker({
+          position: place.geometry.location,
+          map: map,
+          title: place.name
+        });
+        marker.addListener('click', () => {
+          infowindow.setContent(`
+            <div>
+              <strong>${place.name}</strong><br>
+              ${place.vicinity}<br>
+              Rating: ${place.rating ? place.rating + '/5' : 'N/A'}
+            </div>
+          `);
+          infowindow.open(map, marker);
+        });
+      });
+    }
+ 
+    // Event listeners for buttons
+    document.getElementById('findRestaurants').addEventListener('click', () => searchPlaces('restaurant'));
+    document.getElementById('findStores').addEventListener('click', () => searchPlaces('store'));
+ 
+    // Initialize map on page load
+    window.onload = initMap;
+  </script>
 </body>
 </html>
+ 

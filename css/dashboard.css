@@ -22,20 +22,48 @@
  
 body {
   font-family: 'Quicksand', sans-serif;
-  background: linear-gradient(135deg, var(--primary-light), var(--white));
+  background-color: var(--background); /* Fallback if image fails */
+  background-image: url('../Images/Travel.jpg'); /* Adjusted path; alternatives: 'Images/Travel.jpg' or '/Images/Travel.jpg' */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keeps image fixed during scroll */
   color: var(--text-dark);
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px 20px;
-  position: relative;
+  margin: 0;
+  padding-top: 70px; /* Space for fixed elements */
+  position: relative; /* Required for ::before pseudo-element */
+  /* Note: Ensure folder is 'Images' (case-sensitive) and file is 'Travel.jpg' */
 }
  
-/* Container */
-.dashboard-container {
-  max-width: 1200px;
+/* Semi-transparent overlay for text readability */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Darker, more transparent for better image visibility */
+  z-index: -1;
+}
+ 
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to top */
+  min-height: 100vh;
+}
+ 
+.name-center {
+  position: relative;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin: 10px 0 0; /* Reduced to move title higher */
+  padding-bottom: 20px;
+  z-index: 1;
 }
  
 /* Header */
@@ -90,42 +118,188 @@ header h1 {
 /* Grid Layout */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 24px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(auto-fit, 280px); /* Fixed 280px columns for alignment */
+  gap: 16px; /* Compact gap */
+  margin: 5px 0 10px; /* Reduced to move cards higher */
+  padding: 0 10px;
+  width: 100%;
+  justify-content: center; /* Center the grid */
+  justify-items: center; /* Center cards within columns */
 }
  
-/* Card Styles */
+/* Enhanced Card Styles */
 .card {
   background-color: var(--white);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
-  padding: 24px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(36, 96, 113, 0.1);
+  padding: 28px 24px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
   cursor: pointer;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(230, 243, 247, 0.8);
+  width: 100%; /* Fill grid cell */
+  box-sizing: border-box; /* Include padding/border in width */
+}
+ 
+.card:nth-child(5),
+.card:nth-child(6),
+.card:nth-child(7) {
+  margin-left: 240px; /* Shift second row cards (Food Finder, Weather, Saved Trips) significantly to the right */
+}
+ 
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  transition: height 0.3s ease;
 }
  
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(36, 96, 113, 0.15);
+  border-color: rgba(255, 140, 66, 0.3);
+}
+ 
+.card:hover::before {
+  height: 8px;
 }
  
 .card h2 {
-  font-size: 1.3rem;
-  color: var(--primary);
-  margin-bottom: 10px;
-  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin: 12px 0;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 12px;
+}
+ 
+.card h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 3px;
+  background-color: var(--accent);
+  border-radius: 3px;
 }
  
 .card p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--text-light);
+  line-height: 1.5;
+  margin-top: 12px;
 }
  
-/* Saved Trips Card (outside grid) */
-main > .card {
-  margin-top: 24px;
+/* Card Icons */
+.card::after {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: rgba(36, 96, 113, 0.25);
+  position: absolute;
+  bottom: -15px;
+  right: -15px;
+  transition: all 0.3s ease;
+}
+ 
+.card:hover::after {
+  color: rgba(36, 96, 113, 0.35);
+  transform: scale(1.2) rotate(10deg);
+}
+ 
+/* Specific icons for each card */
+.card:nth-child(1)::after {
+  content: '\f5eb'; /* map icon */
+}
+ 
+.card:nth-child(2)::after {
+  content: '\f3d1'; /* money bill icon */
+}
+ 
+.card:nth-child(3)::after {
+  content: '\f21e'; /* heartbeat icon */
+}
+ 
+.card:nth-child(4)::after {
+  content: '\f0eb'; /* lightbulb icon */
+}
+ 
+.card:nth-child(5)::after {
+  content: '\f2e7'; /* utensils icon */
+}
+ 
+.card:nth-child(6)::after {
+  content: '\f0c2'; /* cloud icon */
+}
+ 
+.card:nth-child(7)::after {
+  content: '\f005'; /* star icon */
+}
+ 
+/* Add a subtle animation on hover */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+ 
+.card:active {
+  animation: pulse 0.6s ease;
+}
+ 
+/* Smart tip styles */
+#smart-tip {
+  font-style: italic;
+  position: relative;
+  padding: 0 10px;
+}
+ 
+#smart-tip::before, #smart-tip::after {
+  content: '"';
+  color: var(--accent);
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+ 
+/* Decorative line under Travique name */
+.name-center::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 2px;
+}
+ 
+/* Main content area */
+main {
+  width: 100%;
+  margin-top: 20px;
+}
+ 
+/* Dashboard container adjustment */
+.dashboard-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5px; /* Reduced for compactness */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
  
 /* Hamburger Button */
@@ -268,6 +442,30 @@ main > .card {
   header h1 {
     font-size: 2rem;
   }
+ 
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, 240px); /* Fixed 240px columns for alignment */
+    gap: 12px; /* Compact gap */
+    margin: 10px 5px 10px; /* Adjusted margin */
+  }
+ 
+  .card {
+    padding: 22px 18px;
+  }
+ 
+  .card:nth-child(5),
+  .card:nth-child(6),
+  .card:nth-child(7) {
+    margin-left: 80px; /* Shift second row cards (Food Finder, Weather, Saved Trips) significantly to the right on smaller screens */
+  }
+ 
+  .card h2 {
+    font-size: 1.2rem;
+  }
+ 
+  .card p {
+    font-size: 0.9rem;
+  }
 }
  
 @media (max-width: 600px) {
@@ -283,4 +481,3 @@ main > .card {
     width: 260px;
   }
 }
- 

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Travel Tips</title>
+  <link rel="stylesheet" href="css/tips.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body class="tips-page">
+  <div class="top-bar">
+    <h2>Smart Travel Tips</h2>
+    <button class="back-btn" onclick="window.location.href='dashboard.html'">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </button>
+  </div>
+ 
+  <main>
+    <section>
+      <h2><i class="fas fa-suitcase heading-icon"></i> Top Tips for Smart Travel</h2>
+      <div class="category category-packing">
+        <h3><i class="fas fa-suitcase-rolling"></i> Packing</h3>
+        <ul>
+          <li data-details="Pack only essentials like versatile clothing and travel-sized toiletries to stay mobile.">
+            Travel light to move freely.
+            <span class="details">Pack only essentials like versatile clothing and travel-sized toiletries to stay mobile.</span>
+          </li>
+          <li data-details="Keep toiletries, electronics, and documents in separate cubes for quick access.">
+            Use packing cubes to organize your luggage.
+            <span class="details">Keep toiletries, electronics, and documents in separate cubes for quick access.</span>
+          </li>
+          <li data-details="Pack layers and weather-appropriate gear based on the destination’s forecast.">
+            Check the weather forecast before you pack.
+            <span class="details">Pack layers and weather-appropriate gear based on the destination’s forecast.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="category category-tech">
+        <h3><i class="fas fa-plug"></i> Tech</h3>
+        <ul>
+          <li data-details="Ensure your devices stay powered for navigation and communication.">
+            Always carry a portable charger.
+            <span class="details">Ensure your devices stay powered for navigation and communication.</span>
+          </li>
+          <li data-details="Store copies on your phone or cloud in case of loss or theft.">
+            Keep digital copies of important documents.
+            <span class="details">Store copies on your phone or cloud in case of loss or theft.</span>
+          </li>
+          <li data-details="Use apps like Google Maps or Maps.me for navigation without internet.">
+            Download offline maps for your destination.
+            <span class="details">Use apps like Google Maps or Maps.me for navigation without internet.</span>
+          </li>
+          <li data-details="A flashlight is useful during outages or for navigating dark areas.">
+            Be aware of scheduled power outages and carry a flashlight or power bank.
+            <span class="details">A flashlight is useful during outages or for navigating dark areas.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="category category-safety">
+        <h3><i class="fas fa-shield-alt"></i> Safety</h3>
+        <ul>
+          <li data-details="Stick to well-lit, populated areas to reduce risks.">
+            Avoid walking alone at night in unfamiliar areas.
+            <span class="details">Stick to well-lit, populated areas to reduce risks.</span>
+          </li>
+          <li data-details="Use trusted apps like Uber or Bolt for safe rides.">
+            Use reputable transport services such as ride-hailing apps.
+            <span class="details">Use trusted apps like Uber or Bolt for safe rides.</span>
+          </li>
+          <li data-details="Use a money belt or hidden pouch in busy tourist spots.">
+            Stay alert and keep your belongings secure in crowded areas.
+            <span class="details">Use a money belt or hidden pouch in busy tourist spots.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="category category-culture-finance">
+        <h3><i class="fas fa-globe"></i> Culture & Finance</h3>
+        <ul>
+          <li data-details="Learn greetings like ‘hello’ or ‘thank you’ to connect with locals.">
+            Learn basic phrases in the local language.
+            <span class="details">Learn greetings like ‘hello’ or ‘thank you’ to connect with locals.</span>
+          </li>
+          <li data-details="Inform your bank to avoid card blocks due to international transactions.">
+            Notify your bank about your travel plans.
+            <span class="details">Inform your bank to avoid card blocks due to international transactions.</span>
+          </li>
+          <li data-details="Carry small denominations for markets or rural areas.">
+            Keep some cash on hand for places that don’t accept cards.
+            <span class="details">Carry small denominations for markets or rural areas.</span>
+          </li>
+          <li data-details="Explore street food or local restaurants for authentic flavors.">
+            Try local foods to enrich your travel experience.
+            <span class="details">Explore street food or local restaurants for authentic flavors.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="category category-nature">
+        <h3><i class="fas fa-paw"></i> Nature</h3>
+        <ul>
+          <li data-details="Follow park guidelines to stay safe and protect animals.">
+            Respect wildlife and follow safety rules when visiting nature reserves.
+            <span class="details">Follow park guidelines to stay safe and protect animals.</span>
+          </li>
+        </ul>
+      </div>
+      <button class="back-to-top-btn">
+        <i class="fas fa-arrow-up"></i> Back to Top
+      </button>
+    </section>
+  </main>
+ 
+  <script>
+    document.querySelectorAll('li').forEach(item => {
+      item.addEventListener('click', () => {
+        const details = item.querySelector('.details');
+        if (details) {
+          details.classList.toggle('visible');
+        }
+      });
+    });
+ 
+    document.querySelector('.back-to-top-btn').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

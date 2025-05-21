@@ -1,0 +1,360 @@
+/* Base Styles */
+:root {
+  --primary: #246071;
+  --primary-dark: #1b4a58;
+  --primary-light: #e6f3f7;
+  --accent: #ff8c42;
+  --text-dark: #333;
+  --text-light: #666;
+  --background: #f7fbff;
+  --white: #ffffff;
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+ 
+* {
+  box-sizing: border-box;
+}
+ 
+/* Override body styles specifically for the Tips page */
+body.tips-page {
+  background: linear-gradient(135deg, #E6F0FA 0%, #FFF8E6 100%);
+  background-image:
+    linear-gradient(135deg, #E6F0FA 0%, #FFF8E6 100%),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" opacity="0.1"><path fill="none" stroke="%23246071" stroke-width="2" d="M25,10 L30,20 L40,20 L32,25 L35,35 L25,30 L15,35 L18,25 L10,20 L20,20 Z" /></svg>');
+  background-size: cover, 150px 150px;
+  background-repeat: no-repeat, repeat;
+  margin: 0;
+  padding: 0;
+  color: var(--text-dark);
+  font-family: 'Quicksand', sans-serif;
+  min-height: 100vh;
+  animation: patternDrift 20s linear infinite;
+}
+ 
+@keyframes patternDrift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 0 0, 150px 150px; }
+}
+ 
+/* Remove the semi-transparent overlay from dashboard.css */
+body.tips-page::before {
+  content: none;
+}
+ 
+/* Top Bar */
+.top-bar {
+  width: 100vw;
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 20px 2rem;
+  border-bottom: 4px solid var(--primary-dark);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+ 
+.top-bar h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: var(--white);
+}
+ 
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background-color: var(--white);
+  color: var(--primary);
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+ 
+.back-btn i {
+  margin-right: 8px;
+}
+ 
+.back-btn:hover {
+  background-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
+}
+ 
+/* Back to Top Button */
+.back-to-top-btn {
+  display: block;
+  margin: 2rem auto 1rem;
+  padding: 10px 20px;
+  background-color: var(--white);
+  color: var(--primary);
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+ 
+.back-to-top-btn i {
+  font-size: 0.9rem;
+}
+ 
+.back-to-top-btn:hover {
+  background-color: var(--accent);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
+}
+ 
+/* Main Content */
+main {
+  max-width: 800px;
+  margin: 6rem auto;
+  padding: 2.5rem;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 4px solid var(--primary);
+}
+ 
+/* Section Styles */
+section {
+  padding: 1.5rem;
+}
+ 
+section h2 {
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+ 
+section h2 .heading-icon {
+  color: #FFB300;
+  font-size: 1.6rem;
+}
+ 
+section h2::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, var(--accent) 50%, transparent 50%);
+  background-size: 10px 2px;
+  margin-top: 0.5rem;
+}
+ 
+/* Category Styles */
+.category {
+  margin-bottom: 2rem;
+}
+ 
+.category h3 {
+  font-size: 1.4rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: sticky;
+  top: 80px;
+  background: var(--white);
+  padding: 0.5rem 0;
+  z-index: 998;
+}
+ 
+.category-packing h3 i {
+  color: #FF6F61;
+  font-size: 1.3rem;
+}
+ 
+.category-tech h3 i {
+  color: #4A90E2;
+  font-size: 1.3rem;
+}
+ 
+.category-safety h3 i {
+  color: #D32F2F;
+  font-size: 1.3rem;
+}
+ 
+.category-culture-finance h3 i {
+  color: #FBC02D;
+  font-size: 1.3rem;
+}
+ 
+.category-nature h3 i {
+  color: #388E3C;
+  font-size: 1.3rem;
+}
+ 
+ul {
+  list-style: none;
+  padding: 0;
+}
+ 
+li {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  margin-bottom: 1.2rem;
+  padding-left: 2rem;
+  position: relative;
+  line-height: 1.6;
+  transition: var(--transition);
+  border-radius: 8px;
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+  cursor: pointer;
+}
+ 
+li:hover {
+  background-color: var(--primary-light);
+  transform: translateX(5px);
+  border-left: 3px solid var(--accent);
+}
+ 
+.category-packing li:before {
+  content: '\f0da';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: #FF6F61;
+  position: absolute;
+  left: 0;
+  top: 8px;
+}
+ 
+.category-tech li:before {
+  content: '\f0da';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: #4A90E2;
+  position: absolute;
+  left: 0;
+  top: 8px;
+}
+ 
+.category-safety li:before {
+  content: '\f0da';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: #D32F2F;
+  position: absolute;
+  left: 0;
+  top: 8px;
+}
+ 
+.category-culture-finance li:before {
+  content: '\f0da';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: #FBC02D;
+  position: absolute;
+  left: 0;
+  top: 8px;
+}
+ 
+.category-nature li:before {
+  content: '\f0da';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: #388E3C;
+  position: absolute;
+  left: 0;
+  top: 8px;
+}
+ 
+li .details {
+  display: none;
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--primary-light);
+}
+ 
+li .details.visible {
+  display: block;
+}
+ 
+/* Responsive Design */
+@media (max-width: 768px) {
+  .top-bar {
+    padding: 15px 1rem;
+  }
+ 
+  .top-bar h2 {
+    font-size: 1.5rem;
+  }
+ 
+  .back-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+ 
+  .back-to-top-btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+ 
+  main {
+    margin: 5rem 1rem;
+    padding: 1.5rem;
+    border: 4px solid var(--primary);
+  }
+ 
+  section h2 {
+    font-size: 1.5rem;
+  }
+ 
+  section h2 .heading-icon {
+    font-size: 1.4rem;
+  }
+ 
+  .category h3 {
+    font-size: 1.2rem;
+    top: 70px;
+  }
+ 
+  .category-packing h3 i,
+  .category-tech h3 i,
+  .category-safety h3 i,
+  .category-culture-finance h3 i,
+  .category-nature h3 i {
+    font-size: 1.1rem;
+  }
+ 
+  li {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+ 
+  li:before {
+    top: 6px;
+  }
+ 
+  li .details {
+    font-size: 0.9rem;
+  }
+}

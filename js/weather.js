@@ -1,3 +1,24 @@
+// weather.js
+
+export function fetchWeatherData(location) {
+  const apiKey = '86f6948b34f7cf32a95cacbb9bffa630';
+  const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`;
+
+  return fetch(url)
+    .then(response => {
+      if (!response.ok) throw new Error("Failed to fetch weather data");
+      return response.json();
+    })
+    .then(data => ({
+      temperature: data.current.temp_c,
+      condition: data.current.condition.text,
+    }))
+    .catch(error => {
+      console.error('Weather fetch error:', error);
+      return null;
+    });
+}
+
 const apiKey = '86f6948b34f7cf32a95cacbb9bffa630';
 
 const searchButton = document.getElementById('searchButton');

@@ -4,45 +4,45 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+ 
+:root {
+  --primary: #246071;
+  --primary-dark: #1b4a58;
+  --primary-light: #e6f3f7;
+  --accent: #ff8c42;
+  --text-dark: #333;
+  --text-light: #666;
+  --background: #f7fbff;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
+}
+ 
 body {
-  font-family: 'Inter', sans-serif;
-  background: #f7f9fb;
-  color: #333;
+  font-family: 'Quicksand', sans-serif;
+  background: var(--background);
+  color: var(--text-dark);
   line-height: 1.6;
 }
-
+ 
+/* Header */
 header.planner-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 10%;
-  background-color: #ffffff;
+  background-color: var(--white);
   border-bottom: 1px solid #e0e0e0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
-
+ 
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #2b6777;
+  color: var(--primary);
 }
-
-.back-btn {
-  padding: 10px 20px;
-  background-color: #2b6777;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.back-btn:hover {
-  background-color: #235c6a;
-}
-
+ 
+/* Form Section */
 .route-form {
   max-width: 600px;
   margin: 40px auto;
@@ -51,56 +51,62 @@ header.planner-header {
   gap: 16px;
   padding: 0 10%;
 }
-
+ 
 .route-form input,
 .route-form textarea,
 .route-form select {
-  padding: 12px 14px;
+  padding: 14px 16px;
   border: 1px solid #ccc;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: var(--transition);
+  background-color: var(--white);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
-
+ 
 .route-form input:focus,
 .route-form textarea:focus,
 .route-form select:focus {
-  border-color: #2b6777;
-  box-shadow: 0 0 0 2px rgba(43, 103, 119, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(36, 96, 113, 0.15);
   outline: none;
 }
-
+ 
+/* Button Group */
 .btn-group {
   display: flex;
   gap: 12px;
   margin-top: 10px;
 }
-
+ 
 .btn-group button {
   flex: 1;
-  padding: 12px;
+  padding: 14px;
   border: none;
-  border-radius: 8px;
-  background-color: #2b6777;
-  color: white;
+  border-radius: 12px;
+  background-color: var(--primary);
+  color: var(--white);
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
-
+ 
 .btn-group button:hover {
-  background-color: #235c6a;
+  background-color: var(--primary-dark);
 }
-
+ 
 /* Map Display */
 #map {
   width: 100%;
   height: 400px;
   margin: 40px 0;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  border: 1px solid #e0e0e0;
 }
-
+ 
 /* Modal */
 .modal {
   position: fixed;
@@ -112,27 +118,70 @@ header.planner-header {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
-
+ 
 .modal.hidden {
   display: none;
 }
-
+ 
 .modal-content {
-  background-color: #ffffff;
+  background-color: var(--white);
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 16px;
   max-width: 500px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.5s ease;
 }
-
+ 
 .modal-content h2 {
   margin-bottom: 20px;
-  color: #2b6777;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.8rem;
 }
-
+ 
 .modal-content p {
   margin-bottom: 30px;
+  color: var(--text-light);
+  font-size: 1rem;
 }
+ 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+ 
+/* Back Button */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  background-color: var(--white);
+  color: var(--primary);
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+ 
+.back-btn i {
+  margin-right: 8px;
+}
+ 
+.back-btn:hover {
+  background-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+ 
+ 
