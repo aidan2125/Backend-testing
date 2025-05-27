@@ -38,7 +38,7 @@
     <!-- Only relevant changes shown below -->
 <div class="btn-group">
   <button id="route-btn">Get Route</button>
-  <button id="save-trip-btn">Save Trip</button>
+  <button id="save-btn">Save Trip</button>
 </div>
     </section>
  
@@ -59,28 +59,15 @@
  
 
   <script src="js/map.js"></script>
-  <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap"
+<script
   async
   defer
-></script>
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap">
+</script>
+
   <script type="module" src="js/trip.js"></script>
   <script type="module" src="js/liveLocation.js"></script>
-  <script>
-  document.getElementById('save-trip-btn')?.addEventListener('click', () => {
-    // Trigger the custom event used in map.js
-    document.dispatchEvent(new CustomEvent('saveTripRequested', {
-      detail: {
-        from: document.getElementById('from-address').value,
-        destination: document.getElementById('to-address').value,
-        travelMode: document.getElementById('travel-mode').value,
-        distance: 1000, // Replace with actual calculated distance
-        cost: 500,      // Replace with calculated cost
-        activities: document.getElementById('activities').value,
-      }
-    }));
-  });
-</script>
+  
 </body>
 </html>
 

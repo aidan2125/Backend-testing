@@ -10,7 +10,7 @@
 </head>
 <body>
   <!-- Hamburger Button -->
-  <button id="hamburger">&#9776;</button>
+  <button id="hamburger">☰</button>
  
   <!-- User Profile Area -->
   <div class="user-profile-area">
@@ -23,7 +23,7 @@
  
   <!-- Sidebar -->
   <div id="sidebar">
-    <button id="close-sidebar">&times;</button>
+    <button id="close-sidebar">×</button>
     <ul>
       <li><a href="profile.html"><i class="fas fa-user"></i> User Profile</a></li>
       <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
@@ -37,6 +37,10 @@
  
     <main>
       <div class="card-grid">
+         <div class="card" onclick="location.href='hub.html'">
+          <h2>Travique Hub</h2>
+          <p>Plan your trip, track expenses, and discover local dining—all in one place!</p>
+        </div>
         <div class="card" onclick="location.href='trip-planner.html'">
           <h2>Trip Planner</h2>
           <p>Create and manage your custom travel itinerary.</p>
@@ -51,7 +55,7 @@
         </div>
         <div class="card" onclick="location.href='tips.html'">
           <h2>Smart Travel Tips</h2>
-          <p id="smart-tip">"Travel light to move freely!"</p>
+          <p>Travel light to move freely!</p>
         </div>
         <div class="card" onclick="location.href='food.html'">
           <h2>Food Finder</h2>
@@ -77,17 +81,14 @@
  
     hamburger.addEventListener('click', () => {
       sidebar.classList.toggle('active');
-      // Hide hamburger when sidebar is active
       hamburger.style.display = 'none';
     });
  
     closeSidebar.addEventListener('click', () => {
       sidebar.classList.remove('active');
-      // Show hamburger when sidebar is closed
       hamburger.style.display = 'flex';
     });
  
-    // If user clicks outside sidebar, close it and show hamburger
     document.addEventListener('click', (e) => {
       if (sidebar.classList.contains('active') &&
           !sidebar.contains(e.target) &&
@@ -101,3 +102,4 @@
   <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>
+ 

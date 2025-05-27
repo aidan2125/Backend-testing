@@ -56,7 +56,7 @@ export async function initializeApp() {
 
     // Save last location
     localStorage.setItem("lastLocation", JSON.stringify({ latitude, longitude }));
-
+  
   } catch (error) {
     console.error('Error initializing application:', error);
 

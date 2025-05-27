@@ -134,7 +134,7 @@ body {
 }
  
 /* ...existing styles... */
- 
+ /*
 .back-btn {
   position: absolute;
   top: 20px;
@@ -164,4 +164,8 @@ body {
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
 }
- 
+ */
+
+ #forecastModalClose {
+  z-index: 1; /* make sure it's above content, but not floating in body */
+}

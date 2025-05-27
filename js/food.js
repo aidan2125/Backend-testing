@@ -1,5 +1,11 @@
+ import { createMap, setupAutocomplete, setupDirections, handleLocationError } from './sharedMap.js';
+ 
+// Example usage:
+const map = createMap("map", { center: { lat: 40.7128, lng: -74.0060 }, zoom: 14 });
+// If you need directions or autocomplete, use the helpers as needed.
+ 
  //Global variables
-let map;
+ 
 let service;
 let infowindow;
 let currentPosition;

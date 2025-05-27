@@ -36,12 +36,16 @@ document.getElementById('login-form')?.addEventListener('submit', async (e) => {
     .from('signup')
     .select('profileID')
     .eq('email', email)
-    .single();
+    .maybeSingle();
  
   if (profileError) {
     alert('Error fetching profileID: ' + profileError.message);
     return;
   }
+  if (!profileData) {
+    alert('Profile not found for this email.');
+    return;
+  } 
  
   console.log('ProfileID:', profileData.profileID);
   localStorage.setItem('profileID', profileData.profileID);

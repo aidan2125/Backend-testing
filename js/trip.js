@@ -47,12 +47,23 @@ window.initMap = async function () {
   const routeBtn = document.getElementById("route-btn");
   if (routeBtn) routeBtn.addEventListener("click", handleRoute);
 
-  const saveBtn = document.getElementById("confirm-save-btn");
+  const saveBtn = document.getElementById("save-btn");
   if (saveBtn) {
     saveBtn.addEventListener("click", () => {
       document.dispatchEvent(new CustomEvent('saveTripRequested', { detail: currentTrip }));
     });
   }
+
+ const confirmSaveBtn = document.getElementById("confirm-save-btn");
+if (confirmSaveBtn) {
+  confirmSaveBtn.addEventListener("click", () => {
+    console.log("✅ Confirm & Save button clicked");
+       console.log("Trip data being saved:", currentTrip);
+    document.dispatchEvent(new CustomEvent('saveTripRequested', { detail: currentTrip }));
+  });
+}
+
+
 };
 
 function calculateCost(distance, mode) {
@@ -137,22 +148,68 @@ function handleRoute() {
 
 document.addEventListener('saveTripRequested', async (e) => {
   const trip = e.detail;
-
   const userEmail = localStorage.getItem('userEmail');
-  
-  if (!userEmail) {
-    alert('⚠️ User not logged in');
+  const profileID = localStorage.getItem('profileID'); // Ensure this is set during login
+
+  if (!userEmail || !profileID) {
+    alert('⚠️ Missing user email or profile ID. Please log in again.');
+    return;
+  }
+
+  // Collect title and dates
+  const tripStart = document.getElementById('trip-start')?.value;
+  const tripEnd = document.getElementById('trip-end')?.value;
+  const title = `${trip.origin} to ${trip.destination}`;
+
+  if (!tripStart || !tripEnd) {
+    alert("⚠️ Please enter both trip start and end dates.");
     return;
   }
 
   try {
+    // Geocode destination to get lat/lng
+    const geocoder = new google.maps.Geocoder();
+    const location = await new Promise((resolve, reject) => {
+      geocoder.geocode({ address: trip.destination }, (results, status) => {
+        if (status === 'OK' && results[0]) {
+          resolve(results[0].geometry.location);
+        } else {
+          reject(new Error('Geocode failed: ' + status));
+        }
+      });
+    });
+
+    const destinationLat = location.lat();
+    const destinationLng = location.lng();
+
+    // ✅ Construct geography point as GeoJSON
+    const destination_point = {
+      type: 'Point',
+      coordinates: [destinationLng, destinationLat]
+    };
+
+    // 🔧 Final trip payload
+    const tripWithCoords = {
+      title,
+      origin: trip.origin,
+      destination: trip.destination,
+      activities: trip.activities,
+      travel_mode: trip.travelMode,
+      distance: trip.distance,
+      estimated_cost: trip.cost,
+      start_date: tripStart,
+      end_date: tripEnd,
+      profileID,
+      
+    };
+
     const response = await fetch('http://localhost:3000/api/savetrip', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-user-email': userEmail,
       },
-      body: JSON.stringify(trip)
+      body: JSON.stringify(tripWithCoords)
     });
 
     const data = await response.json();
@@ -166,7 +223,8 @@ document.addEventListener('saveTripRequested', async (e) => {
       console.error(data);
     }
   } catch (err) {
-    console.error('Error saving trip:', err);
-    alert('❌ Could not connect to server');
+    console.error('❌ Trip save error:', err);
+    alert('❌ Error saving trip: ' + err.message);
   }
 });
+
