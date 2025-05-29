@@ -14,63 +14,313 @@
  
   <!-- User Profile Area -->
   <div class="user-profile-area">
-    <div class="profile-pic">
-      <img src="img/default-avatar.png" alt="Profile" id="profile-image">
-    </div>
     <p id="user-email">Loading...</p>
   </div>
- 
  
   <!-- Sidebar -->
   <div id="sidebar">
     <button id="close-sidebar">×</button>
     <ul>
       <li><a href="profile.html"><i class="fas fa-user"></i> User Profile</a></li>
-      <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
-      <li><a href="help.html"><i class="fas fa-question-circle"></i> Help</a></li>
-      <li id="logout-container"><button id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
+      <li><a href="hub.html"><i class="fas fa-compass"></i> Travique Hub</a></li>
+      <li><a href="trip-planner.html"><i class="fas fa-map"></i> Trip Planner</a></li>
+      <li><a href="expenses.html"><i class="fas fa-money-bill"></i>Expense Tracker</a></li>
+      <li><a href="health.html"><i class="fas fa-heartbeat"></i>Health & Fitness</a></li>
+      <li><a href="tips.html"><i class="fas fa-lightbulb"></i>Smart Travel Tips</a></li>
+      <li><a href="food.html"><i class="fas fa-utensils"></i>Food Finder</a></li>
+      <li><a href="weather.html"><i class="fas fa-cloud"></i>Weather</a></li>
+      <li><a href="saved_trips.html"><i class="fas fa-star"></i>Saved Trips</a></li>
+      <li id="logout-container"><button id="logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</button></li>
     </ul>
   </div>
  
-  <div class="dashboard-container">
-   <div class="name-center">Travique</div>
+  <!-- Page Container to Ensure Footer Stays at Bottom -->
+  <div class="page-container">
+    <div class="dashboard-container">
+      <div class="name-center">Travique</div>
  
-    <main>
-      <div class="card-grid">
-         <div class="card" onclick="location.href='hub.html'">
-          <h2>Travique Hub</h2>
-          <p>Plan your trip, track expenses, and discover local dining—all in one place!</p>
+      <main>
+        <div class="cape-town-main-container" id="cape-town-container">
+          <h2>Cape Town</h2>
+          <p>Visit these popular destinations in Cape Town:</p>
+ 
+          <div class="cape-town-container">
+            <section class="place">
+              <h3>V & A Waterfront</h3>
+              <div class="image-grid">
+                <div class="image-card">
+                  <img src="Images/Waterfront.jpg" alt="V & A Waterfront">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Waterfront.2.jpg" alt="V & A Waterfront">
+                </div>
+              </div>
+              <div class="place-info">
+                <p>At the V & A Waterfront in Cape Town, visitors can enjoy:</p>
+                <ul>
+                  <li>Shopping & Dining: Over 450 shops and 80 restaurants.</li>
+                  <li>Two Oceans Aquarium: See marine life like sharks and penguins.</li>
+                  <li>Zeitz MOCAA: Contemporary African art museum.</li>
+                  <li>Cape Wheel: Panoramic city and mountain views.</li>
+                  <li>Robben Island Tours: Historic ferry trip to Mandela’s prison.</li>
+                  <li>Harbor Cruises: Scenic boat rides.</li>
+                  <li>Battery Park: Outdoor fun with skateboarding and paddling.</li>
+                  <li>For more info, <a href="https://www.waterfront.co.za/" target="_blank">click here</a>.</li>
+                </ul>
+              </div>
+            </section>
+ 
+            <section class="place">
+              <h3>Table Mountain</h3>
+              <div class="image-grid">
+                <div class="image-card">
+                  <img src="Images/Table-Mountain.jpg" alt="Table Mountain">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Mountain.jpg" alt="Table Mountain">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Mountain.2.jpg" alt="Table Mountain">
+                </div>
+              </div>
+              <div class="place-info">
+                <p>At Table Mountain, visitors can enjoy:</p>
+                <ul>
+                  <li>Ride the Cableway: Take the rotating cable car for stunning views on the way up.</li>
+                  <li>Hiking: Explore scenic trails like Platteklip Gorge or Skeleton Gorge.</li>
+                  <li>Enjoy the Views: Take in panoramic views of Cape Town, the ocean, and surrounding mountains.</li>
+                  <li>Photography: Capture breathtaking landscapes and wildlife.</li>
+                  <li>Spot Wildlife: Look out for dassies (rock hyrax), birds, and unique plant life.</li>
+                  <li>Picnicking: Relax and have a snack at the top with a view.</li>
+                  <li>Abseiling: For thrill-seekers, try abseiling off one of the world’s highest commercial descent points.</li>
+                  <li>For more info, <a href="https://www.tablemountain.net/" target="_blank">click here</a>.</li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="nav-buttons">
+            <button id="cape-town-next-btn">Go to Next</button>
+          </div>
         </div>
-        <div class="card" onclick="location.href='trip-planner.html'">
-          <h2>Trip Planner</h2>
-          <p>Create and manage your custom travel itinerary.</p>
+ 
+        <div class="johannesburg-main-container" id="johannesburg-container" style="display:none;">
+          <h2>Johannesburg</h2>
+          <p>Explore these popular destinations in Johannesburg:</p>
+ 
+          <div class="johannesburg-container">
+            <section class="place">
+              <h3>Gold Reef City</h3>
+              <div class="image-grid">
+                <div class="image-card">
+                  <img src="Images/Gold-reef-city.webp" alt="Gold Reef City">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Fun.jpg" alt="Fun">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Fun.2.webp" alt="Fun 2 Webp">
+                </div>
+              </div>
+              <div class="place-info">
+                <p>At Gold Reef City in Johannesburg, visitors can:</p>
+                <ul>
+                  <li>Ride thrilling theme park rides like the Anaconda and Tower of Terror.</li>
+                  <li>Take an underground mine tour and see gold pouring demos.</li>
+                  <li>Play at the trampoline park, laser tag, and arcade.</li>
+                  <li>Watch movies in a Victorian-themed cinema.</li>
+                  <li>See live shows at the Lyric Theatre.</li>
+                  <li>Try their luck at the casino.</li>
+                  <li>Dine at various restaurants.</li>
+                  <li>Visit the Apartheid Museum nearby.</li>
+                  <li>For more info, <a href="https://www.goldreefcity.co.za/hotels/" target="_blank">click here</a>.</li>
+                </ul>
+              </div>
+            </section>
+ 
+            <section class="place">
+              <h3>Sun City Resort</h3>
+              <div class="image-grid">
+                <div class="image-card">
+                  <img src="Images/Sun-City.jpg" alt="Sun City">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Sun-City.2.jpg" alt="Sun City 2">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Sun-City.3.jpg" alt="Sun City 3">
+                </div>
+              </div>
+              <div class="place-info">
+                <p>At Sun City, visitors can:</p>
+                <ul>
+                  <li>Relax at the Valley of Waves water park.</li>
+                  <li>Go on a Big 5 safari in Pilanesberg Game Reserve.</li>
+                  <li>Play golf at world-class courses.</li>
+                  <li>Explore the Maze of the Lost City.</li>
+                  <li>Try adventure activities like zip-lining and quad biking.</li>
+                  <li>Enjoy casino games and nightlife.</li>
+                  <li>Treat yourself at the spa.</li>
+                  <li>Shop and dine at various spots.</li>
+                  <li>Have fun with family-friendly attractions.</li>
+                  <li>For more info, <a href="https://www.suninternational.com/sun-city/" target="_blank">click here</a>.</li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="nav-buttons">
+            <button id="johannesburg-prev-btn">Go to Previous</button>
+            <button id="johannesburg-next-btn">Go to Next</button>
+          </div>
         </div>
-        <div class="card" onclick="location.href='expenses.html'">
-          <h2>Expense Tracker</h2>
-          <p>Track your spending and stay on budget.</p>
+ 
+        <div class="mpumalanga-main-container" id="mpumalanga-container" style="display:none;">
+          <h2>Mpumalanga</h2>
+          <p>Explore these popular destinations in Mpumalanga:</p>
+ 
+          <div class="mpumalanga-container">
+            <section class="place">
+              <h3>Kruger National Park</h3>
+              <div class="image-grid">
+                <div class="image-card">
+                  <img src="Images/Park.1.jpg" alt="Kruger National Park 1">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Park.2.jpg" alt="Kruger National Park 2">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Park.3.jpg" alt="Kruger National Park 3">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Park.4.jpeg" alt="Kruger National Park 4">
+                </div>
+              </div>
+              <div class="place-info">
+                <p>At Kruger National Park, visitors can:</p>
+                <ul>
+                  <li>Go on a Big 5 safari (lion, leopard, elephant, rhino, buffalo).</li>
+                  <li>Take a self-drive or guided game drive.</li>
+                  <li>Join a bush walk for a close-up wildlife experience.</li>
+                  <li>Enjoy birdwatching with over 500 bird species.</li>
+                  <li>Stay in lodges or campsites surrounded by nature.</li>
+                  <li>Visit rest camps with shops, restaurants, and picnic spots.</li>
+                  <li>Capture wildlife photography.</li>
+                  <li>Join night drives to spot nocturnal animals.</li>
+                  <li>For more info, <a href="https://www.krugerpark.co.za/" target="_blank">click here</a>.</li>
+                </ul>
+              </div>
+            </section>
+ 
+            <section class="place">
+              <h3>Mac Mac Falls</h3>
+              <div class="image-grid">
+                <div class="image-card">
+                  <img src="Images/Falls.1.jpg" alt="Mac Mac Falls 1">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Falls.2.jpg" alt="Mac Mac Falls 2">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Falls.3.jpg" alt="Mac Mac Falls 3">
+                </div>
+              </div>
+              <div class="place-info">
+                <p>At Mac Mac Falls in Mpumalanga, visitors can:</p>
+                <ul>
+                  <li>View the Twin Waterfalls – a stunning 65-meter-high split waterfall.</li>
+                  <li>Swim at Mac Mac Pools – natural rock pools perfect for cooling off.</li>
+                  <li>Enjoy a picnic in scenic designated areas.</li>
+                  <li>Hike the Secretary Bird Trail – a 3 km trail great for nature and birdwatching.</li>
+                  <li>Try canyoning – guided adventures with hiking, swimming, and rock pool jumps.</li>
+                  <li>Explore nearby attractions like Berlin Falls, Lisbon Falls, and Pilgrim’s Rest.</li>
+                  <li>For more info, <a href="https://www.sa-venues.com/attractionsmpl/mac-mac-falls.php" target="_blank">click here</a>.</li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="nav-buttons">
+            <button id="mpumalanga-prev-btn">Go to Previous</button>
+            <button id="mpumalanga-next-btn">Go to Next</button>
+          </div>
         </div>
-        <div class="card" onclick="location.href='health.html'">
-          <h2>Health & Fitness</h2>
-          <p>Maintain wellness throughout your travels.</p>
+ 
+        <div class="durban-main-container" id="durban-container" style="display:none;">
+          <h2>Durban</h2>
+          <p>Explore these popular destinations in Durban:</p>
+ 
+          <div class="durban-container">
+            <section class="place">
+              <h3>uShaka Marine World</h3>
+              <div class="image-grid">
+                <div class="image-card">
+                  <img src="Images/Marine.1.jpg" alt="uShaka Marine World 1">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Marine.2.webp" alt="uShaka Marine World 2">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Marine.3.jpg" alt="uShaka Marine World 3">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Marine.4.jpg" alt="uShaka Marine World 4">
+                </div>
+              </div>
+              <div class="place-info">
+                <p>At uShaka Marine World in Durban, visitors can:</p>
+                <ul>
+                  <li>Explore Sea World Aquarium – see sharks, dolphins, and penguins.</li>
+                  <li>Have fun at Wet ‘n Wild – enjoy water slides and splash zones.</li>
+                  <li>Try Ocean Walker – walk underwater with a special helmet.</li>
+                  <li>Go shark diving or snorkeling – safely get close to marine life.</li>
+                  <li>Test your skills at the Rope Adventure Park.</li>
+                  <li>Take a gondola canal ride for a relaxing experience.</li>
+                  <li>Shop and eat at Village Walk, styled like a traditional village.</li>
+                  <li>Let kids play in Kids World, filled with fun activities.</li>
+                  <li>For more info, <a href="https://ushakamarine.com/" target="_blank">click here</a>.</li>
+                </ul>
+              </div>
+            </section>
+ 
+            <section class="place">
+              <h3>Umgeni River Bird Park</h3>
+              <div class="image-grid">
+                <div class="image-card">
+                  <img src="Images/Bird.1.webp" alt="Umgeni River Bird Park 1">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Bird.2.jpg" alt="Umgeni River Bird Park 2">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Bird.3.webp" alt="Umgeni River Bird Park 3">
+                </div>
+                <div class="image-card">
+                  <img src="Images/Bird.4.jpg" alt="Umgeni River Bird Park 4">
+                </div>
+              </div>
+              <div class="place-info">
+                <p>At Umgeni River Bird Park in Durban, visitors can:</p>
+                <ul>
+                  <li>Walk through aviaries to see a wide variety of birds in natural settings.</li>
+                  <li>Watch free-flight bird shows held daily at 11 am and 2 pm.</li>
+                  <li>Join bird feeding sessions for up-close experiences.</li>
+                  <li>Take beautiful photos of exotic birds and waterfalls.</li>
+                  <li>Learn from educational exhibits about bird species and conservation.</li>
+                  <li>For more info, <a href="https://www.umgeniriverbirdpark.co.za/" target="_blank">click here</a>.</li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <div class="nav-buttons">
+            <button id="durban-prev-btn">Go to Previous</button>
+            <button id="durban-next-btn" disabled>Go to Next</button>
+          </div>
         </div>
-        <div class="card" onclick="location.href='tips.html'">
-          <h2>Smart Travel Tips</h2>
-          <p>Travel light to move freely!</p>
-        </div>
-        <div class="card" onclick="location.href='food.html'">
-          <h2>Food Finder</h2>
-          <p>Explore local dining experiences.</p>
-        </div>
-        <div class="card" onclick="location.href='weather.html'">
-          <h2>Weather</h2>
-          <p>Check current conditions and forecasts.</p>
-        </div>
-        <div class="card" onclick="location.href='saved_trips.html'">
-          <h2>Saved Trips</h2>
-          <p>Access and manage your previous plans.</p>
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
+ 
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 Travique. All rights reserved.</p>
+    </footer>
   </div>
  
   <!-- Toggle Sidebar Script -->
@@ -102,4 +352,3 @@
   <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>
- 

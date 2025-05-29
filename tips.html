@@ -6,7 +6,180 @@
   <title>Smart Travel Tips</title>
   <link rel="stylesheet" href="css/tips.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.15/babel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom styles for enhanced icons */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-10px) rotate(1deg); }
+      66% { transform: translateY(-5px) rotate(-1deg); }
+    }
+ 
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+      50% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
+    }
+ 
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+ 
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+ 
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+ 
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.3; }
+    }
+ 
+    @keyframes float-complex {
+      0%, 100% {
+        transform: translateY(0px) rotateX(0deg) rotateY(0deg);
+      }
+      25% {
+        transform: translateY(-8px) rotateX(5deg) rotateY(-2deg);
+      }
+      50% {
+        transform: translateY(-12px) rotateX(0deg) rotateY(3deg);
+      }
+      75% {
+        transform: translateY(-4px) rotateX(-3deg) rotateY(-1deg);
+      }
+    }
+ 
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+ 
+    @keyframes pulse-red {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+      50% { box-shadow: 0 0 0 15px rgba(239, 68, 68, 0); }
+    }
+ 
+    @keyframes shield-glow {
+      0%, 100% { filter: drop-shadow(0 0 5px rgba(59, 130, 246, 0.5)); }
+      50% { filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.8)); }
+    }
+ 
+    @keyframes brain-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+ 
+    @keyframes sun-rays {
+      0% { filter: brightness(100%) drop-shadow(0 0 5px rgba(255, 193, 7, 0.5)); }
+      50% { filter: brightness(120%) drop-shadow(0 0 15px rgba(255, 193, 7, 0.8)); }
+    }
+ 
+    @keyframes wave-flow {
+      0% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      100% { transform: translateX(-5px); }
+    }
+ 
+    @keyframes soap-bubble {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.05) translateY(-5px); }
+    }
+ 
+    @keyframes syringe-pulse {
+      0%, 100% { filter: brightness(100%); }
+      50% { filter: brightness(110%) drop-shadow(0 0 10px rgba(239, 68, 68, 0.5)); }
+    }
+ 
+    @keyframes bug-zap {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(5deg); }
+      75% { transform: rotate(-5deg); }
+    }
+ 
+    @keyframes utensil-shine {
+      0%, 100% { filter: brightness(100%); }
+      50% { filter: brightness(120%) drop-shadow(0 0 10px rgba(249, 115, 22, 0.5)); }
+    }
+ 
+    @keyframes car-move {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(3px); }
+    }
+ 
+    @keyframes globe-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+ 
+    @keyframes mountain-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+ 
+    @keyframes pill-glow {
+      0%, 100% { filter: drop-shadow(0 0 5px rgba(219, 39, 119, 0.5)); }
+      50% { filter: drop-shadow(0 0 10px rgba(219, 39, 119, 0.8)); }
+    }
+ 
+    @keyframes paw-track {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+ 
+    @keyframes cloud-rain {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+ 
+    .animate-float { animation: float 6s ease-in-out infinite; }
+    .animate-pulse-glow { animation: pulse-glow 2s infinite; }
+    .animate-shimmer { animation: shimmer 2s infinite; }
+    .animate-gradient-shift { background-size: 200% 200%; animation: gradient-shift 3s ease infinite; }
+    .animate-spin-slow { animation: spin-slow 20s linear infinite; }
+    .animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+    .animate-float-complex { animation: float-complex 8s ease-in-out infinite; }
+    .animate-glitch:hover { animation: glitch 0.3s ease-in-out; }
+    .animate-pulse-red { animation: pulse-red 2s infinite; }
+    .animate-shield-glow { animation: shield-glow 2s infinite; }
+    .animate-brain-pulse { animation: brain-pulse 2s infinite; }
+    .animate-sun-rays { animation: sun-rays 2s infinite; }
+    .animate-wave-flow { animation: wave-flow 3s ease-in-out infinite; }
+    .animate-soap-bubble { animation: soap-bubble 2s ease-in-out infinite; }
+    .animate-syringe-pulse { animation: syringe-pulse 2s infinite; }
+    .animate-bug-zap { animation: bug-zap 1.5s ease-in-out infinite; }
+    .animate-utensil-shine { animation: utensil-shine 2s infinite; }
+    .animate-car-move { animation: car-move 2s ease-in-out infinite; }
+    .animate-globe-spin { animation: globe-spin 20s linear infinite; }
+    .animate-mountain-pulse { animation: mountain-pulse 2s infinite; }
+    .animate-pill-glow { animation: pill-glow 2s infinite; }
+    .animate-paw-track { animation: paw-track 2s ease-in-out infinite; }
+    .animate-cloud-rain { animation: cloud-rain 2s infinite; }
+ 
+    .perspective-1000 { perspective: 1000px; }
+    .transform-gpu { transform: translate3d(0, 0, 0); }
+    .rounded-4xl { border-radius: 2rem; }
+    .shadow-3xl { box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25); }
+    .shadow-4xl { box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.25); }
+    .backdrop-blur-2xl { backdrop-filter: blur(40px); }
+ 
+    .bg-premium-blue { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .bg-premium-purple { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    .bg-premium-green { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+  </style>
 </head>
 <body class="tips-page">
   <div class="top-bar">
@@ -15,114 +188,280 @@
       <i class="fas fa-arrow-left"></i> Back to Dashboard
     </button>
   </div>
- 
   <main>
-    <section>
-      <h2><i class="fas fa-suitcase heading-icon"></i> Top Tips for Smart Travel</h2>
-      <div class="category category-packing">
-        <h3><i class="fas fa-suitcase-rolling"></i> Packing</h3>
-        <ul>
-          <li data-details="Pack only essentials like versatile clothing and travel-sized toiletries to stay mobile.">
-            Travel light to move freely.
-            <span class="details">Pack only essentials like versatile clothing and travel-sized toiletries to stay mobile.</span>
-          </li>
-          <li data-details="Keep toiletries, electronics, and documents in separate cubes for quick access.">
-            Use packing cubes to organize your luggage.
-            <span class="details">Keep toiletries, electronics, and documents in separate cubes for quick access.</span>
-          </li>
-          <li data-details="Pack layers and weather-appropriate gear based on the destination’s forecast.">
-            Check the weather forecast before you pack.
-            <span class="details">Pack layers and weather-appropriate gear based on the destination’s forecast.</span>
-          </li>
-        </ul>
-      </div>
-      <div class="category category-tech">
-        <h3><i class="fas fa-plug"></i> Tech</h3>
-        <ul>
-          <li data-details="Ensure your devices stay powered for navigation and communication.">
-            Always carry a portable charger.
-            <span class="details">Ensure your devices stay powered for navigation and communication.</span>
-          </li>
-          <li data-details="Store copies on your phone or cloud in case of loss or theft.">
-            Keep digital copies of important documents.
-            <span class="details">Store copies on your phone or cloud in case of loss or theft.</span>
-          </li>
-          <li data-details="Use apps like Google Maps or Maps.me for navigation without internet.">
-            Download offline maps for your destination.
-            <span class="details">Use apps like Google Maps or Maps.me for navigation without internet.</span>
-          </li>
-          <li data-details="A flashlight is useful during outages or for navigating dark areas.">
-            Be aware of scheduled power outages and carry a flashlight or power bank.
-            <span class="details">A flashlight is useful during outages or for navigating dark areas.</span>
-          </li>
-        </ul>
-      </div>
-      <div class="category category-safety">
-        <h3><i class="fas fa-shield-alt"></i> Safety</h3>
-        <ul>
-          <li data-details="Stick to well-lit, populated areas to reduce risks.">
-            Avoid walking alone at night in unfamiliar areas.
-            <span class="details">Stick to well-lit, populated areas to reduce risks.</span>
-          </li>
-          <li data-details="Use trusted apps like Uber or Bolt for safe rides.">
-            Use reputable transport services such as ride-hailing apps.
-            <span class="details">Use trusted apps like Uber or Bolt for safe rides.</span>
-          </li>
-          <li data-details="Use a money belt or hidden pouch in busy tourist spots.">
-            Stay alert and keep your belongings secure in crowded areas.
-            <span class="details">Use a money belt or hidden pouch in busy tourist spots.</span>
-          </li>
-        </ul>
-      </div>
-      <div class="category category-culture-finance">
-        <h3><i class="fas fa-globe"></i> Culture & Finance</h3>
-        <ul>
-          <li data-details="Learn greetings like ‘hello’ or ‘thank you’ to connect with locals.">
-            Learn basic phrases in the local language.
-            <span class="details">Learn greetings like ‘hello’ or ‘thank you’ to connect with locals.</span>
-          </li>
-          <li data-details="Inform your bank to avoid card blocks due to international transactions.">
-            Notify your bank about your travel plans.
-            <span class="details">Inform your bank to avoid card blocks due to international transactions.</span>
-          </li>
-          <li data-details="Carry small denominations for markets or rural areas.">
-            Keep some cash on hand for places that don’t accept cards.
-            <span class="details">Carry small denominations for markets or rural areas.</span>
-          </li>
-          <li data-details="Explore street food or local restaurants for authentic flavors.">
-            Try local foods to enrich your travel experience.
-            <span class="details">Explore street food or local restaurants for authentic flavors.</span>
-          </li>
-        </ul>
-      </div>
-      <div class="category category-nature">
-        <h3><i class="fas fa-paw"></i> Nature</h3>
-        <ul>
-          <li data-details="Follow park guidelines to stay safe and protect animals.">
-            Respect wildlife and follow safety rules when visiting nature reserves.
-            <span class="details">Follow park guidelines to stay safe and protect animals.</span>
-          </li>
-        </ul>
-      </div>
-      <button class="back-to-top-btn">
-        <i class="fas fa-arrow-up"></i> Back to Top
-      </button>
-    </section>
+    <div id="root"></div>
   </main>
+  <script type="text/babel">
+    const { useState, useEffect, memo } = React;
  
-  <script>
-    document.querySelectorAll('li').forEach(item => {
-      item.addEventListener('click', () => {
-        const details = item.querySelector('.details');
-        if (details) {
-          details.classList.toggle('visible');
+    const tipsData = {
+      Packing: [
+        { tip: "Travel light to move freely.", details: "Pack only essentials like versatile clothing and travel-sized toiletries to stay mobile." },
+        { tip: "Use packing cubes to organize your luggage.", details: "Keep toiletries, electronics, and documents in separate cubes for quick access." },
+        { tip: "Check the weather forecast before you pack.", details: "Pack layers and weather-appropriate gear based on the destination’s forecast." }
+      ],
+      Tech: [
+        { tip: "Always carry a portable charger.", details: "Ensure your devices stay powered for navigation and communication." },
+        { tip: "Keep digital copies of important documents.", details: "Store copies on your phone or cloud in case of loss or theft." },
+        { tip: "Download offline maps for your destination.", details: "Use apps like Google Maps or Maps.me for navigation without internet." },
+        { tip: "Be aware of scheduled power outages and carry a flashlight or power bank.", details: "A flashlight is useful during outages or for navigating dark areas." }
+      ],
+      Safety: [
+        { tip: "Avoid walking alone at night in unfamiliar areas.", details: "Stick to well-lit, populated areas to reduce risks." },
+        { tip: "Use reputable transport services such as ride-hailing apps.", details: "Use trusted apps like Uber or Bolt for safe rides." },
+        { tip: "Stay alert and keep your belongings secure in crowded areas.", details: "Use a money belt or hidden pouch in busy tourist spots." }
+      ],
+      "Culture & Finance": [
+        { tip: "Learn basic phrases in the local language.", details: "Learn greetings like ‘hello’ or ‘thank you’ to connect with locals." },
+        { tip: "Notify your bank about your travel plans.", details: "Inform your bank to avoid card blocks due to international transactions." },
+        { tip: "Keep some cash on hand for places that don’t accept cards.", details: "Carry small denominations for markets or rural areas." },
+        { tip: "Try local foods to enrich your travel experience.", details: "Explore street food or local restaurants for authentic flavors." }
+      ],
+      Nature: [
+        { tip: "Respect wildlife and follow safety rules when visiting nature reserves.", details: "Follow park guidelines to stay safe and protect animals." }
+      ]
+    };
+ 
+    const getSpecialEffects = (category) => {
+      const effects = {
+        "Packing": "animate-car-move",
+        "Tech": "animate-utensil-shine",
+        "Safety": "animate-shield-glow",
+        "Culture & Finance": "animate-globe-spin",
+        "Nature": "animate-paw-track"
+      };
+      return effects[category] || "";
+    };
+ 
+    const CategoryIcon = memo(({ category }) => {
+      const iconConfig = {
+        "Packing": {
+          icon: "fas fa-suitcase-rolling",
+          gradient: "from-orange-500 via-amber-400 to-yellow-300",
+          hoverGradient: "from-orange-600 via-amber-500 to-yellow-400",
+          bg: "bg-gradient-to-br from-orange-50 to-amber-50",
+          accent: "#F59E0B"
+        },
+        "Tech": {
+          icon: "fas fa-plug",
+          gradient: "from-blue-500 via-indigo-500 to-purple-400",
+          hoverGradient: "from-blue-600 via-indigo-600 to-purple-500",
+          bg: "bg-gradient-to-br from-blue-50 to-indigo-50",
+          accent: "#3B82F6"
+        },
+        "Safety": {
+          icon: "fas fa-shield-alt",
+          gradient: "from-emerald-500 via-teal-400 to-green-300",
+          hoverGradient: "from-emerald-600 via-teal-500 to-green-400",
+          bg: "bg-gradient-to-br from-emerald-50 to-teal-50",
+          accent: "#10B981"
+        },
+        "Culture & Finance": {
+          icon: "fas fa-globe",
+          gradient: "from-indigo-500 via-blue-400 to-cyan-300",
+          hoverGradient: "from-indigo-600 via-blue-500 to-cyan-400",
+          bg: "bg-gradient-to-br from-indigo-50 to-blue-50",
+          accent: "#3B82F6"
+        },
+        "Nature": {
+          icon: "fas fa-paw",
+          gradient: "from-green-500 via-emerald-400 to-teal-300",
+          hoverGradient: "from-green-600 via-emerald-500 to-teal-400",
+          bg: "bg-gradient-to-br from-emerald-50 to-green-50",
+          accent: "#10B981"
+         },
+        "Heading": {
+          icon: "fas fa-suitcase",
+          gradient: "from-blue-500 via-cyan-400 to-teal-300",
+          hoverGradient: "from-blue-600 via-cyan-500 to-teal-400",
+          bg: "bg-gradient-to-br from-blue-50 to-cyan-50",
+          accent: "#06B6D4"
         }
-      });
+      };
+ 
+      const config = iconConfig[category] || {
+        icon: "fas fa-info-circle",
+        gradient: "from-gray-500 to-gray-400",
+        hoverGradient: "from-gray-600 to-gray-500",
+        bg: "bg-gray-50",
+        accent: "#6B7280"
+      };
+ 
+      const [isPressed, setIsPressed] = useState(false);
+      const [isHovered, setIsHovered] = useState(false);
+      const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+ 
+      const handleMouseDown = () => {
+        setIsPressed(true);
+        setTimeout(() => setIsPressed(false), 150);
+      };
+ 
+      const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+        const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+        setMousePos({ x: x * 20, y: y * 20 });
+      };
+ 
+      const handleMouseLeave = () => {
+        setMousePos({ x: 0, y: 0 });
+        setIsHovered(false);
+      };
+ 
+      return (
+        <div
+          className={`relative w-16 h-16 group cursor-pointer perspective-1000 select-none icon-container ${getSpecialEffects(category)}`}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={handleMouseLeave}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          role="img"
+          aria-label={category}
+        >
+          <div className={`absolute -inset-2 rounded-full bg-gradient-to-r ${config.gradient} opacity-0 group-hover:opacity-20 scale-90 group-hover:scale-110 transition-all duration-700 ease-out animate-spin-slow`} />
+          <div className="absolute -inset-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+            <div className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${config.gradient} animate-ping`} style={{ top: '10%', left: '20%', animationDelay: '0s' }} />
+            <div className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${config.gradient} animate-ping`} style={{ top: '80%', right: '15%', animationDelay: '0.3s' }} />
+            <div className={`absolute w-1 h-1 rounded-full bg-gradient-to-r ${config.gradient} animate-ping`} style={{ bottom: '20%', left: '10%', animationDelay: '0.6s' }} />
+          </div>
+          {isPressed && (
+            <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${config.gradient} animate-ping opacity-75 scale-150`} />
+          )}
+          <div
+            className={`absolute inset-2 rounded-3xl bg-gradient-to-br ${config.gradient} opacity-10 transition-all duration-300`}
+            style={{ transform: `translate(${mousePos.x * 0.1}px, ${mousePos.y * 0.1}px) rotateX(${mousePos.y * 0.5}deg) rotateY(${mousePos.x * 0.5}deg)` }}
+          />
+          <div
+            className={`absolute inset-1 rounded-3xl bg-gradient-to-br ${config.gradient} opacity-20 transition-all duration-300`}
+            style={{ transform: `translate(${mousePos.x * 0.2}px, ${mousePos.y * 0.2}px) rotateX(${mousePos.y}deg) rotateY(${mousePos.x}deg)` }}
+          />
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id={`gradient-${category}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3B82F6" />
+                <stop offset="100%" stopColor="#06B6D4" />
+              </linearGradient>
+            </defs>
+            <path
+              className="transition-all duration-700 ease-out group-hover:scale-110"
+              d="M32,8 C45,8 56,19 56,32 C56,45 45,56 32,56 C19,56 8,45 8,32 C8,19 19,8 32,8 Z"
+              fill={`url(#gradient-${category})`}
+              opacity="0.1"
+            />
+            <path
+              className="transition-all duration-700 ease-out opacity-0 group-hover:opacity-20"
+              d="M32,12 C42,12 50,20 50,30 C50,40 42,48 32,48 C22,48 14,40 14,30 C14,20 22,12 32,12 Z"
+              fill={`url(#gradient-${category})`}
+            />
+          </svg>
+          <div
+            className={`
+              relative w-full h-full rounded-4xl ${config.bg} flex items-center justify-center
+              shadow-2xl group-hover:shadow-4xl transform transition-all duration-200 ease-out
+              ${isPressed ? 'scale-95 shadow-lg brightness-95' : isHovered ? 'scale-110 -translate-y-4 shadow-3xl' : ''}
+              border-2 border-white/50 backdrop-blur-2xl transform-gpu animate-float-complex
+            `}
+            style={{
+              transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px) rotateX(${mousePos.y * 1.5}deg) rotateY(${mousePos.x * 1.5}deg) translateZ(20px)`,
+              transformStyle: 'preserve-3d',
+              backfaceVisibility: 'hidden'
+            }}
+          >
+            <div className={`absolute inset-0 rounded-4xl bg-gradient-to-br ${config.hoverGradient} opacity-0 group-hover:opacity-15 transition-opacity duration-300 animate-gradient-shift`} />
+            <div className={`absolute inset-0 rounded-4xl bg-gradient-to-r from-transparent via-white/30 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out skew-x-12`} />
+            <div className={`absolute inset-0 rounded-4xl bg-gradient-to-br ${config.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm`} />
+            <div className={`absolute inset-1 rounded-4xl bg-gradient-to-br from-gray-900 to-black z-10`} />
+            <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${config.gradient} opacity-20 transition-all duration-700 ease-out group-hover:rounded-2xl group-hover:scale-110 group-hover:opacity-30 group-hover:animate-pulse`} />
+            <div className={`absolute inset-2 rounded-full bg-gradient-to-br ${config.gradient} opacity-10 transition-all duration-500 ease-out delay-100 group-hover:rounded-xl group-hover:scale-125 group-hover:opacity-20`} />
+            <i
+              className={`
+                ${config.icon} relative z-20 bg-gradient-to-br ${config.gradient}
+                bg-clip-text text-transparent drop-shadow-2xl transition-all duration-300 ease-out
+                ${isPressed ? 'scale-90 text-2xl' : isHovered ? 'scale-130 text-3xl' : 'text-2xl'}
+                filter ${isHovered ? 'brightness-110 contrast-110 drop-shadow-[0_0_20px_currentColor]' : 'drop-shadow-[0_0_10px_currentColor]'}
+              `}
+              style={{
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: `0 0 20px ${config.accent}40`,
+                transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px) rotateX(${mousePos.y * 2}deg) rotateY(${mousePos.x * 2}deg) translateZ(40px)`
+              }}
+            />
+            <div className={`absolute inset-0 rounded-4xl bg-gradient-to-br ${config.gradient} opacity-0 group-hover:opacity-30 blur-2xl scale-125 transition-all duration-500`} />
+            <div className={`absolute inset-0 rounded-4xl bg-gradient-to-br ${config.gradient} opacity-0 group-hover:opacity-20 blur-3xl scale-150 transition-all duration-700 animate-pulse-slow`} />
+          </div>
+        </div>
+      );
     });
  
-    document.querySelector('.back-to-top-btn').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    const SmartTravelTips = () => {
+      const [openDetails, setOpenDetails] = useState({});
+ 
+      const toggleDetails = (category, index) => {
+        setOpenDetails(prev => ({
+          ...prev,
+          [`${category}-${index}`]: !prev[`${category}-${index}`]
+        }));
+      };
+ 
+      const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+ 
+      useEffect(() => {
+        const preloadHoverEffects = () => {
+          const preloader = document.createElement('div');
+          preloader.className = 'opacity-0 absolute -z-50';
+          preloader.innerHTML = `
+            <div className="shadow-3xl shadow-4xl backdrop-blur-2xl"></div>
+          `;
+          document.body.appendChild(preloader);
+          setTimeout(() => document.body.removeChild(preloader), 100);
+        };
+        preloadHoverEffects();
+      }, []);
+ 
+      return (
+        <section>
+          <h2>
+            <span className="heading-icon"><CategoryIcon category="Heading" /></span>
+            Top Tips for Smart Travel
+          </h2>
+          {Object.entries(tipsData).map(([category, tips]) => (
+            <div key={category} className={`category category-${category.toLowerCase().replace(' & ', '-')}`}>
+              <h3>
+                <span className="category-icon"><CategoryIcon category={category} /></span>
+                {category}
+              </h3>
+              <ul>
+                {tips.map((tip, index) => (
+                  <li
+                    key={index}
+                    onClick={() => toggleDetails(category, index)}
+                    data-details={tip.details}
+                    className="cursor-pointer"
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={(e) => e.key === 'Enter' && toggleDetails(category, index)}
+                  >
+                    {tip.tip}
+                    <span className={`details ${openDetails[`${category}-${index}`] ? 'visible' : ''}`}>
+                      {tip.details}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <button className="back-to-top-btn" onClick={scrollToTop}>
+            <i className="fas fa-arrow-up"></i> Back to Top
+          </button>
+        </section>
+      );
+    };
+ 
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<SmartTravelTips />);
   </script>
 </body>
 </html>

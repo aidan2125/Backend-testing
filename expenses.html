@@ -17,76 +17,84 @@
     </button>
   </div>
  
-  <!-- Dashboard container moved down with margin -->
-  <div class="dashboard-container">
-    <header>
-      <h1>Expense Tracker</h1>
-    </header>
+  <!-- Page Container -->
+  <div class="page-container">
+    <!-- Dashboard container moved down with margin -->
+    <div class="dashboard-container">
+      <header>
+        <h1>Expense Tracker</h1>
+      </header>
  
-    <main>
-      <!-- INTRO TEXT -->
-      <section class="intro-section">
-        <p>Track and manage your expenses below. Stay on top of your budget during your travels.</p>
-      </section>
+      <main>
+        <!-- INTRO TEXT -->
+        <section class="intro-section">
+          <p>Track and manage your expenses below. Stay on top of your budget during your travels.</p>
+        </section>
  
-      <!-- EXPENSE FORM SECTION -->
-      <section class="form-section">
-        <form id="expense-category">
-          <input type="text" id="expense-name" placeholder="Expense Name" required />
-          <input type="number" id="expense-amount" placeholder="Amount" required />
+        <!-- EXPENSE FORM SECTION -->
+        <section class="form-section">
+          <form id="expense-category">
+            <input type="text" id="expense-name" placeholder="Expense Name" required />
+            <input type="number" id="expense-amount" placeholder="Amount" required />
  
-          <select id="expense-category" name="category">
-            <option value="accommodation">Accommodation</option>
-            <option value="food">Food</option>
-            <option value="entertainment">Entertainment</option>
-            <option value="others">Others</option>
-          </select>
+            <select id="expense-category" name="category">
+              <option value="accommodation">Accommodation</option>
+              <option value="food">Food</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="others">Others</option>
+            </select>
  
-          <input type="text" id="expense-location" placeholder="Location (optional)" />
-          <input type="datetime-local" id="expense-date" placeholder="Date of Expense" />
+            <input type="text" id="expense-location" placeholder="Location (optional)" />
+            <input type="datetime-local" id="expense-date" placeholder="Date of Expense" />
  
-          <input type="hidden" id="trip-id" />
-          <input type="hidden" id="profile-id" />
-          <button type="submit">Add Expense</button>
-        </form>
-      </section>
+            <input type="hidden" id="trip-id" />
+            <input type="hidden" id="profile-id" />
+            <button type="submit">Add Expense</button>
+          </form>
+        </section>
  
-      <!-- EXPENSES TOTAL & LIST SECTION -->
-      <section class="list-section">
-        <div id="expense-error" class="error-message"></div>
-        <div id="expense-list"></div>
-        <div class="total-container">
-          <h3>Total Expenses: R<span id="total-amount"></span></h3>
-        </div>
-      </section>
- 
-      <!-- CURRENCY CONVERTER SECTION -->
-      <hr />
-      <section class="currency-converter">
-        <h2>Currency Converter</h2>
- 
-        <form action="javascript:;" onsubmit="convert(event)">
-          <fieldset>
-            <label for="valueField">Amount</label>
-            <input type="number" placeholder="0" id="valueField" required>
- 
-            <label for="fromCurrency">From Currency</label>
-            <select id="fromCurrency"></select>
- 
-            <label for="toCurrency">To Currency</label>
-            <select id="toCurrency"></select>
- 
-            <input id="convertBtn" class="button-primary" type="submit" value="Convert">
-            <button id="reset-button" type="button" onclick="resetConverter()">Reset</button>
-          </fieldset>
-          <div id="loading-container" style="display: none;">
-            <div class="loader"></div>
-            <div>Calculating ...</div>
+        <!-- EXPENSES TOTAL & LIST SECTION -->
+        <section class="list-section">
+          <div id="expense-error" class="error-message"></div>
+          <div id="expense-list"></div>
+          <div class="total-container">
+            <h3>Total Expenses: R<span id="total-amount"></span></h3>
           </div>
-          <div id="result"></div>
-        </form>
-      </section>
-    </main>
+        </section>
+ 
+        <!-- CURRENCY CONVERTER SECTION -->
+        <hr />
+        <section class="currency-converter">
+          <h2>Currency Converter</h2>
+ 
+          <form action="javascript:;" onsubmit="convert(event)">
+            <fieldset>
+              <label for="valueField">Amount</label>
+              <input type="number" placeholder="0" id="valueField" required>
+ 
+              <label for="fromCurrency">From Currency</label>
+              <select id="fromCurrency"></select>
+ 
+              <label for="toCurrency">To Currency</label>
+              <select id="toCurrency"></select>
+ 
+              <input id="convertBtn" class="button-primary" type="submit" value="Convert">
+              <button id="reset-button" type="button" onclick="resetConverter()">Reset</button>
+            </fieldset>
+            <div id="loading-container" style="display: none;">
+              <div class="loader"></div>
+              <div>Calculating ...</div>
+            </div>
+            <div id="result"></div>
+          </form>
+        </section>
+      </main>
+    </div>
+ 
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 Travique. All rights reserved.</p>
+    </footer>
   </div>
  
   <script type="module" src="js/auth.js"></script>

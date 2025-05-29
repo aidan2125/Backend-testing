@@ -6,14 +6,11 @@
   <title>Travique | Trip Planner</title>
   <link rel="stylesheet" href="css/trip-planner.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <header class="planner-header">
     <h1 class="logo">Plan Your Trip</h1>
-    <button id="top-right-back-btn" class="back-btn" onclick="location.href='dashboard.html'">
-      <i class="fas fa-arrow-left"></i> Back to Dashboard
-    </button>
+    <button class="back-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
   </header>
  
   <main>
@@ -22,24 +19,16 @@
       <input id="to-address" type="text" placeholder="Destination" />
       <textarea id="activities" placeholder="Activities you plan to do (comma separated)"></textarea>
  
-      <!-- Trip Dates -->
-      <label for="trip-start">Trip Start Date:</label>
-      <input id="trip-start" type="date" />
- 
-      <label for="trip-end">Trip End Date:</label>
-      <input id="trip-end" type="date" />
- 
       <select id="travel-mode">
         <option value="DRIVING">Driving</option>
         <option value="TRANSIT">Public Transit</option>
         <option value="FLYING">Flying</option>
       </select>
  
-    <!-- Only relevant changes shown below -->
-<div class="btn-group">
-  <button id="route-btn">Get Route</button>
-  <button id="save-btn">Save Trip</button>
-</div>
+      <div class="btn-group">
+        <button id="route-btn">Get Route</button>
+        <button id="save-trip-btn">Save Trip</button>
+      </div>
     </section>
  
     <div id="map"></div>
@@ -51,23 +40,15 @@
         <p id="summary-text"></p>
         <div class="btn-group">
           <button id="confirm-save-btn">Confirm & Save</button>
-          <button onclick="document.getElementById('trip-summary-modal').style.display = 'none'">Cancel</button>
+          <button onclick="document.getElementById('trip-summary-modal').classList.add('hidden')">Cancel</button>
         </div>
       </div>
     </div>
   </main>
  
-
-  <script src="js/map.js"></script>
-<script
-  async
-  defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap">
-</script>
-
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap" async defer></script>
   <script type="module" src="js/trip.js"></script>
-  <script type="module" src="js/liveLocation.js"></script>
-  
+  <script type="module" src="/js/liveLocation.js"></script>
 </body>
 </html>
-
+ 

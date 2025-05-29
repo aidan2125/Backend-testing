@@ -29,27 +29,27 @@ window.initHubMap = async function () {
     const mapElement = document.getElementById("map");
     if (!mapElement) return;
     map = new google.maps.Map(mapElement, { center: defaultLocation, zoom: 14 });
- 
+
     // Places Service for food search
     service = new google.maps.places.PlacesService(map);
- 
+
     // Autocomplete for food destination
     const destinationInput = document.getElementById("destination");
     if (destinationInput) {
         autocomplete = new google.maps.places.Autocomplete(destinationInput);
         autocomplete.setFields(['geometry', 'name']);
     }
- 
+
     // Directions for trip planning
     directionsService = new google.maps.DirectionsService();
     directionsRenderer = new google.maps.DirectionsRenderer();
     directionsRenderer.setMap(map);
- 
+
     fromInput = document.getElementById("from-address");
     toInput = document.getElementById("to-address");
     if (fromInput) new google.maps.places.Autocomplete(fromInput);
     if (toInput) new google.maps.places.Autocomplete(toInput);
- 
+
     // Autofill "From" input using live location
     if (fromInput) {
         try {
@@ -57,7 +57,7 @@ window.initHubMap = async function () {
             fromInput.value = address;
         } catch (err) { console.warn("Live location not available:", err); }
     }
- 
+
     // Try to get user's current location for food
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
@@ -74,9 +74,18 @@ window.initHubMap = async function () {
     } else {
         handleLocationError(false);
     }
- 
+
     setupEventListeners();
- 
+
+    // Initialize new features
+    await loadUpcomingTrips();
+    setupItineraryBuilder();
+    setupLiveTravelAssistant();
+    setupPackingChecklist();
+    setupBudgetSnapshot();
+    setupTripNotes();
+    setupQuickAccessButtons();
+
     // Trip event listeners
     const routeBtn = document.getElementById("route-btn");
     if (routeBtn) routeBtn.addEventListener("click", handleRoute);
@@ -84,10 +93,137 @@ window.initHubMap = async function () {
     if (saveBtn) saveBtn.addEventListener("click", () => {
         document.dispatchEvent(new CustomEvent('saveTripRequested', { detail: currentTrip }));
     });
- 
+
     // Expense event listeners
     setupExpenseListeners();
 };
+
+// --- New Feature Implementations ---
+
+// Load upcoming trips from Supabase and display in Trip Overview
+async function loadUpcomingTrips() {
+    const container = document.getElementById('upcoming-trips-container');
+    if (!container) return;
+    container.innerHTML = '<p>Loading upcoming trips...</p>';
+    try {
+        const user = await getCurrentUser();
+        if (!user) {
+            container.innerHTML = '<p>Please log in to see your upcoming trips.</p>';
+            return;
+        }
+        const { data, error } = await supabase
+            .from('trip_planner')
+            .select('*')
+            .eq('profileID', user.profileID)
+            .order('start_date', { ascending: true })
+            .limit(5);
+        if (error) {
+            container.innerHTML = '<p>Error loading trips.</p>';
+            return;
+        }
+        if (!data || data.length === 0) {
+            container.innerHTML = '<p>No upcoming trips found.</p>';
+            return;
+        }
+        container.innerHTML = '';
+        data.forEach(trip => {
+            const tripDiv = document.createElement('div');
+            tripDiv.className = 'trip-item';
+            const startDate = new Date(trip.start_date);
+            const now = new Date();
+            const diffTime = startDate - now;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            tripDiv.innerHTML = `
+                <strong>${trip.destination}</strong> - ${startDate.toDateString()}<br/>
+                Mode: ${trip.travel_mode || 'N/A'}<br/>
+                Estimated Cost: $${trip.estimated_cost || 'N/A'}<br/>
+                Activities: ${trip.activities || 'None'}<br/>
+                <em>Trip starts in ${diffDays} day${diffDays !== 1 ? 's' : ''}</em>
+            `;
+            container.appendChild(tripDiv);
+        });
+    } catch (err) {
+        container.innerHTML = '<p>Error loading trips.</p>';
+        console.error(err);
+    }
+}
+
+// Placeholder functions for other new features
+function setupItineraryBuilder() {
+    // TODO: Implement drag-and-drop itinerary builder
+}
+
+function setupLiveTravelAssistant() {
+    // TODO: Implement live travel assistant widgets
+}
+
+function setupPackingChecklist() {
+    // TODO: Implement trip packing checklist with auto-generated items
+}
+
+function setupBudgetSnapshot() {
+    // TODO: Implement budget snapshot pulling data from expenses
+}
+
+function setupTripNotes() {
+    const saveBtn = document.getElementById('save-notes-btn');
+    const notesTextarea = document.getElementById('trip-notes-textarea');
+    if (!saveBtn || !notesTextarea) return;
+
+    saveBtn.addEventListener('click', async () => {
+        const notes = notesTextarea.value.trim();
+        if (!notes) {
+            alert('Please enter some notes before saving.');
+            return;
+        }
+        try {
+            const user = await getCurrentUser();
+            if (!user) {
+                alert('Please log in to save notes.');
+                return;
+            }
+            const { error } = await supabase
+                .from('trip_notes')
+                .upsert({ profileID: user.profileID, notes }, { onConflict: 'profileID' });
+            if (error) {
+                alert('Failed to save notes.');
+            } else {
+                alert('Notes saved successfully.');
+            }
+        } catch (err) {
+            alert('Error saving notes.');
+            console.error(err);
+        }
+    });
+}
+
+function setupQuickAccessButtons() {
+    const weatherBtn = document.getElementById('weather-btn');
+    const currencyBtn = document.getElementById('currency-btn');
+    const foodBtn = document.getElementById('food-btn');
+    const emergencyBtn = document.getElementById('emergency-btn');
+
+    if (weatherBtn) {
+        weatherBtn.addEventListener('click', () => {
+            window.location.href = 'weather.html';
+        });
+    }
+    if (currencyBtn) {
+        currencyBtn.addEventListener('click', () => {
+            window.location.href = 'converter.html';
+        });
+    }
+    if (foodBtn) {
+        foodBtn.addEventListener('click', () => {
+            window.location.href = 'food.html';
+        });
+    }
+    if (emergencyBtn) {
+        emergencyBtn.addEventListener('click', () => {
+            alert('Emergency Numbers:\nPolice: 911\nAmbulance: 911\nFire: 911');
+        });
+    }
+}
  
 // --- Food Functions ---
 function setupEventListeners() {

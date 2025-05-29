@@ -2,57 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>User Profile | Travique</title>
   <link rel="stylesheet" href="css/profile.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
 </head>
 <body>
-  <!-- Background Shapes -->
-  <div class="bg-shape bg-shape-1"></div>
-  <div class="bg-shape bg-shape-2"></div>
- 
-  <!-- Top Right Back to Dashboard Button -->
-  <button id="top-right-back-btn" class="back-btn" onclick="location.href='dashboard.html'">
+  <!-- Back Button -->
+  <button
+    id="top-right-back-btn"
+    class="back-btn"
+    onclick="location.href='dashboard.html'"
+  >
     <i class="fas fa-arrow-left"></i> Back to Dashboard
   </button>
- 
+
+  <!-- Profile Container -->
   <div class="profile-container">
     <div class="profile-header">
-      <div class="profile-picture">
-        <img id="profile-img" src="default-avatar.png" alt="Profile Picture" />
-        <label for="profile-pic-upload" class="upload-label">
+      <label for="profile-pic-upload" class="profile-picture">
+        <img
+          id="profile-img"
+          src="images/default-avatar.png"
+          alt="Profile Picture"
+          onerror="this.onerror=null; this.src='images/default-avatar.png';"
+        />
+        <div class="upload-label">
           <i class="fas fa-camera"></i> Change Picture
-        </label>
-        <input type="file" id="profile-pic-upload" accept="image/*" hidden />
-      </div>
+        </div>
+      </label>
+      <input type="file" id="profile-pic-upload" accept="image/*" hidden />
       <h1>User Profile</h1>
     </div>
-   
+
+    <!-- Display User Info (read-only) -->
     <div class="user-info">
       <div class="profile-field">
         <span class="profile-label"><i class="fas fa-user"></i> First Name:</span>
-        <span class="profile-value" id="name"><span class="loading"></span><span class="loading-text">Loading...</span></span>
+        <span class="profile-value" id="name">Loading...</span>
       </div>
       <div class="profile-field">
         <span class="profile-label"><i class="fas fa-user"></i> Last Name:</span>
-        <span class="profile-value" id="surname"><span class="loading"></span><span class="loading-text">Loading...</span></span>
+        <span class="profile-value" id="surname">Loading...</span>
       </div>
       <div class="profile-field">
         <span class="profile-label"><i class="fas fa-envelope"></i> Email Address:</span>
-        <span class="profile-value" id="email"><span class="loading"></span><span class="loading-text">Loading...</span></span>
+        <span class="profile-value" id="email">Loading...</span>
       </div>
       <div class="profile-field">
         <span class="profile-label"><i class="fas fa-phone"></i> Phone Number:</span>
-        <span class="profile-value" id="phone"><span class="loading"></span><span class="loading-text">Loading...</span></span>
+        <span class="profile-value" id="phone">Loading...</span>
       </div>
     </div>
+
+    <!-- Editable Profile Form -->
+    <div class="edit-profile">
+      <h2>Edit Profile</h2>
+      <div class="form-group">
+        <label for="edit-name">First Name:</label>
+        <input type="text" id="edit-name" placeholder="Enter first name" />
+      </div>
+      <div class="form-group">
+        <label for="edit-surname">Last Name:</label>
+        <input type="text" id="edit-surname" placeholder="Enter last name" />
+      </div>
+      <div class="form-group">
+        <label for="edit-email">Email:</label>
+        <input type="email" id="edit-email" placeholder="Enter email" />
+      </div>
+      <div class="form-group">
+        <label for="edit-phone">Phone Number:</label>
+        <input type="tel" id="edit-phone" placeholder="Enter phone number" />
+      </div>
+      <button id="save-profile-btn">Save Changes</button>
+    </div>
   </div>
- 
+
   <script type="module" src="js/profile.js"></script>
 </body>
 </html>
- 

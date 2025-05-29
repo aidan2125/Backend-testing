@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Fullscreen Weather App</title>
   <link rel="stylesheet" href="css/weather.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+ 
     body.clear-day { background: linear-gradient(to top, #87CEEB, #FFD93B); }
     body.clear-night { background: linear-gradient(to top, #001848, #0a2a66); }
     body.clouds { background: linear-gradient(to top, #757f9a, #d7dde8); color: #333; }
@@ -15,63 +16,27 @@
     body.snow { background: linear-gradient(to top, #83a4d4, #b6fbff); color: #222; }
     body.thunderstorm { background: linear-gradient(to top, #373b44, #4286f4); }
     body.mist, body.fog { background: linear-gradient(to top, #606c88, #3f4c6b); }
-
+ 
     .forecast-container::-webkit-scrollbar { display: none; }
     .forecast-container { -ms-overflow-style: none; scrollbar-width: none; }
-
-    /* Modal Styles */
-    #forecastModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 50;
-    }
-    #forecastModalContent {
-      background: #1e293b; /* Tailwind slate-800 */
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
-      max-width: 400px;
-      width: 90%;
-      position: relative;
-      box-shadow: 0 0 15px rgba(255,255,255,0.2);
-    }
-    #forecastModalClose {
-      position: absolute;
-      top: 10px; right: 15px;
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 24px;
-      cursor: pointer;
-
-      #forecastModalClose {
-  z-index: 1; /* make sure it's above content, but not floating in body */
-}
-    }
+ 
   </style>
 </head>
 <body class="min-h-screen w-screen flex items-start justify-center font-sans">
-
+ 
   <!-- Top Bar -->
   <div class="top-bar">
-    <h2 class="text-white text-2xl font-semibold">Weather Forecast</h2>
-  </div>
-
-  <!-- Back Button -->
-  <button class="absolute top-6 left-6 z-50 px-4 py-2 bg-white/20 hover:bg-white/40 text-white rounded-md text-sm flex items-center gap-2 backdrop-blur-md shadow-md"
-     onclick="window.location.href='dashboard.html'"> 
-    <i class="fas fa-arrow-left"></i> Back to Dashboard
-  </button> 
-
+  <h2>Weather Forecast</h2>
+</div>
+ 
+<!-- Back Button (Outside the top-bar, absolutely positioned) -->
+<button class="back-btn" onclick="window.location.href='dashboard.html'">
+  <i class="fas fa-arrow-left"></i> Back to Dashboard
+</button>
+ 
   <!-- Main Content -->
-  <div class="w-full h-full pt-28 px-6 pb-6 max-w-4xl">
-
+  <div class="w-full h-full pt-28 px-6 pb-6">
+ 
     <!-- Header: Current Weather Info -->
     <header class="text-center mb-6">
       <h1 id="cityName" class="text-4xl font-bold text-white">Loading...</h1>
@@ -80,31 +45,31 @@
       <div id="humidity" class="text-xl mt-1 text-white">Humidity: --%</div>
       <div id="weatherIcon" class="mx-auto w-24 h-24 mt-4"></div>
     </header>
-
+ 
     <!-- Search Section -->
     <div class="search-section flex gap-4 mb-4">
       <input type="text" id="cityInput" placeholder="Enter city..." autocomplete="off"
-             class="flex-1 p-3 rounded-lg text-black outline-none shadow-inner" />
+             class="flex-1 p-3 rounded-lg text-black outline-none shadow-inner">
       <button id="searchButton" class="px-6 py-3 bg-white/30 hover:bg-white/50 transition rounded-lg font-bold text-white">
         Search
       </button>
     </div>
-
+ 
     <!-- Saved Cities -->
     <ul id="cityListContainer" class="flex gap-3 mb-4 overflow-x-auto text-white"></ul>
-
-   
-
+ 
     <!-- Forecast Container -->
     <div class="forecast-container flex gap-4 overflow-x-auto text-white mb-24">
       <!-- Forecast items will be dynamically inserted here -->
     </div>
-
-    <div id="error-message" class="text-red-500 text-sm mt-2"></div>
+ 
+    <!-- Forecast Container Fixed at Bottom -->
+    <div class="forecast-container fixed bottom-0 left-0 w-full px-6 py-4 bg-black/30 backdrop-blur-md flex justify-between gap-4 text-white z-40">
+      <!-- Dynamic forecast items can appear here if needed -->
+    </div>
+ 
   </div>
-
-  
-
+ 
   <script src="js/weather.js"></script>
 </body>
 </html>

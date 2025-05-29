@@ -22,151 +22,67 @@
       <i class="fas fa-arrow-left"></i> Back to Dashboard
     </button>
   </div>
- 
+
   <main>
-    <!-- Trip Planner Section -->
-    <section id="trip-planner-preview">
-      <h2>Quick Trip Planner</h2>
-      <form id="trip-form">
-        <input type="text" id="from-address" placeholder="From" required />
-        <input type="text" id="to-address" placeholder="To" required />
-        <select id="travel-mode">
-          <option value="DRIVING">Driving</option>
-          <option value="TRANSIT">Transit</option>
-          <option value="FLYING">Flying</option>
-          <option value="Walking">Walking</option>
-        </select>
-        <input type="text" id="activities" placeholder="Activities (optional)" />
-        <button type="button" id="route-btn">Plan Route</button>
-      </form>
-      <div id="trip-preview-container"></div>
-      <div id="trip-summary-modal" style="display:none;">
-        <pre id="summary-text"></pre>
-        <button id="confirm-save-btn">Save Trip</button>
-      </div>
-      <div id="map" style="width:100%;height:300px;margin-top:10px;"></div>
-    </section>
- 
-    <!-- Expense Tracker Section -->
-    <section id="expense-tracker-preview">
-      <header>
-        <h2>Control Expenses</h2>
-      </header>
- 
-      <div class="dashboard-container">
-        <header>
-          <h1>Expense Tracker</h1>
-        </header>
- 
-        <main>
-          <!-- INTRO TEXT -->
-          <section class="intro-section">
-            <p>Track and manage your expenses below. Stay on top of your budget during your travels.</p>
-          </section>
- 
-          <!-- EXPENSE FORM SECTION -->
-          <section class="form-section">
-            <form id="expense-category">
-              <input type="text" id="expense-name" placeholder="Expense Name" required />
-              <input type="number" id="expense-amount" placeholder="Amount" required />
- 
-              <select id="expense-category" name="category">
-                <option value="accommodation">Accommodation</option>
-                <option value="food">Food</option>
-                <option value="entertainment">Entertainment</option>
-                <option value="others">Others</option>
-              </select>
- 
-              <input type="text" id="expense-location" placeholder="Location (optional)" />
-              <input type="datetime-local" id="expense-date" placeholder="Date of Expense" />
- 
-              <input type="hidden" id="trip-id" />
-              <input type="hidden" id="profile-id" />
-              <button type="submit">Add Expense</button>
-            </form>
-          </section>
- 
-          <!-- EXPENSES TOTAL & LIST SECTION -->
-          <section class="list-section">
-            <div id="expense-error" class="error-message"></div>
-            <div id="expense-list"></div>
-            <div class="total-container">
-              <h3>Total Expenses: R<span id="total-amount"></span></h3>
-            </div>
-          </section>
- 
-          <!-- CURRENCY CONVERTER SECTION -->
-          <hr />
-          <section class="currency-converter">
-            <h2>Currency Converter</h2>
- 
-            <form action="javascript:;" onsubmit="convert(event)">
-              <fieldset>
-                <label for="valueField">Amount</label>
-                <input type="number" placeholder="0" id="valueField" required>
- 
-                <label for="fromCurrency">From Currency</label>
-                <select id="fromCurrency"></select>
- 
-                <label for="toCurrency">To Currency</label>
-                <select id="toCurrency"></select>
- 
-                <input id="convertBtn" class="button-primary" type="submit" value="Convert">
-                <button id="reset-button" type="button" onclick="resetConverter()">Reset</button>
-              </fieldset>
-              <div id="loading-container" style="display: none;">
-                <div class="loader"></div>
-                <div>Calculating ...</div>
-              </div>
-              <div id="result"></div>
-            </form>
-          </section>
-        </main>
+    <!-- Trip Overview Dashboard -->
+    <section id="trip-overview" class="dashboard-section">
+      <h2>Trip Overview</h2>
+      <div id="upcoming-trips-container">
+        <!-- Upcoming trips will be dynamically loaded here -->
       </div>
     </section>
- 
-    <!-- Food Finder Section -->
-    <section id="food-finder-preview">
-      <h2>Food Near You</h2>
-      <div>
-        <button id="current-tab" class="active">Near Me</button>
-        <button id="destination-tab">At Destination</button>
+
+    <!-- Itinerary Timeline -->
+    <section id="itinerary-timeline" class="dashboard-section">
+      <h2>Itinerary Timeline</h2>
+      <div id="itinerary-builder">
+        <!-- Drag-and-drop itinerary builder will be here -->
       </div>
-      <div id="current-location-search">
-        <label>
-          Cuisine:
-          <input type="text" id="cuisine-type" placeholder="e.g. Italian" />
-        </label>
-        <label>
-          Distance (meters):
-          <input type="number" id="distance" value="1000" />
-        </label>
-        <button id="search-current">Search</button>
-      </div>
-      <div id="destination-search" style="display:none;">
-        <input type="text" id="destination" placeholder="Enter destination" />
-        <label>
-          Cuisine:
-          <input type="text" id="dest-cuisine-type" placeholder="e.g. Sushi" />
-        </label>
-        <label>
-          Distance (meters):
-          <input type="number" id="dest-distance" value="1000" />
-        </label>
-        <button id="search-destination">Search</button>
-      </div>
-      <div id="loading" style="display:none;">Loading...</div>
-      <ul id="results-list"></ul>
     </section>
- 
-    <!-- Saved Trips Preview -->
-    <section id="saved-trips-preview">
-      <h2>My Latest Trip</h2>
-      <div id="latest-trip-container"></div>
+
+    <!-- Live Travel Assistant Widgets -->
+    <section id="live-travel-assistant" class="dashboard-section">
+      <h2>Live Travel Assistant</h2>
+      <div id="travel-alerts">
+        <!-- Alerts and reminders will be shown here -->
+      </div>
+    </section>
+
+    <!-- Trip Packing & Checklist -->
+    <section id="packing-checklist" class="dashboard-section">
+      <h2>Trip Packing & Checklist</h2>
+      <ul id="packing-list">
+        <!-- Auto-generated packing items with checkboxes -->
+      </ul>
+    </section>
+
+    <!-- Budget Snapshot -->
+    <section id="budget-snapshot" class="dashboard-section">
+      <h2>Budget Snapshot</h2>
+      <div id="budget-summary">
+        <!-- Summary of expenses and budget -->
+      </div>
+    </section>
+
+    <!-- Trip Notes & Journal -->
+    <section id="trip-notes" class="dashboard-section">
+      <h2>Trip Notes & Journal</h2>
+      <textarea id="trip-notes-textarea" placeholder="Write your trip notes here..."></textarea>
+      <button id="save-notes-btn">Save Notes</button>
+    </section>
+
+    <!-- Quick Access Buttons -->
+    <section id="quick-access" class="dashboard-section">
+      <h2>Quick Access</h2>
+      <div class="quick-buttons">
+        <button id="weather-btn"><i class="fas fa-cloud-sun"></i> Weather</button>
+        <button id="currency-btn"><i class="fas fa-dollar-sign"></i> Currency Converter</button>
+        <button id="food-btn"><i class="fas fa-utensils"></i> Food Suggestions</button>
+        <button id="emergency-btn"><i class="fas fa-phone-alt"></i> Emergency Numbers</button>
+      </div>
     </section>
   </main>
- 
-  <!-- Google Maps API (replace YOUR_API_KEY with your actual key) -->
+
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initHubMap"></script>
   <script type="module" src="js/hub.js"></script>
   <script src="js/converter.js"></script>
