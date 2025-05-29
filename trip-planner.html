@@ -8,22 +8,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header class="planner-header">
-    <h1 class="logo">Plan Your Trip</h1>
+  <header class="top-bar">
+    <h2>Plan Your Trip</h2>
     <button class="back-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
   </header>
  
   <main>
     <section class="route-form">
-      <input id="from-address" type="text" placeholder="Your current location" />
-      <input id="to-address" type="text" placeholder="Destination" />
-      <textarea id="activities" placeholder="Activities you plan to do (comma separated)"></textarea>
- 
-      <select id="travel-mode">
-        <option value="DRIVING">Driving</option>
-        <option value="TRANSIT">Public Transit</option>
-        <option value="FLYING">Flying</option>
-      </select>
+      <div class="form-group">
+        <label for="from-address">Your Current Location</label>
+        <input id="from-address" type="text" placeholder="Your current location" />
+      </div>
+      <div class="form-group">
+        <label for="to-address">Destination</label>
+        <input id="to-address" type="text" placeholder="Destination" />
+      </div>
+      <div class="form-group full-width">
+        <label for="activities">Activities</label>
+        <textarea id="activities" placeholder="Activities you plan to do (comma separated)"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="travel-mode">Travel Mode</label>
+        <select id="travel-mode">
+          <option value="DRIVING">Driving</option>
+          <option value="TRANSIT">Public Transit</option>
+          <option value="FLYING">Flying</option>
+        </select>
+      </div>
  
       <div class="btn-group">
         <button id="route-btn">Get Route</button>
@@ -46,9 +57,12 @@
     </div>
   </main>
  
+  <footer>
+    <p>© 2025 Travique. All rights reserved.</p>
+  </footer>
+ 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap" async defer></script>
   <script type="module" src="js/trip.js"></script>
   <script type="module" src="/js/liveLocation.js"></script>
 </body>
 </html>
- 

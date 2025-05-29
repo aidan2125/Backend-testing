@@ -22,7 +22,7 @@
     <button id="close-sidebar">×</button>
     <ul>
       <li><a href="profile.html"><i class="fas fa-user"></i> User Profile</a></li>
-      <li><a href="hub.html"><i class="fas fa-compass"></i> Travique Hub</a></li>
+     <li><a href="hub.html"><i class="fas fa-compass"></i> Travique Hub</a></li>
       <li><a href="trip-planner.html"><i class="fas fa-map"></i> Trip Planner</a></li>
       <li><a href="expenses.html"><i class="fas fa-money-bill"></i>Expense Tracker</a></li>
       <li><a href="health.html"><i class="fas fa-heartbeat"></i>Health & Fitness</a></li>
@@ -347,6 +347,27 @@
         hamburger.style.display = 'flex';
       }
     });
+  </script>
+
+<script>
+  window.addEventListener('mouseover', initLandbot, { once: true });
+  window.addEventListener('touchstart', initLandbot, { once: true });
+  var myLandbot;
+  function initLandbot() {
+    if (!myLandbot) {
+      var s = document.createElement('script');
+      s.type = "module"
+      s.async = true;
+      s.addEventListener('load', function() {
+        var myLandbot = new Landbot.Livechat({
+          configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2963391-C493S9Z59CSWDRQE/index.json',
+        });
+      });
+      s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
+      var x = document.getElementsByTagName('script')[0];
+      x.parentNode.insertBefore(s, x);
+    }
+  }
   </script>
  
   <script type="module" src="js/dashboard.js"></script>

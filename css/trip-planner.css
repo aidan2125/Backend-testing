@@ -4,7 +4,7 @@
   padding: 0;
   box-sizing: border-box;
 }
- 
+
 :root {
   --primary: #246071;
   --primary-dark: #1b4a58;
@@ -17,14 +17,17 @@
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   --transition: all 0.3s ease;
 }
- 
+
 body {
   font-family: 'Inter', sans-serif;
   background: var(--background);
   color: var(--text-dark);
   line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
- 
+
 /* Footer */
 footer {
   width: 100vw;
@@ -32,14 +35,14 @@ footer {
   color: white;
   text-align: center;
   padding: 1rem;
-  margin-top: auto;
-  position: relative;
+  position: fixed;
+  bottom: 0;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
 }
- 
+
 /* Top Bar */
 .top-bar {
   width: 100vw;
@@ -56,41 +59,41 @@ footer {
   left: 0;
   z-index: 999;
 }
- 
+
 .top-bar h2 {
   margin: 0;
   font-size: 1.8rem;
 }
- 
+
 /* Form Section */
 .route-form {
   max-width: 800px;
   margin: 140px auto 40px;
   padding: 0 5%;
 }
- 
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 }
- 
+
 .form-group {
   display: flex;
   flex-direction: column;
 }
- 
+
 .form-group.full-width {
   grid-column: 1 / -1;
 }
- 
+
 .route-form label {
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--primary);
   margin-bottom: 8px;
 }
- 
+
 .route-form input,
 .route-form textarea,
 .route-form select {
@@ -101,12 +104,12 @@ footer {
   background-color: #f9fafb;
   transition: var(--transition);
 }
- 
+
 .route-form textarea {
   resize: vertical;
   min-height: 100px;
 }
- 
+
 .route-form input:focus,
 .route-form textarea:focus,
 .route-form select:focus {
@@ -115,7 +118,7 @@ footer {
   box-shadow: 0 0 0 3px rgba(36, 96, 113, 0.1);
   outline: none;
 }
- 
+
 /* Button Group */
 .btn-group {
   display: flex;
@@ -123,7 +126,7 @@ footer {
   margin-top: 24px;
   justify-content: center;
 }
- 
+
 .btn-group button {
   padding: 16px 32px;
   border: none;
@@ -135,12 +138,12 @@ footer {
   cursor: pointer;
   transition: var(--transition);
 }
- 
+
 .btn-group button:hover {
   background-color: var(--primary-dark);
   transform: translateY(-2px);
 }
- 
+
 /* Map Display */
 #map {
   width: 100%;
@@ -151,7 +154,7 @@ footer {
   border: 2px solid var(--primary-light);
   box-shadow: var(--shadow);
 }
- 
+
 /* Modal */
 .modal {
   position: fixed;
@@ -165,11 +168,11 @@ footer {
   justify-content: center;
   z-index: 1000;
 }
- 
+
 .modal.hidden {
   display: none;
 }
- 
+
 .modal-content {
   background-color: var(--white);
   padding: 32px;
@@ -180,25 +183,25 @@ footer {
   box-shadow: var(--shadow);
   animation: fadeIn 0.5s ease;
 }
- 
+
 .modal-content h2 {
   margin-bottom: 20px;
   color: var(--primary);
   font-weight: 700;
   font-size: 1.8rem;
 }
- 
+
 .modal-content p {
   margin-bottom: 30px;
   color: var(--text-light);
   font-size: 1rem;
 }
- 
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
- 
+
 /* Back Button */
 .back-btn {
   position: absolute;
@@ -218,83 +221,69 @@ footer {
   display: flex;
   align-items: center;
 }
- 
+
 .back-btn i {
   margin-right: 8px;
 }
- 
+
 .back-btn:hover {
   background-color: var(--accent);
   color: white;
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(255, 140, 66, 0.3);
 }
- 
+
 /* Responsive */
 @media (max-width: 1024px) {
   .top-bar {
     padding: 16px 1.5rem;
   }
- 
+
   .top-bar h2 {
     font-size: 1.6rem;
   }
- 
+
   .route-form {
     margin: 120px auto 30px;
     padding: 0 4%;
   }
- 
+
   #map {
     height: 500px;
   }
- 
+
   footer {
-    width: 100vw;
-    padding: 1rem;
     font-size: 0.85rem;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
   }
 }
- 
+
 @media (max-width: 768px) {
   .top-bar {
     padding: 14px 1rem;
   }
- 
+
   .top-bar h2 {
     font-size: 1.4rem;
   }
- 
+
   .form-grid {
     grid-template-columns: 1fr;
   }
- 
+
   .route-form {
     margin: 100px auto 20px;
     padding: 0 3%;
   }
- 
+
   #map {
     height: 400px;
   }
- 
+
   footer {
-    width: 100vw;
-    padding: 1rem;
     font-size: 0.85rem;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
   }
 }
- 
+
 @media (max-width: 600px) {
   .top-bar {
     padding: 12px 1rem;
@@ -302,40 +291,33 @@ footer {
     gap: 10px;
     align-items: center;
   }
- 
+
   .top-bar h2 {
     font-size: 1.2rem;
     text-align: center;
   }
- 
+
   .back-btn {
     position: static;
     padding: 10px 20px;
     font-size: 0.9rem;
   }
- 
+
   .route-form {
     margin: 80px auto 20px;
     padding: 0 2%;
   }
- 
+
   #map {
     height: 300px;
   }
- 
+
   .modal-content {
     padding: 20px;
     width: 95%;
   }
- 
+
   footer {
-    width: 100vw;
-    padding: 1rem;
     font-size: 0.8rem;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
   }
 }

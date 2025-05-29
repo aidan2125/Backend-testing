@@ -2,89 +2,183 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Travique Hub</title>
-  <link rel="stylesheet" href="css/hub.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+ 
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="css/hub.css"/>
+ 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet"/>
+ 
+  <!-- FontAwesome icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
 </head>
 <body>
   <div class="top-bar">
     <h2>Travique Hub</h2>
     <div class="nav-container">
       <nav>
-        <a href="expenses.html">Expense Tracker</a>
-        <a href="food.html">Food Finder</a>
-        <a href="trip-planner.html">Trip Planner</a>
+        <a href="expenses.html" id="expense-link">Expense Tracker</a>
+        <a href="food.html" class="btn" id="food-link">Food Finder</a>
+        <a href="trip-planner.html" id="trip-planner-link">Trip Planner</a>
       </nav>
     </div>
     <button class="back-btn" onclick="window.location.href='dashboard.html'">
       <i class="fas fa-arrow-left"></i> Back to Dashboard
     </button>
   </div>
-
-  <main>
-    <!-- Trip Overview Dashboard -->
-    <section id="trip-overview" class="dashboard-section">
-      <h2>Trip Overview</h2>
-      <div id="upcoming-trips-container">
-        <!-- Upcoming trips will be dynamically loaded here -->
-      </div>
-    </section>
-
-    <!-- Itinerary Timeline -->
-    <section id="itinerary-timeline" class="dashboard-section">
-      <h2>Itinerary Timeline</h2>
-      <div id="itinerary-builder">
-        <!-- Drag-and-drop itinerary builder will be here -->
-      </div>
-    </section>
-
-    <!-- Live Travel Assistant Widgets -->
-    <section id="live-travel-assistant" class="dashboard-section">
-      <h2>Live Travel Assistant</h2>
-      <div id="travel-alerts">
-        <!-- Alerts and reminders will be shown here -->
-      </div>
-    </section>
-
-    <!-- Trip Packing & Checklist -->
-    <section id="packing-checklist" class="dashboard-section">
-      <h2>Trip Packing & Checklist</h2>
-      <ul id="packing-list">
-        <!-- Auto-generated packing items with checkboxes -->
-      </ul>
-    </section>
-
-    <!-- Budget Snapshot -->
-    <section id="budget-snapshot" class="dashboard-section">
-      <h2>Budget Snapshot</h2>
-      <div id="budget-summary">
-        <!-- Summary of expenses and budget -->
-      </div>
-    </section>
-
-    <!-- Trip Notes & Journal -->
-    <section id="trip-notes" class="dashboard-section">
-      <h2>Trip Notes & Journal</h2>
-      <textarea id="trip-notes-textarea" placeholder="Write your trip notes here..."></textarea>
-      <button id="save-notes-btn">Save Notes</button>
-    </section>
-
-    <!-- Quick Access Buttons -->
-    <section id="quick-access" class="dashboard-section">
-      <h2>Quick Access</h2>
-      <div class="quick-buttons">
-        <button id="weather-btn"><i class="fas fa-cloud-sun"></i> Weather</button>
-        <button id="currency-btn"><i class="fas fa-dollar-sign"></i> Currency Converter</button>
-        <button id="food-btn"><i class="fas fa-utensils"></i> Food Suggestions</button>
-        <button id="emergency-btn"><i class="fas fa-phone-alt"></i> Emergency Numbers</button>
-      </div>
-    </section>
-  </main>
-
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initHubMap"></script>
+ 
+  <div class="dashboard-container">
+    <main>
+      <section id="trip-overview" class="dashboard-section">
+        <h2>Trip Overview</h2>
+        <div id="upcoming-trips-container">
+          <!-- Upcoming trips dynamically loaded here -->
+        </div>
+      </section>
+ 
+      <section id="itinerary-timeline" class="dashboard-section">
+        <h2>Itinerary Timeline</h2>
+        <div id="itinerary-builder">
+          <!-- Drag-and-drop itinerary builder -->
+        </div>
+      </section>
+ 
+      <section id="live-travel-assistant" class="dashboard-section">
+        <h2>Live Travel Assistant</h2>
+        <div id="travel-alerts">
+          <!-- Travel alerts and reminders -->
+        </div>
+      </section>
+ 
+      <section id="packing-checklist" class="dashboard-section">
+        <h2>Trip Packing & Checklist</h2>
+        <ul id="packing-list">
+          <!-- Packing items with checkboxes -->
+        </ul>
+      </section>
+ 
+      <section id="budget-snapshot" class="dashboard-section">
+        <h2>Budget Snapshot</h2>
+        <div id="budget-summary">
+          <!-- Expense summary -->
+        </div>
+      </section>
+ 
+      <section id="trip-notes" class="dashboard-section">
+        <h2>Trip Notes & Journal</h2>
+        <textarea id="trip-notes-textarea" placeholder="Write your trip notes here..."></textarea>
+        <button id="save-notes-btn">Save Notes</button>
+      </section>
+ 
+      <section id="quick-access" class="dashboard-section">
+        <h2>Quick Access</h2>
+        <div class="quick-buttons">
+          <button id="weather-btn"><i class="fas fa-cloud-sun"></i> Weather</button>
+          <button id="currency-btn"><i class="fas fa-dollar-sign"></i> Currency Converter</button>
+          <button id="food-btn"><i class="fas fa-utensils"></i> Food Suggestions</button>
+          <button id="emergency-btn"><i class="fas fa-phone-alt"></i> Emergency Numbers</button>
+        </div>
+      </section>
+ 
+      <section id="map-location" class="dashboard-section">
+        <h2>Map & Location</h2>
+        <div class="map-controls">
+          <div class="tab-buttons">
+            <button id="current-tab" class="active" type="button">Current Location</button>
+            <button id="destination-tab" type="button">Destination</button>
+          </div>
+          <input id="current-location-search" type="text" placeholder="Enter current location" />
+          <input id="destination-search" type="text" placeholder="Enter destination" style="display:none;" />
+        </div>
+        <div id="map" style="height: 400px; width: 100%; margin-top: 10px;"></div>
+      </section>
+ 
+      <section id="currency-converter" class="dashboard-section">
+        <h2>Currency Converter</h2>
+        <form id="converter-form" class="converter-form">
+          <input type="number" id="convert-amount" placeholder="Amount" min="0" step="any" required />
+          <select id="from-currency"></select>
+          <span>to</span>
+          <select id="to-currency"></select>
+          <button id="convertBtn" type="submit">Convert</button>
+        </form>
+        <div id="converted-result" style="margin-top:1em;font-weight:bold;"></div>
+      </section>
+    </main>
+  </div>
+ 
+  <div id="trip-summary-modal" style="display:none;">
+    <pre id="summary-text"></pre>
+    <button id="confirm-save-btn">Save Trip</button>
+    <button onclick="document.getElementById('trip-summary-modal').style.display='none'">Close</button>
+  </div>
+ 
+  <div id="trip-planner-form" style="display:none;">
+    <label for="from-address">From:</label>
+    <input type="text" id="from-address" placeholder="Starting location" />
+ 
+    <label for="to-address">To:</label>
+    <input type="text" id="to-address" placeholder="Destination" />
+ 
+    <label for="travel-mode">Travel Mode:</label>
+    <select id="travel-mode">
+      <option value="DRIVING">Driving</option>
+      <option value="TRANSIT">Transit</option>
+      <option value="FLYING">Flying</option>
+    </select>
+ 
+    <label for="activities">Planned Activities (comma separated):</label>
+    <input type="text" id="activities" placeholder="e.g., Hiking, Museums, Food Tour" />
+ 
+    <button id="route-btn">Show Route / Estimate</button>
+  </div>
+ 
+  <!-- Google Maps API -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initHubMap">
+  </script>
+ 
+  <!-- JavaScript -->
   <script type="module" src="js/hub.js"></script>
-  <script src="js/converter.js"></script>
+  <script>
+    // Quick Access Button Functionality
+    document.addEventListener('DOMContentLoaded', function () {
+      // Weather button: open weather.html
+      document.getElementById('weather-btn')?.addEventListener('click', function () {
+        window.location.href = 'weather.html';
+      });
+ 
+      // Currency button: scroll to in-page converter
+      document.getElementById('currency-btn')?.addEventListener('click', function () {
+        document.getElementById('currency-converter')?.scrollIntoView({ behavior: 'smooth' });
+      });
+ 
+      // Food button: open food.html
+      document.getElementById('food-btn')?.addEventListener('click', function () {
+        window.location.href = 'food.html';
+      });
+ 
+      // Emergency button: show alert
+      document.getElementById('emergency-btn')?.addEventListener('click', function () {
+        alert('Emergency Numbers:\nPolice: 911\nAmbulance: 911\nFire: 911');
+      });
+ 
+      // Optionally, link nav bar buttons as well
+      document.getElementById('expense-link')?.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'expenses.html';
+      });
+      document.getElementById('food-link')?.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'food.html';
+      });
+      document.getElementById('trip-planner-link')?.addEventListener('click', function (e) {
+        e.preventDefault();
+        window.location.href = 'trip-planner.html';
+      });
+    });
+  </script>
 </body>
 </html>
