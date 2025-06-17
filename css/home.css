@@ -189,8 +189,48 @@ body {
 
 /* Hero Section */
 .hero {
-  padding: 80px 0;
-  background: linear-gradient(135deg, #e0f7fa, #ffffff);
+  padding: 100px 0;
+  background: linear-gradient(
+    135deg,
+    var(--pure-white) 0%,
+    rgba(33, 150, 243, 0.1) 25%,
+    rgba(255, 107, 53, 0.05) 50%,
+    rgba(33, 150, 243, 0.08) 75%,
+    var(--off-white) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(255, 107, 53, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 80%,
+      rgba(33, 150, 243, 0.1) 0%,
+      transparent 50%
+    );
+  animation: heroFloat 8s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
 }
 
 .hero-content {
@@ -201,6 +241,8 @@ body {
   width: 100%;
   padding: 0 20px;
   gap: 40px;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-text {
@@ -209,15 +251,39 @@ body {
 }
 
 .hero h2 {
-  font-size: 2.5rem;
-  color: #1b4a58;
-  margin-bottom: 20px;
+  font-size: 3rem;
+  background: linear-gradient(
+    45deg,
+    var(--primary-blue),
+    var(--primary-orange),
+    var(--dark-blue)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease-in-out infinite;
+  margin-bottom: 25px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+@keyframes gradientShift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .hero p {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 30px;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  margin-bottom: 35px;
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 .main-cta {
