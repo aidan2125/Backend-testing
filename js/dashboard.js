@@ -147,10 +147,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = safeGetElement("logout-btn");
   safeAddEventListener(logoutBtn, "click", async () => {
     try {
+      // Show loading state
+      if (logoutBtn) {
+        logoutBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> <span>Signing out...</span>';
+        logoutBtn.disabled = true;
+      }
+
       await supabase.auth.signOut();
       window.location.href = "index.html";
     } catch (error) {
       console.error("Logout error:", error);
+
+      // Reset button state
+      if (logoutBtn) {
+        logoutBtn.innerHTML =
+          '<i class="fas fa-sign-out-alt"></i> <span>Logout</span>';
+        logoutBtn.disabled = false;
+      }
+
+      // Handle logout error gracefully
+      if (error.message?.includes("Failed to fetch")) {
+        // If logout fails due to network, clear local session and redirect anyway
+        console.warn("Network issue during logout, clearing local session");
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.href = "index.html";
+      } else {
+        // Show error notification
+        showErrorNotification("Logout failed. Please try again.");
+      }
     }
   });
 
