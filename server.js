@@ -45,22 +45,19 @@ app.use(
 // Serve images
 app.use("/Images", express.static(path.join(__dirname, "Images")));
 
-// Fallback to index.html for SPA-style routing
-app.get("*", (req, res) => {
-  // If it's a request for a specific HTML file, serve it
-  if (req.path.endsWith(".html")) {
-    res.sendFile(path.join(__dirname, req.path));
-  } else if (req.path === "/") {
-    res.sendFile(path.join(__dirname, "index.html"));
-  } else {
-    // For other routes, try to find the file or fallback to index.html
-    const filePath = path.join(__dirname, req.path);
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        res.sendFile(path.join(__dirname, "index.html"));
-      }
-    });
-  }
+// Route for root
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// Route for HTML files
+app.get("/*.html", (req, res) => {
+  res.sendFile(path.join(__dirname, req.path));
+});
+
+// Handle 404 for other routes
+app.use((req, res) => {
+  res.status(404).send("File not found");
 });
 
 app.listen(PORT, () => {
