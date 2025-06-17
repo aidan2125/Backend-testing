@@ -570,8 +570,8 @@ body.stormy {
 .map-btn.active,
 .chart-btn:hover,
 .map-btn:hover {
-  background: var(--primary-orange);
-  color: var(--pure-white);
+  background: var(--primary);
+  color: var(--white);
 }
 
 /* Hourly Forecast */
