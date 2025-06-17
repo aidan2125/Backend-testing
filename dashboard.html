@@ -535,6 +535,36 @@
       if (statsSection) {
         statsObserver.observe(statsSection);
       }
+
+      // Safe anchor link handling to prevent querySelector errors
+      document.addEventListener("click", function (e) {
+        if (e.target.tagName === "A") {
+          const href = e.target.getAttribute("href");
+
+          // Prevent errors from invalid selectors
+          if (href === "#" || href === "" || !href) {
+            e.preventDefault();
+            return false;
+          }
+
+          // Handle anchor links safely
+          if (href && href.startsWith("#") && href.length > 1) {
+            try {
+              const target = document.querySelector(href);
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            } catch (error) {
+              console.warn("Invalid selector:", href);
+              e.preventDefault();
+            }
+          }
+        }
+      });
     </script>
 
     <script type="module" src="js/dashboard.js"></script>
