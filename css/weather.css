@@ -865,7 +865,7 @@ body.stormy {
 }
 
 .toggle-switch input:checked + label {
-  background-color: var(--primary-orange);
+  background-color: var(--primary);
 }
 
 .toggle-switch input:checked + label:before {
