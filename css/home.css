@@ -5,11 +5,30 @@
   box-sizing: border-box;
 }
 
+/* Core Color Variables */
+:root {
+  --primary-orange: #ff6b35;
+  --light-orange: #ff8a65;
+  --dark-orange: #e8540e;
+  --primary-blue: #2196f3;
+  --dark-blue: #1976d2;
+  --light-blue: #64b5f6;
+  --pure-white: #ffffff;
+  --off-white: #fafafa;
+  --text-dark: #2c3e50;
+  --text-light: #34495e;
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffffff;
-  color: #333;
+  background: linear-gradient(
+    135deg,
+    var(--pure-white) 0%,
+    var(--off-white) 100%
+  );
+  color: var(--text-dark);
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 /* Header Styling */
