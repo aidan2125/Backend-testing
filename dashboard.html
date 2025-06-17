@@ -536,33 +536,72 @@
         statsObserver.observe(statsSection);
       }
 
-      // Safe anchor link handling to prevent querySelector errors
-      document.addEventListener("click", function (e) {
-        if (e.target.tagName === "A") {
-          const href = e.target.getAttribute("href");
+      // Comprehensive error prevention for querySelector issues
 
-          // Prevent errors from invalid selectors
-          if (href === "#" || href === "" || !href) {
-            e.preventDefault();
-            return false;
+      // Override querySelector to prevent invalid selector errors
+      const originalQuerySelector = Document.prototype.querySelector;
+      Document.prototype.querySelector = function (selector) {
+        if (!selector || selector === "#" || selector === "") {
+          console.warn("Invalid selector prevented:", selector);
+          return null;
+        }
+        try {
+          return originalQuerySelector.call(this, selector);
+        } catch (error) {
+          console.warn("querySelector error prevented:", selector, error);
+          return null;
+        }
+      };
+
+      // Global click handler to prevent anchor link errors
+      document.addEventListener(
+        "click",
+        function (e) {
+          // Handle all anchor elements
+          let target = e.target;
+          while (target && target.tagName !== "A") {
+            target = target.parentElement;
           }
 
-          // Handle anchor links safely
-          if (href && href.startsWith("#") && href.length > 1) {
-            try {
-              const target = document.querySelector(href);
-              if (target) {
-                e.preventDefault();
-                target.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-              }
-            } catch (error) {
-              console.warn("Invalid selector:", href);
+          if (target && target.tagName === "A") {
+            const href = target.getAttribute("href");
+
+            // Prevent errors from invalid selectors
+            if (href === "#" || href === "" || !href) {
               e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }
+
+            // Handle anchor links safely
+            if (href && href.startsWith("#") && href.length > 1) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              try {
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                  targetElement.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }
+              } catch (error) {
+                console.warn("Invalid selector:", href, error);
+              }
+              return false;
             }
           }
+        },
+        true,
+      ); // Use capture phase to catch early
+
+      // Additional protection for any existing code that might be running
+      window.addEventListener("error", function (e) {
+        if (e.message && e.message.includes("not a valid selector")) {
+          console.warn("Selector error caught and prevented:", e);
+          e.preventDefault();
+          return true;
         }
       });
     </script>
