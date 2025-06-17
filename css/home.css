@@ -34,8 +34,41 @@ body {
 /* Header Styling */
 .landing-header {
   padding: 20px 40px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(
+    90deg,
+    var(--pure-white) 0%,
+    rgba(33, 150, 243, 0.05) 50%,
+    rgba(255, 107, 53, 0.05) 100%
+  );
+  box-shadow: 0 4px 20px rgba(33, 150, 243, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 107, 53, 0.1),
+    transparent
+  );
+  animation: headerShimmer 4s infinite;
+}
+
+@keyframes headerShimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 .header-wrapper {
@@ -43,6 +76,8 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
 }
 
 .logo-container {
@@ -53,14 +88,36 @@ body {
 
 .logo-text-large {
   font-size: 2rem;
-  color: #246071;
-  font-weight: bold;
+  background: linear-gradient(
+    45deg,
+    var(--primary-blue),
+    var(--primary-orange)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  transition: all 0.3s ease;
+}
+
+.logo-text-large:hover {
+  background: linear-gradient(
+    45deg,
+    var(--primary-orange),
+    var(--primary-blue)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: scale(1.05);
 }
 
 .header-logo-image {
   height: 50px;
   width: 50px;
   object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(33, 150, 243, 0.3));
 }
 
 /* Nav Buttons */
