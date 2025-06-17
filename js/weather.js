@@ -1,7 +1,7 @@
 // Modern Weather App JavaScript
 class WeatherApp {
   constructor() {
-    this.apiKey = "YOUR_OPENWEATHERMAP_API_KEY_HERE"; // Replace with your real OpenWeatherMap API key
+    this.apiKey = "86f6948b34f7cf32a95cacbb9bffa630"; // OpenWeatherMap API key
     this.currentCity = "Cape Town";
     this.temperatureUnit = "celsius";
     this.windUnit = "kmh";
