@@ -1,20 +1,16 @@
 /* Modern Weather App CSS */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap");
 
-/* CSS Variables */
+/* CSS Variables - Original Blue Theme */
 :root {
-  --primary-orange: #ff6b35;
-  --light-orange: #ff8a65;
-  --dark-orange: #e8540e;
-  --primary-blue: #2196f3;
-  --dark-blue: #1976d2;
-  --light-blue: #64b5f6;
-  --pure-white: #ffffff;
-  --off-white: #fafafa;
-  --light-gray: #f5f7fa;
-  --text-dark: #2c3e50;
-  --text-light: #34495e;
-  --text-muted: #7f8c8d;
+  --primary: #246071;
+  --primary-dark: #1b4a58;
+  --primary-light: #e6f3f7;
+  --accent: #ff8c42;
+  --text-dark: #333;
+  --text-light: #666;
+  --background: #f7fbff;
+  --white: #ffffff;
   --shadow-light: 0 2px 10px rgba(0, 0, 0, 0.05);
   --shadow-medium: 0 8px 25px rgba(0, 0, 0, 0.1);
   --shadow-heavy: 0 15px 35px rgba(0, 0, 0, 0.15);
