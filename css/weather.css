@@ -823,7 +823,7 @@ body.stormy {
 .radio-option input[type="radio"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--primary-orange);
+  accent-color: var(--primary);
 }
 
 /* Toggle Switch */
