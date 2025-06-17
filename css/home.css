@@ -803,19 +803,16 @@ body.menu-open {
   animation: dynamicPulse 4s infinite;
 }
 
-/* Features Section */
+/* Modern Dynamic Features Section */
 .features {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  padding: 80px 20px;
+  padding: 120px 0;
   background: linear-gradient(
     180deg,
     var(--pure-white) 0%,
     var(--off-white) 100%
   );
   position: relative;
+  overflow: hidden;
 }
 
 .features::before {
@@ -837,6 +834,61 @@ body.menu-open {
       transparent 50%
     );
   pointer-events: none;
+  animation: backgroundFloat 8s ease-in-out infinite;
+}
+
+@keyframes backgroundFloat {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+.features-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-title {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 800;
+  background: linear-gradient(
+    45deg,
+    var(--primary-orange),
+    var(--primary-blue)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.section-subtitle {
+  font-family: "Inter", sans-serif;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  font-weight: 500;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  position: relative;
+  z-index: 2;
 }
 
 .feature-card {
