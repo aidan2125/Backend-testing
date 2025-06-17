@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="css/home.css" />
   </head>
   <body>
-    <!-- Header Section -->
-    <header class="landing-header">
-      <div class="header-wrapper">
+    <!-- Dynamic Header Section -->
+    <header class="modern-header">
+      <nav class="nav-container">
         <div class="logo-container">
           <h1 class="logo-text-large">Travique</h1>
           <img
@@ -18,11 +18,61 @@
             class="header-logo-image"
           />
         </div>
-        <!--<div class="nav-buttons">
-        <a href="login.html" class="btn">Login</a>
-        <a href="signup.html" class="btn">Sign Up</a>
-      </div> -->
-      </div>
+
+        <!-- Desktop Navigation -->
+        <div class="desktop-nav">
+          <ul class="nav-menu">
+            <li><a href="#features" class="nav-link">Features</a></li>
+            <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+            <li><a href="trip-planner.html" class="nav-link">Plan Trip</a></li>
+            <li class="dropdown">
+              <a href="#" class="nav-link dropdown-toggle"
+                >More <span class="dropdown-arrow">▼</span></a
+              >
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="expenses.html" class="dropdown-link">Expenses</a>
+                </li>
+                <li><a href="health.html" class="dropdown-link">Health</a></li>
+                <li><a href="food.html" class="dropdown-link">Food</a></li>
+                <li>
+                  <a href="weather.html" class="dropdown-link">Weather</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="auth-buttons">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="signup.html" class="btn btn-primary">Sign Up</a>
+          </div>
+        </div>
+
+        <!-- Mobile Hamburger Menu -->
+        <div class="mobile-nav">
+          <button class="hamburger" id="hamburger-btn">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu" id="mobile-menu">
+          <div class="mobile-menu-content">
+            <a href="#features" class="mobile-nav-link">Features</a>
+            <a href="dashboard.html" class="mobile-nav-link">Dashboard</a>
+            <a href="trip-planner.html" class="mobile-nav-link">Plan Trip</a>
+            <a href="expenses.html" class="mobile-nav-link">Expenses</a>
+            <a href="health.html" class="mobile-nav-link">Health</a>
+            <a href="food.html" class="mobile-nav-link">Food</a>
+            <a href="weather.html" class="mobile-nav-link">Weather</a>
+            <div class="mobile-auth-buttons">
+              <a href="login.html" class="btn btn-outline">Login</a>
+              <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <!-- Hero Section -->
