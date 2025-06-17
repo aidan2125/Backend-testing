@@ -244,7 +244,8 @@ body.sidebar-open {
 .nav-menu {
   list-style: none;
   padding: 20px 0;
-  padding-bottom: 120px; /* Add bottom padding to prevent overlap with logout button */
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .nav-item {
