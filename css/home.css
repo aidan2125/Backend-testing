@@ -556,30 +556,53 @@ body {
 }
 
 .feature-card h3 {
-  color: #246071;
-  margin-bottom: 10px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  background: linear-gradient(45deg, var(--primary-orange), var(--dark-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 15px;
+  font-weight: 700;
+  font-size: 1.3rem;
+  transition: all 0.4s ease;
   position: relative;
   z-index: 2;
+}
+
+.feature-card:nth-child(even) h3 {
+  background: linear-gradient(45deg, var(--primary-blue), var(--dark-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .feature-card p {
-  color: #555;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
+  color: var(--text-light);
+  font-size: 1rem;
+  transition: all 0.4s ease;
   position: relative;
   z-index: 2;
+  line-height: 1.6;
 }
 
 .feature-card:hover h3 {
-  color: #1b4a58;
-  transform: translateY(-2px);
+  background: linear-gradient(45deg, var(--dark-orange), var(--primary-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transform: translateY(-3px) scale(1.05);
+}
+
+.feature-card:nth-child(even):hover h3 {
+  background: linear-gradient(45deg, var(--dark-blue), var(--primary-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .feature-card:hover p {
-  color: #333;
-  transform: translateY(-1px);
+  color: var(--text-dark);
+  transform: translateY(-2px);
+  font-weight: 500;
 }
 
 /* Footer */
