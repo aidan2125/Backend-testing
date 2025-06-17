@@ -1,375 +1,513 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Travique | Dashboard</title>
-  <link rel="stylesheet" href="css/dashboard.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-</head>
-<body>
-  <!-- Hamburger Button -->
-  <button id="hamburger">☰</button>
- 
-  <!-- User Profile Area -->
-  <div class="user-profile-area">
-    <p id="user-email">Loading...</p>
-  </div>
- 
-  <!-- Sidebar -->
-  <div id="sidebar">
-    <button id="close-sidebar">×</button>
-    <ul>
-      <li><a href="profile.html"><i class="fas fa-user"></i> User Profile</a></li>
-     <!-- <li><a href="hub.html"><i class="fas fa-compass"></i> Travique Hub</a></li>-->
-      <li><a href="trip-planner.html"><i class="fas fa-map"></i> Trip Planner</a></li>
-      <li><a href="expenses.html"><i class="fas fa-money-bill"></i>Expense Tracker</a></li>
-      <li><a href="health.html"><i class="fas fa-heartbeat"></i>Health & Fitness</a></li>
-      <li><a href="tips.html"><i class="fas fa-lightbulb"></i>Smart Travel Tips</a></li>
-      <li><a href="food.html"><i class="fas fa-utensils"></i>Food Finder</a></li>
-      <li><a href="weather.html"><i class="fas fa-cloud"></i>Weather</a></li>
-      <li><a href="saved_trips.html"><i class="fas fa-star"></i>Saved Trips</a></li>
-      <li id="logout-container"><button id="logout-btn"><i class="fas fa-sign-out-alt"></i>Logout</button></li>
-    </ul>
-  </div>
- 
-  <!-- Page Container to Ensure Footer Stays at Bottom -->
-  <div class="page-container">
-    <div class="dashboard-container">
-      <div class="name-center">Travique</div>
- 
-      <main>
-        <div class="cape-town-main-container" id="cape-town-container">
-          <h2>Cape Town</h2>
-          <p>Visit these popular destinations in Cape Town:</p>
- 
-          <div class="cape-town-container">
-            <section class="place">
-              <h3>V & A Waterfront</h3>
-              <div class="image-grid">
-                <div class="image-card">
-                  <img src="Images/Waterfront.jpg" alt="V & A Waterfront">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Waterfront.2.jpg" alt="V & A Waterfront">
-                </div>
-              </div>
-              <div class="place-info">
-                <p>At the V & A Waterfront in Cape Town, visitors can enjoy:</p>
-                <ul>
-                  <li>Shopping & Dining: Over 450 shops and 80 restaurants.</li>
-                  <li>Two Oceans Aquarium: See marine life like sharks and penguins.</li>
-                  <li>Zeitz MOCAA: Contemporary African art museum.</li>
-                  <li>Cape Wheel: Panoramic city and mountain views.</li>
-                  <li>Robben Island Tours: Historic ferry trip to Mandela’s prison.</li>
-                  <li>Harbor Cruises: Scenic boat rides.</li>
-                  <li>Battery Park: Outdoor fun with skateboarding and paddling.</li>
-                  <li>For more info, <a href="https://www.waterfront.co.za/" target="_blank">click here</a>.</li>
-                </ul>
-              </div>
-            </section>
- 
-            <section class="place">
-              <h3>Table Mountain</h3>
-              <div class="image-grid">
-                <div class="image-card">
-                  <img src="Images/Table-Mountain.jpg" alt="Table Mountain">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Mountain.jpg" alt="Table Mountain">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Mountain.2.jpg" alt="Table Mountain">
-                </div>
-              </div>
-              <div class="place-info">
-                <p>At Table Mountain, visitors can enjoy:</p>
-                <ul>
-                  <li>Ride the Cableway: Take the rotating cable car for stunning views on the way up.</li>
-                  <li>Hiking: Explore scenic trails like Platteklip Gorge or Skeleton Gorge.</li>
-                  <li>Enjoy the Views: Take in panoramic views of Cape Town, the ocean, and surrounding mountains.</li>
-                  <li>Photography: Capture breathtaking landscapes and wildlife.</li>
-                  <li>Spot Wildlife: Look out for dassies (rock hyrax), birds, and unique plant life.</li>
-                  <li>Picnicking: Relax and have a snack at the top with a view.</li>
-                  <li>Abseiling: For thrill-seekers, try abseiling off one of the world’s highest commercial descent points.</li>
-                  <li>For more info, <a href="https://www.tablemountain.net/" target="_blank">click here</a>.</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-          <div class="nav-buttons">
-            <button id="cape-town-next-btn">Go to Next</button>
-          </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travique | Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Modern Header -->
+    <header class="dashboard-header">
+      <div class="header-content">
+        <div class="logo-section">
+          <h1 class="logo-text">Travique</h1>
+          <span class="dashboard-subtitle">Your Travel Command Center</span>
         </div>
- 
-        <div class="johannesburg-main-container" id="johannesburg-container" style="display:none;">
-          <h2>Johannesburg</h2>
-          <p>Explore these popular destinations in Johannesburg:</p>
- 
-          <div class="johannesburg-container">
-            <section class="place">
-              <h3>Gold Reef City</h3>
-              <div class="image-grid">
-                <div class="image-card">
-                  <img src="Images/Gold-reef-city.webp" alt="Gold Reef City">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Fun.jpg" alt="Fun">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Fun.2.webp" alt="Fun 2 Webp">
-                </div>
-              </div>
-              <div class="place-info">
-                <p>At Gold Reef City in Johannesburg, visitors can:</p>
-                <ul>
-                  <li>Ride thrilling theme park rides like the Anaconda and Tower of Terror.</li>
-                  <li>Take an underground mine tour and see gold pouring demos.</li>
-                  <li>Play at the trampoline park, laser tag, and arcade.</li>
-                  <li>Watch movies in a Victorian-themed cinema.</li>
-                  <li>See live shows at the Lyric Theatre.</li>
-                  <li>Try their luck at the casino.</li>
-                  <li>Dine at various restaurants.</li>
-                  <li>Visit the Apartheid Museum nearby.</li>
-                  <li>For more info, <a href="https://www.goldreefcity.co.za/hotels/" target="_blank">click here</a>.</li>
-                </ul>
-              </div>
-            </section>
- 
-            <section class="place">
-              <h3>Sun City Resort</h3>
-              <div class="image-grid">
-                <div class="image-card">
-                  <img src="Images/Sun-City.jpg" alt="Sun City">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Sun-City.2.jpg" alt="Sun City 2">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Sun-City.3.jpg" alt="Sun City 3">
-                </div>
-              </div>
-              <div class="place-info">
-                <p>At Sun City, visitors can:</p>
-                <ul>
-                  <li>Relax at the Valley of Waves water park.</li>
-                  <li>Go on a Big 5 safari in Pilanesberg Game Reserve.</li>
-                  <li>Play golf at world-class courses.</li>
-                  <li>Explore the Maze of the Lost City.</li>
-                  <li>Try adventure activities like zip-lining and quad biking.</li>
-                  <li>Enjoy casino games and nightlife.</li>
-                  <li>Treat yourself at the spa.</li>
-                  <li>Shop and dine at various spots.</li>
-                  <li>Have fun with family-friendly attractions.</li>
-                  <li>For more info, <a href="https://www.suninternational.com/sun-city/" target="_blank">click here</a>.</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-          <div class="nav-buttons">
-            <button id="johannesburg-prev-btn">Go to Previous</button>
-            <button id="johannesburg-next-btn">Go to Next</button>
-          </div>
-        </div>
- 
-        <div class="mpumalanga-main-container" id="mpumalanga-container" style="display:none;">
-          <h2>Mpumalanga</h2>
-          <p>Explore these popular destinations in Mpumalanga:</p>
- 
-          <div class="mpumalanga-container">
-            <section class="place">
-              <h3>Kruger National Park</h3>
-              <div class="image-grid">
-                <div class="image-card">
-                  <img src="Images/Park.1.jpg" alt="Kruger National Park 1">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Park.2.jpg" alt="Kruger National Park 2">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Park.3.jpg" alt="Kruger National Park 3">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Park.4.jpeg" alt="Kruger National Park 4">
-                </div>
-              </div>
-              <div class="place-info">
-                <p>At Kruger National Park, visitors can:</p>
-                <ul>
-                  <li>Go on a Big 5 safari (lion, leopard, elephant, rhino, buffalo).</li>
-                  <li>Take a self-drive or guided game drive.</li>
-                  <li>Join a bush walk for a close-up wildlife experience.</li>
-                  <li>Enjoy birdwatching with over 500 bird species.</li>
-                  <li>Stay in lodges or campsites surrounded by nature.</li>
-                  <li>Visit rest camps with shops, restaurants, and picnic spots.</li>
-                  <li>Capture wildlife photography.</li>
-                  <li>Join night drives to spot nocturnal animals.</li>
-                  <li>For more info, <a href="https://www.krugerpark.co.za/" target="_blank">click here</a>.</li>
-                </ul>
-              </div>
-            </section>
- 
-            <section class="place">
-              <h3>Mac Mac Falls</h3>
-              <div class="image-grid">
-                <div class="image-card">
-                  <img src="Images/Falls.1.jpg" alt="Mac Mac Falls 1">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Falls.2.jpg" alt="Mac Mac Falls 2">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Falls.3.jpg" alt="Mac Mac Falls 3">
-                </div>
-              </div>
-              <div class="place-info">
-                <p>At Mac Mac Falls in Mpumalanga, visitors can:</p>
-                <ul>
-                  <li>View the Twin Waterfalls – a stunning 65-meter-high split waterfall.</li>
-                  <li>Swim at Mac Mac Pools – natural rock pools perfect for cooling off.</li>
-                  <li>Enjoy a picnic in scenic designated areas.</li>
-                  <li>Hike the Secretary Bird Trail – a 3 km trail great for nature and birdwatching.</li>
-                  <li>Try canyoning – guided adventures with hiking, swimming, and rock pool jumps.</li>
-                  <li>Explore nearby attractions like Berlin Falls, Lisbon Falls, and Pilgrim’s Rest.</li>
-                  <li>For more info, <a href="https://www.sa-venues.com/attractionsmpl/mac-mac-falls.php" target="_blank">click here</a>.</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-          <div class="nav-buttons">
-            <button id="mpumalanga-prev-btn">Go to Previous</button>
-            <button id="mpumalanga-next-btn">Go to Next</button>
-          </div>
-        </div>
- 
-        <div class="durban-main-container" id="durban-container" style="display:none;">
-          <h2>Durban</h2>
-          <p>Explore these popular destinations in Durban:</p>
- 
-          <div class="durban-container">
-            <section class="place">
-              <h3>uShaka Marine World</h3>
-              <div class="image-grid">
-                <div class="image-card">
-                  <img src="Images/Marine.1.jpg" alt="uShaka Marine World 1">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Marine.2.webp" alt="uShaka Marine World 2">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Marine.3.jpg" alt="uShaka Marine World 3">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Marine.4.jpg" alt="uShaka Marine World 4">
-                </div>
-              </div>
-              <div class="place-info">
-                <p>At uShaka Marine World in Durban, visitors can:</p>
-                <ul>
-                  <li>Explore Sea World Aquarium – see sharks, dolphins, and penguins.</li>
-                  <li>Have fun at Wet ‘n Wild – enjoy water slides and splash zones.</li>
-                  <li>Try Ocean Walker – walk underwater with a special helmet.</li>
-                  <li>Go shark diving or snorkeling – safely get close to marine life.</li>
-                  <li>Test your skills at the Rope Adventure Park.</li>
-                  <li>Take a gondola canal ride for a relaxing experience.</li>
-                  <li>Shop and eat at Village Walk, styled like a traditional village.</li>
-                  <li>Let kids play in Kids World, filled with fun activities.</li>
-                  <li>For more info, <a href="https://ushakamarine.com/" target="_blank">click here</a>.</li>
-                </ul>
-              </div>
-            </section>
- 
-            <section class="place">
-              <h3>Umgeni River Bird Park</h3>
-              <div class="image-grid">
-                <div class="image-card">
-                  <img src="Images/Bird.1.webp" alt="Umgeni River Bird Park 1">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Bird.2.jpg" alt="Umgeni River Bird Park 2">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Bird.3.webp" alt="Umgeni River Bird Park 3">
-                </div>
-                <div class="image-card">
-                  <img src="Images/Bird.4.jpg" alt="Umgeni River Bird Park 4">
-                </div>
-              </div>
-              <div class="place-info">
-                <p>At Umgeni River Bird Park in Durban, visitors can:</p>
-                <ul>
-                  <li>Walk through aviaries to see a wide variety of birds in natural settings.</li>
-                  <li>Watch free-flight bird shows held daily at 11 am and 2 pm.</li>
-                  <li>Join bird feeding sessions for up-close experiences.</li>
-                  <li>Take beautiful photos of exotic birds and waterfalls.</li>
-                  <li>Learn from educational exhibits about bird species and conservation.</li>
-                  <li>For more info, <a href="https://www.umgeniriverbirdpark.co.za/" target="_blank">click here</a>.</li>
-                </ul>
-              </div>
-            </section>
-          </div>
-          <div class="nav-buttons">
-            <button id="durban-prev-btn">Go to Previous</button>
-            <button id="durban-next-btn" disabled>Go to Next</button>
-          </div>
-        </div>
-      </main>
-    </div>
- 
-    <!-- Footer -->
-    <footer>
-      <p>© 2025 Travique. All rights reserved.</p>
-    </footer>
-  </div>
- 
-  <!-- Toggle Sidebar Script -->
-  <script>
-    const hamburger = document.getElementById('hamburger');
-    const sidebar = document.getElementById('sidebar');
-    const closeSidebar = document.getElementById('close-sidebar');
- 
-    hamburger.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-      hamburger.style.display = 'none';
-    });
- 
-    closeSidebar.addEventListener('click', () => {
-      sidebar.classList.remove('active');
-      hamburger.style.display = 'flex';
-    });
- 
-    document.addEventListener('click', (e) => {
-      if (sidebar.classList.contains('active') &&
-          !sidebar.contains(e.target) &&
-          e.target !== hamburger) {
-        sidebar.classList.remove('active');
-        hamburger.style.display = 'flex';
-      }
-    });
-  </script>
 
-<script>
-  window.addEventListener('mouseover', initLandbot, { once: true });
-  window.addEventListener('touchstart', initLandbot, { once: true });
-  var myLandbot;
-  function initLandbot() {
-    if (!myLandbot) {
-      var s = document.createElement('script');
-      s.type = "module"
-      s.async = true;
-      s.addEventListener('load', function() {
-        var myLandbot = new Landbot.Livechat({
-          configUrl: 'https://storage.googleapis.com/landbot.online/v3/H-2963391-C493S9Z59CSWDRQE/index.json',
+        <div class="header-actions">
+          <div class="user-profile">
+            <div class="user-avatar">
+              <i class="fas fa-user"></i>
+            </div>
+            <span class="user-name" id="user-email">Loading...</span>
+          </div>
+          <button class="menu-toggle" id="menu-toggle">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Modern Sidebar -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h3>Navigation</h3>
+        <button class="close-sidebar" id="close-sidebar">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item">
+          <a href="profile.html" class="nav-link">
+            <div class="nav-icon orange-theme">
+              <i class="fas fa-user"></i>
+            </div>
+            <span>User Profile</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="trip-planner.html" class="nav-link">
+            <div class="nav-icon blue-theme">
+              <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <span>Trip Planner</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="expenses.html" class="nav-link">
+            <div class="nav-icon orange-theme">
+              <i class="fas fa-wallet"></i>
+            </div>
+            <span>Expense Tracker</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="health.html" class="nav-link">
+            <div class="nav-icon blue-theme">
+              <i class="fas fa-heartbeat"></i>
+            </div>
+            <span>Health & Fitness</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="tips.html" class="nav-link">
+            <div class="nav-icon orange-theme">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <span>Smart Travel Tips</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="food.html" class="nav-link">
+            <div class="nav-icon blue-theme">
+              <i class="fas fa-utensils"></i>
+            </div>
+            <span>Food Finder</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="weather.html" class="nav-link">
+            <div class="nav-icon orange-theme">
+              <i class="fas fa-cloud-sun"></i>
+            </div>
+            <span>Weather</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="saved_trips.html" class="nav-link">
+            <div class="nav-icon blue-theme">
+              <i class="fas fa-bookmark"></i>
+            </div>
+            <span>Saved Trips</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="logout-btn" id="logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Main Dashboard Content -->
+    <main class="dashboard-main">
+      <div class="dashboard-container">
+        <!-- Dashboard Header Section -->
+        <section class="dashboard-welcome">
+          <div class="welcome-content">
+            <h2 class="welcome-title">Welcome back, Traveler!</h2>
+            <p class="welcome-subtitle">
+              Ready for your next adventure? Let's explore the world together.
+            </p>
+          </div>
+          <div class="welcome-illustration">
+            <div class="floating-element blue-glow"></div>
+            <div class="floating-element orange-glow"></div>
+          </div>
+        </section>
+
+        <!-- Quick Actions Section -->
+        <section class="quick-actions">
+          <h3 class="section-title">Quick Actions</h3>
+          <div class="actions-grid">
+            <div
+              class="action-card orange-theme"
+              data-aos="fade-up"
+              data-delay="100"
+            >
+              <div class="action-icon">
+                <i class="fas fa-plus"></i>
+              </div>
+              <h4>Plan New Trip</h4>
+              <p>Start planning your next adventure</p>
+              <a href="trip-planner.html" class="action-btn">Start Planning</a>
+            </div>
+
+            <div
+              class="action-card blue-theme"
+              data-aos="fade-up"
+              data-delay="200"
+            >
+              <div class="action-icon">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <h4>Track Expenses</h4>
+              <p>Monitor your travel budget</p>
+              <a href="expenses.html" class="action-btn">View Expenses</a>
+            </div>
+
+            <div
+              class="action-card orange-theme"
+              data-aos="fade-up"
+              data-delay="300"
+            >
+              <div class="action-icon">
+                <i class="fas fa-heart"></i>
+              </div>
+              <h4>Health Check</h4>
+              <p>Stay healthy while traveling</p>
+              <a href="health.html" class="action-btn">Health Tips</a>
+            </div>
+
+            <div
+              class="action-card blue-theme"
+              data-aos="fade-up"
+              data-delay="400"
+            >
+              <div class="action-icon">
+                <i class="fas fa-cloud-sun"></i>
+              </div>
+              <h4>Weather Update</h4>
+              <p>Check weather conditions</p>
+              <a href="weather.html" class="action-btn">View Weather</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Travel Statistics Section -->
+        <section class="travel-stats">
+          <h3 class="section-title">Your Travel Journey</h3>
+          <div class="stats-grid">
+            <div class="stat-card" data-aos="fade-up" data-delay="100">
+              <div class="stat-icon orange-theme">
+                <i class="fas fa-globe-americas"></i>
+              </div>
+              <div class="stat-content">
+                <h4 class="stat-number">12</h4>
+                <p class="stat-label">Countries Visited</p>
+              </div>
+            </div>
+
+            <div class="stat-card" data-aos="fade-up" data-delay="200">
+              <div class="stat-icon blue-theme">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="stat-content">
+                <h4 class="stat-number">47</h4>
+                <p class="stat-label">Cities Explored</p>
+              </div>
+            </div>
+
+            <div class="stat-card" data-aos="fade-up" data-delay="300">
+              <div class="stat-icon orange-theme">
+                <i class="fas fa-calendar-check"></i>
+              </div>
+              <div class="stat-content">
+                <h4 class="stat-number">89</h4>
+                <p class="stat-label">Days Traveled</p>
+              </div>
+            </div>
+
+            <div class="stat-card" data-aos="fade-up" data-delay="400">
+              <div class="stat-icon blue-theme">
+                <i class="fas fa-camera"></i>
+              </div>
+              <div class="stat-content">
+                <h4 class="stat-number">1.2k</h4>
+                <p class="stat-label">Memories Captured</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Popular Destinations -->
+        <section class="destinations">
+          <div class="destinations-header">
+            <h3 class="section-title">Explore South Africa</h3>
+            <div class="destination-tabs">
+              <button class="tab-btn active" data-tab="cape-town">
+                Cape Town
+              </button>
+              <button class="tab-btn" data-tab="johannesburg">
+                Johannesburg
+              </button>
+              <button class="tab-btn" data-tab="mpumalanga">Mpumalanga</button>
+              <button class="tab-btn" data-tab="durban">Durban</button>
+            </div>
+          </div>
+
+          <!-- Cape Town -->
+          <div class="destination-content active" id="cape-town">
+            <div class="destination-intro">
+              <h4>Discover Cape Town</h4>
+              <p>
+                Explore the Mother City's most breathtaking attractions and
+                experiences.
+              </p>
+            </div>
+
+            <div class="places-grid">
+              <div class="place-card" data-aos="fade-up">
+                <div class="place-images">
+                  <img
+                    src="Images/Waterfront.jpg"
+                    alt="V & A Waterfront"
+                    class="main-image"
+                  />
+                  <div class="image-gallery">
+                    <img src="Images/Waterfront.2.jpg" alt="V & A Waterfront" />
+                  </div>
+                </div>
+                <div class="place-content">
+                  <h5>V & A Waterfront</h5>
+                  <p>
+                    A vibrant hub of shopping, dining, and entertainment with
+                    stunning harbor views.
+                  </p>
+                  <ul class="place-highlights">
+                    <li>450+ shops and 80 restaurants</li>
+                    <li>Two Oceans Aquarium</li>
+                    <li>Zeitz Museum of Contemporary African Art</li>
+                    <li>Cape Wheel for panoramic views</li>
+                  </ul>
+                  <a
+                    href="https://www.waterfront.co.za/"
+                    target="_blank"
+                    class="place-btn orange-theme"
+                    >Explore More</a
+                  >
+                </div>
+              </div>
+
+              <div class="place-card" data-aos="fade-up" data-delay="200">
+                <div class="place-images">
+                  <img
+                    src="Images/Table-Mountain.jpg"
+                    alt="Table Mountain"
+                    class="main-image"
+                  />
+                  <div class="image-gallery">
+                    <img src="Images/Mountain.jpg" alt="Table Mountain" />
+                    <img src="Images/Mountain.2.jpg" alt="Table Mountain" />
+                  </div>
+                </div>
+                <div class="place-content">
+                  <h5>Table Mountain</h5>
+                  <p>
+                    Iconic flat-topped mountain offering breathtaking 360-degree
+                    views of Cape Town.
+                  </p>
+                  <ul class="place-highlights">
+                    <li>Rotating cable car experience</li>
+                    <li>Hiking trails for all levels</li>
+                    <li>Wildlife and unique flora</li>
+                    <li>World-class abseiling</li>
+                  </ul>
+                  <a
+                    href="https://www.tablemountain.net/"
+                    target="_blank"
+                    class="place-btn blue-theme"
+                    >Explore More</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other destinations (hidden by default) -->
+          <div
+            class="destination-content"
+            id="johannesburg"
+            style="display: none"
+          >
+            <div class="destination-intro">
+              <h4>Discover Johannesburg</h4>
+              <p>
+                Experience the vibrant energy of South Africa's largest city.
+              </p>
+            </div>
+            <!-- Similar structure for other destinations -->
+          </div>
+
+          <div
+            class="destination-content"
+            id="mpumalanga"
+            style="display: none"
+          >
+            <div class="destination-intro">
+              <h4>Discover Mpumalanga</h4>
+              <p>
+                Explore the breathtaking landscapes and wildlife of this
+                beautiful province.
+              </p>
+            </div>
+          </div>
+
+          <div class="destination-content" id="durban" style="display: none">
+            <div class="destination-intro">
+              <h4>Discover Durban</h4>
+              <p>
+                Enjoy the golden beaches and rich cultural heritage of the east
+                coast.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Modern Footer -->
+    <footer class="dashboard-footer">
+      <div class="footer-content">
+        <p>&copy; 2025 Travique. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Privacy</a>
+          <a href="#" class="footer-link">Terms</a>
+          <a href="#" class="footer-link">Support</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+      // Mobile menu toggle
+      const menuToggle = document.getElementById("menu-toggle");
+      const sidebar = document.getElementById("sidebar");
+      const sidebarOverlay = document.getElementById("sidebar-overlay");
+      const closeSidebar = document.getElementById("close-sidebar");
+
+      function toggleSidebar() {
+        sidebar.classList.toggle("active");
+        sidebarOverlay.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+        document.body.classList.toggle("sidebar-open");
+      }
+
+      function closeSidebarMenu() {
+        sidebar.classList.remove("active");
+        sidebarOverlay.classList.remove("active");
+        menuToggle.classList.remove("active");
+        document.body.classList.remove("sidebar-open");
+      }
+
+      menuToggle.addEventListener("click", toggleSidebar);
+      sidebarOverlay.addEventListener("click", closeSidebarMenu);
+      closeSidebar.addEventListener("click", closeSidebarMenu);
+
+      // Destination tabs
+      const tabBtns = document.querySelectorAll(".tab-btn");
+      const destinationContents = document.querySelectorAll(
+        ".destination-content",
+      );
+
+      tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const targetTab = btn.getAttribute("data-tab");
+
+          // Remove active class from all tabs and contents
+          tabBtns.forEach((tab) => tab.classList.remove("active"));
+          destinationContents.forEach((content) => {
+            content.classList.remove("active");
+            content.style.display = "none";
+          });
+
+          // Add active class to clicked tab and corresponding content
+          btn.classList.add("active");
+          const targetContent = document.getElementById(targetTab);
+          if (targetContent) {
+            targetContent.classList.add("active");
+            targetContent.style.display = "block";
+          }
         });
       });
-      s.src = 'https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs';
-      var x = document.getElementsByTagName('script')[0];
-      x.parentNode.insertBefore(s, x);
-    }
-  }
-  </script>
- 
-  <script type="module" src="js/dashboard.js"></script>
-</body>
+
+      // Animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+          }
+        });
+      }, observerOptions);
+
+      // Observe elements with data-aos attribute
+      document.querySelectorAll("[data-aos]").forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Counter animation for stats
+      function animateCounters() {
+        const counters = document.querySelectorAll(".stat-number");
+
+        counters.forEach((counter) => {
+          const target = parseFloat(counter.textContent);
+          const increment = target / 50;
+          let current = 0;
+
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+            }
+
+            if (counter.textContent.includes("k")) {
+              counter.textContent = (current / 1000).toFixed(1) + "k";
+            } else {
+              counter.textContent = Math.floor(current);
+            }
+          }, 30);
+        });
+      }
+
+      // Start counter animation when stats section is visible
+      const statsSection = document.querySelector(".travel-stats");
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            statsObserver.unobserve(entry.target);
+          }
+        });
+      });
+
+      if (statsSection) {
+        statsObserver.observe(statsSection);
+      }
+    </script>
+
+    <script type="module" src="js/dashboard.js"></script>
+  </body>
 </html>
