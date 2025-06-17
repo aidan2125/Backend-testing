@@ -367,7 +367,7 @@ body.stormy {
 }
 
 .quick-temp {
-  color: var(--primary-orange);
+  color: var(--primary);
   font-size: 1.5rem;
   font-weight: 700;
 }
