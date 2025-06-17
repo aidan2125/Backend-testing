@@ -1,104 +1,425 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Travique | Expenses</title>
-  <link rel="stylesheet" href="css/dashboard.css" />
-  <link rel="stylesheet" href="css/expenses.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-</head>
-<body class="expenses-page">
-  <!-- CONTROL EXPENSES HEADER BAR -->
-  <div class="top-bar">
-    <h2>Control Expenses</h2>
-    <button class="back-btn" onclick="window.location.href='dashboard.html'">
-      <i class="fas fa-arrow-left"></i> Back to Dashboard
-    </button>
-  </div>
- 
-  <!-- Page Container -->
-  <div class="page-container">
-    <!-- Dashboard container moved down with margin -->
-    <div class="dashboard-container">
-      <header>
-        <h1>Expense Tracker</h1>
-      </header>
- 
-      <main>
-        <!-- INTRO TEXT -->
-        <section class="intro-section">
-          <p>Track and manage your expenses below. Stay on top of your budget during your travels.</p>
-        </section>
- 
-        <!-- EXPENSE FORM SECTION -->
-        <section class="form-section">
-          <form id="expense-category">
-            <input type="text" id="expense-name" placeholder="Expense Name" required />
-            <input type="number" id="expense-amount" placeholder="Amount" required />
- 
-            <select id="expense-category" name="category">
-              <option value="accommodation">Accommodation</option>
-              <option value="food">Food</option>
-              <option value="entertainment">Entertainment</option>
-              <option value="others">Others</option>
-            </select>
- 
-            <input type="text" id="expense-location" placeholder="Location (optional)" />
-            <input type="datetime-local" id="expense-date" placeholder="Date of Expense" />
- 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travique | Expense Tracker</title>
+    <link rel="stylesheet" href="css/expenses.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="expenses-page">
+    <!-- Modern Header -->
+    <header class="dashboard-header">
+      <div class="header-content">
+        <div class="logo-section">
+          <h1 class="logo-text">Travique</h1>
+          <span class="dashboard-subtitle">Smart Expense Management</span>
+        </div>
+        <div class="header-actions">
+          <button
+            class="back-btn dynamic-btn"
+            onclick="window.location.href='dashboard.html'"
+          >
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Dashboard</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="expenses-main">
+      <!-- Welcome Section -->
+      <section class="expenses-welcome">
+        <div class="welcome-content">
+          <h2 class="welcome-title">Track Your Expenses</h2>
+          <p class="welcome-subtitle">
+            Stay on top of your budget with our intelligent expense tracking.
+            Monitor spending patterns and make informed financial decisions for
+            your travels.
+          </p>
+        </div>
+        <div class="welcome-illustration">
+          <div class="floating-element expense-glow-1"></div>
+          <div class="floating-element expense-glow-2"></div>
+          <div class="floating-element expense-glow-3"></div>
+        </div>
+      </section>
+
+      <!-- Expense Form Section -->
+      <section class="expense-form-section">
+        <div class="form-container">
+          <div class="form-header">
+            <h3><i class="fas fa-plus-circle"></i> Add New Expense</h3>
+            <p>Record your expenses and keep track of your spending</p>
+          </div>
+
+          <form id="expense-category" class="expense-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="expense-name">
+                  <i class="fas fa-tag"></i>
+                  Expense Name
+                </label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    id="expense-name"
+                    placeholder="What did you spend on?"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="expense-amount">
+                  <i class="fas fa-dollar-sign"></i>
+                  Amount
+                </label>
+                <div class="input-wrapper">
+                  <input
+                    type="number"
+                    id="expense-amount"
+                    placeholder="0.00"
+                    step="0.01"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="expense-category">
+                  <i class="fas fa-list"></i>
+                  Category
+                </label>
+                <div class="select-wrapper">
+                  <select id="expense-category" name="category" required>
+                    <option value="accommodation">🏨 Accommodation</option>
+                    <option value="food">🍽️ Food & Dining</option>
+                    <option value="entertainment">🎭 Entertainment</option>
+                    <option value="transport">🚗 Transportation</option>
+                    <option value="shopping">🛍️ Shopping</option>
+                    <option value="others">📦 Others</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="expense-location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  Location
+                </label>
+                <div class="input-wrapper">
+                  <input
+                    type="text"
+                    id="expense-location"
+                    placeholder="Where did you spend? (optional)"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="expense-date">
+                  <i class="fas fa-calendar-alt"></i>
+                  Date & Time
+                </label>
+                <div class="input-wrapper">
+                  <input type="datetime-local" id="expense-date" />
+                </div>
+              </div>
+            </div>
+
             <input type="hidden" id="trip-id" />
             <input type="hidden" id="profile-id" />
-            <button type="submit">Add Expense</button>
-          </form>
-        </section>
- 
-        <!-- EXPENSES TOTAL & LIST SECTION -->
-        <section class="list-section">
-          <div id="expense-error" class="error-message"></div>
-          <div id="expense-list"></div>
-          <div class="total-container">
-            <h3>Total Expenses: R<span id="total-amount"></span></h3>
-          </div>
-        </section>
- 
-        <!-- CURRENCY CONVERTER SECTION -->
-        <hr />
-        <section class="currency-converter">
-          <h2>Currency Converter</h2>
- 
-          <form action="javascript:;" onsubmit="convert(event)">
-            <fieldset>
-              <label for="valueField">Amount</label>
-              <input type="number" placeholder="0" id="valueField" required>
- 
-              <label for="fromCurrency">From Currency</label>
-              <select id="fromCurrency"></select>
- 
-              <label for="toCurrency">To Currency</label>
-              <select id="toCurrency"></select>
- 
-              <input id="convertBtn" class="button-primary" type="submit" value="Convert">
-              <button id="reset-button" type="button" onclick="resetConverter()">Reset</button>
-            </fieldset>
-            <div id="loading-container" style="display: none;">
-              <div class="loader"></div>
-              <div>Calculating ...</div>
+
+            <div class="form-actions">
+              <button type="submit" class="primary-btn dynamic-btn">
+                <i class="fas fa-plus"></i>
+                <span>Add Expense</span>
+                <div class="btn-glow"></div>
+              </button>
+
+              <button type="reset" class="secondary-btn dynamic-btn">
+                <i class="fas fa-eraser"></i>
+                <span>Clear Form</span>
+                <div class="btn-glow"></div>
+              </button>
             </div>
-            <div id="result"></div>
           </form>
-        </section>
-      </main>
-    </div>
- 
-    <!-- Footer -->
-    <footer>
-      <p>© 2025 Travique. All rights reserved.</p>
+        </div>
+      </section>
+
+      <!-- Expenses Display Section -->
+      <section class="expenses-display-section">
+        <div class="expenses-container">
+          <div class="expenses-header">
+            <h3><i class="fas fa-receipt"></i> Your Expenses</h3>
+            <div class="expense-stats">
+              <div class="stat-item">
+                <span class="stat-value" id="expense-count">0</span>
+                <span class="stat-label">Expenses</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value" id="category-count">0</span>
+                <span class="stat-label">Categories</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="expense-error" class="error-message"></div>
+
+          <div class="expense-filters">
+            <button class="filter-btn active" data-category="all">All</button>
+            <button class="filter-btn" data-category="accommodation">
+              Accommodation
+            </button>
+            <button class="filter-btn" data-category="food">Food</button>
+            <button class="filter-btn" data-category="entertainment">
+              Entertainment
+            </button>
+            <button class="filter-btn" data-category="transport">
+              Transport
+            </button>
+            <button class="filter-btn" data-category="shopping">
+              Shopping
+            </button>
+            <button class="filter-btn" data-category="others">Others</button>
+          </div>
+
+          <div id="expense-list" class="expense-list"></div>
+
+          <div class="total-container">
+            <div class="total-content">
+              <h3><i class="fas fa-calculator"></i> Total Expenses</h3>
+              <div class="total-amount">
+                <span class="currency">R</span>
+                <span id="total-amount">0.00</span>
+              </div>
+            </div>
+            <div class="total-actions">
+              <button class="export-btn dynamic-btn" onclick="exportExpenses()">
+                <i class="fas fa-download"></i>
+                <span>Export</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Currency Converter Section -->
+      <section class="currency-converter-section">
+        <div class="converter-container">
+          <div class="converter-header">
+            <h3><i class="fas fa-exchange-alt"></i> Currency Converter</h3>
+            <p>
+              Convert between different currencies for accurate expense tracking
+            </p>
+          </div>
+
+          <form
+            action="javascript:;"
+            onsubmit="convert(event)"
+            class="converter-form"
+          >
+            <div class="converter-grid">
+              <div class="form-group">
+                <label for="valueField">
+                  <i class="fas fa-coins"></i>
+                  Amount
+                </label>
+                <div class="input-wrapper">
+                  <input
+                    type="number"
+                    placeholder="0.00"
+                    id="valueField"
+                    step="0.01"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="fromCurrency">
+                  <i class="fas fa-arrow-right"></i>
+                  From Currency
+                </label>
+                <div class="select-wrapper">
+                  <select id="fromCurrency" required></select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="toCurrency">
+                  <i class="fas fa-bullseye"></i>
+                  To Currency
+                </label>
+                <div class="select-wrapper">
+                  <select id="toCurrency" required></select>
+                </div>
+              </div>
+            </div>
+
+            <div class="converter-actions">
+              <button
+                id="convertBtn"
+                class="primary-btn dynamic-btn"
+                type="submit"
+              >
+                <i class="fas fa-sync-alt"></i>
+                <span>Convert</span>
+                <div class="btn-glow"></div>
+              </button>
+
+              <button
+                id="reset-button"
+                class="secondary-btn dynamic-btn"
+                type="button"
+                onclick="resetConverter()"
+              >
+                <i class="fas fa-undo"></i>
+                <span>Reset</span>
+                <div class="btn-glow"></div>
+              </button>
+            </div>
+
+            <div id="loading-container" class="loading-container">
+              <div class="loader"></div>
+              <div class="loading-text">Calculating...</div>
+            </div>
+
+            <div id="result" class="conversion-result"></div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modern Footer -->
+    <footer class="dashboard-footer">
+      <div class="footer-content">
+        <p>&copy; 2025 Travique. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="javascript:void(0)" class="footer-link">Privacy Policy</a>
+          <a href="javascript:void(0)" class="footer-link">Terms of Service</a>
+          <a href="javascript:void(0)" class="footer-link">Support</a>
+        </div>
+      </div>
     </footer>
-  </div>
- 
-  <script type="module" src="js/auth.js"></script>
-  <script type="module" src="js/expenses.js"></script>
-  <script src="js/converter.js"></script>
-</body>
+
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/expenses.js"></script>
+    <script src="js/converter.js"></script>
+
+    <script>
+      // Enhanced functionality for the modern interface
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize animations
+        animateOnScroll();
+        window.addEventListener("scroll", animateOnScroll);
+
+        // Initialize expense filters
+        initializeFilters();
+
+        // Set current date/time as default
+        const now = new Date();
+        const dateInput = document.getElementById("expense-date");
+        if (dateInput) {
+          dateInput.value = now.toISOString().slice(0, 16);
+        }
+
+        // Add animation delays
+        const formGroups = document.querySelectorAll(".form-group");
+        formGroups.forEach((group, index) => {
+          group.style.animationDelay = `${index * 0.1}s`;
+        });
+      });
+
+      function animateOnScroll() {
+        const elements = document.querySelectorAll(
+          ".form-container, .expenses-container, .converter-container",
+        );
+        elements.forEach((element) => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+
+          if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add("animate");
+          }
+        });
+      }
+
+      function initializeFilters() {
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        filterBtns.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            // Remove active class from all buttons
+            filterBtns.forEach((b) => b.classList.remove("active"));
+            // Add active class to clicked button
+            this.classList.add("active");
+
+            const category = this.dataset.category;
+            filterExpenses(category);
+          });
+        });
+      }
+
+      function filterExpenses(category) {
+        const expenseItems = document.querySelectorAll(".expense-item");
+        expenseItems.forEach((item) => {
+          if (category === "all" || item.dataset.category === category) {
+            item.style.display = "flex";
+            item.style.animation = "fadeInUp 0.3s ease-out forwards";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      }
+
+      function exportExpenses() {
+        // Placeholder for export functionality
+        const btn = event.target.closest(".export-btn");
+        const originalContent = btn.innerHTML;
+
+        btn.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> <span>Exporting...</span>';
+        btn.disabled = true;
+
+        setTimeout(() => {
+          btn.innerHTML = originalContent;
+          btn.disabled = false;
+          alert("Export functionality will be implemented soon!");
+        }, 2000);
+      }
+
+      function updateExpenseStats() {
+        const expenseItems = document.querySelectorAll(".expense-item");
+        const categories = new Set(
+          Array.from(expenseItems).map((item) => item.dataset.category),
+        );
+
+        document.getElementById("expense-count").textContent =
+          expenseItems.length;
+        document.getElementById("category-count").textContent = categories.size;
+      }
+
+      // Add smooth scroll behavior
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
