@@ -571,26 +571,49 @@ body.sidebar-open {
 
 .card-emoji {
   position: absolute;
-  top: -10px;
-  right: -10px;
-  font-size: 2rem;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
   z-index: 2;
-  animation: bounce 2s infinite;
+  background: var(--pure-white);
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  animation: pulse 3s infinite;
 }
 
-@keyframes bounce {
+.card-emoji svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.trip-planning .card-emoji svg {
+  color: #ff9800;
+}
+
+.expense-tracking .card-emoji svg {
+  color: #4caf50;
+}
+
+.health-check .card-emoji svg {
+  color: #e91e63;
+}
+
+.weather-update .card-emoji svg {
+  color: #2196f3;
+}
+
+@keyframes pulse {
   0%,
-  20%,
-  50%,
-  80%,
   100% {
-    transform: translateY(0);
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
 }
 
