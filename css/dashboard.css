@@ -304,11 +304,9 @@ body.sidebar-open {
 }
 
 .sidebar-footer {
-  position: absolute;
-  bottom: 25px;
-  left: 25px;
-  right: 25px;
-  z-index: 10;
+  padding: 25px;
+  margin-top: auto;
+  flex-shrink: 0;
 }
 
 .logout-btn {
