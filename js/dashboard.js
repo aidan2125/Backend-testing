@@ -66,6 +66,49 @@ function handleAuthError(error) {
   }
 }
 
+// Show error notification
+function showErrorNotification(message) {
+  const notification = document.createElement("div");
+  notification.innerHTML = `
+    <div style="
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-size: 14px;
+      font-weight: 500;
+      max-width: 300px;
+      animation: slideIn 0.3s ease-out;
+    ">
+      <i class="fas fa-exclamation-triangle" style="margin-right: 8px;"></i>
+      ${message}
+      <button onclick="this.parentElement.parentElement.remove()" style="
+        background: none;
+        border: none;
+        color: white;
+        float: right;
+        cursor: pointer;
+        margin-left: 10px;
+        opacity: 0.8;
+      ">×</button>
+    </div>
+  `;
+
+  document.body.appendChild(notification);
+
+  // Auto-hide after 4 seconds
+  setTimeout(() => {
+    if (notification && notification.parentElement) {
+      notification.remove();
+    }
+  }, 4000);
+}
+
 // Show offline notification
 function showOfflineNotification() {
   // Create notification if it doesn't exist
