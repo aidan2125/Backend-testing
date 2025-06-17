@@ -131,20 +131,91 @@ body {
 
 .main-cta {
   display: inline-block;
-  background-color: #246071;
+  background: linear-gradient(135deg, #246071, #1b4a58);
   color: white;
   padding: 14px 32px;
   border-radius: 30px;
   font-size: 1rem;
-  transition:
-    background-color 0.3s ease,
-    transform 0.2s ease;
+  font-weight: 600;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(36, 96, 113, 0.3);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.main-cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.6s;
+}
+
+.main-cta::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.3s,
+    height 0.3s;
 }
 
 .main-cta:hover {
-  background-color: #1b4a58;
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #1b4a58, #246071);
+  transform: translateY(-3px) scale(1.08);
+  box-shadow: 0 8px 25px rgba(36, 96, 113, 0.5);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.main-cta:hover::before {
+  left: 100%;
+}
+
+.main-cta:hover::after {
+  width: 300px;
+  height: 300px;
+}
+
+.main-cta:active {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 15px rgba(36, 96, 113, 0.4);
+  transition: all 0.1s;
+}
+
+/* Pulsing animation for main CTA */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 15px rgba(36, 96, 113, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 4px 15px rgba(36, 96, 113, 0.5),
+      0 0 20px rgba(36, 96, 113, 0.2);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(36, 96, 113, 0.3);
+  }
+}
+
+.main-cta {
+  animation: pulse 3s infinite;
 }
 
 /* Features Section */
