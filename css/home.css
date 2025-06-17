@@ -395,11 +395,82 @@ body {
 }
 
 .hero p {
-  font-size: 1.2rem;
+  font-family: "Inter", sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
   color: var(--text-light);
-  margin-bottom: 35px;
-  line-height: 1.7;
-  font-weight: 400;
+  margin-bottom: 40px;
+  line-height: 1.8;
+  font-weight: 500;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  letter-spacing: 0.3px;
+  animation: fadeInUp 1s ease-out 0.5s both;
+}
+
+/* Staggered word animation for dynamic effect */
+.hero h2 {
+  overflow: hidden;
+}
+
+.hero h2 span {
+  display: inline-block;
+  animation: wordReveal 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(100px) rotateX(-90deg);
+}
+
+.hero h2 span:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.hero h2 span:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.hero h2 span:nth-child(3) {
+  animation-delay: 0.5s;
+}
+.hero h2 span:nth-child(4) {
+  animation-delay: 0.7s;
+}
+
+@keyframes wordReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) rotateX(-90deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translateY(-10px) rotateX(-45deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced responsive typography */
+@media (max-width: 768px) {
+  .hero h2 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    letter-spacing: -1px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    font-size: clamp(0.9rem, 4vw, 1.1rem);
+    line-height: 1.6;
+  }
 }
 
 .main-cta {
