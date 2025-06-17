@@ -789,7 +789,7 @@ body.stormy {
 }
 
 .close-modal:hover {
-  color: var(--primary-orange);
+  color: var(--primary);
 }
 
 .modal-body {
