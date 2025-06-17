@@ -434,7 +434,7 @@ body.menu-open {
 
 /* Hero Section */
 .hero {
-  padding: 100px 0;
+  padding: 140px 0 100px;
   background: linear-gradient(
     135deg,
     var(--pure-white) 0%,
@@ -445,6 +445,9 @@ body.menu-open {
   );
   position: relative;
   overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
 .hero::before {
