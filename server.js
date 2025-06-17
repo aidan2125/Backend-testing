@@ -50,14 +50,28 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Route for HTML files
-app.get("/*.html", (req, res) => {
-  res.sendFile(path.join(__dirname, req.path));
-});
+// Specific routes for known HTML files
+const htmlFiles = [
+  "dashboard.html",
+  "expenses.html",
+  "food.html",
+  "health.html",
+  "hub.html",
+  "itienary.html",
+  "login.html",
+  "profile.html",
+  "reset.html",
+  "saved_trips.html",
+  "signup.html",
+  "tips.html",
+  "trip-planner.html",
+  "weather.html",
+];
 
-// Handle 404 for other routes
-app.use((req, res) => {
-  res.status(404).send("File not found");
+htmlFiles.forEach((file) => {
+  app.get(`/${file}`, (req, res) => {
+    res.sendFile(path.join(__dirname, file));
+  });
 });
 
 app.listen(PORT, () => {
