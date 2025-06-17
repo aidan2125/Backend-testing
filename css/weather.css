@@ -683,7 +683,7 @@ body.stormy {
 .map-placeholder i {
   font-size: 3rem;
   margin-bottom: 15px;
-  color: var(--primary-orange);
+  color: var(--primary);
 }
 
 /* Travel Insights */
