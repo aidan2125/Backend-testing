@@ -1,68 +1,300 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Travique | Trip Planner</title>
-  <link rel="stylesheet" href="css/trip-planner.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <header class="top-bar">
-    <h2>Plan Your Trip</h2>
-    <button class="back-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-  </header>
- 
-  <main>
-    <section class="route-form">
-      <div class="form-group">
-        <label for="from-address">Your Current Location</label>
-        <input id="from-address" type="text" placeholder="Your current location" />
-      </div>
-      <div class="form-group">
-        <label for="to-address">Destination</label>
-        <input id="to-address" type="text" placeholder="Destination" />
-      </div>
-      <div class="form-group full-width">
-        <label for="activities">Activities</label>
-        <textarea id="activities" placeholder="Activities you plan to do (comma separated)"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="travel-mode">Travel Mode</label>
-        <select id="travel-mode">
-          <option value="DRIVING">Driving</option>
-          <option value="TRANSIT">Public Transit</option>
-          <option value="FLYING">Flying</option>
-        </select>
-      </div>
- 
-      <div class="btn-group">
-        <button id="route-btn">Get Route</button>
-        <button id="save-trip-btn">Save Trip</button>
-      </div>
-    </section>
- 
-    <div id="map"></div>
- 
-    <!-- Trip Summary Modal -->
-    <div id="trip-summary-modal" class="modal hidden">
-      <div class="modal-content">
-        <h2>Trip Summary</h2>
-        <p id="summary-text"></p>
-        <div class="btn-group">
-          <button id="confirm-save-btn">Confirm & Save</button>
-          <button onclick="document.getElementById('trip-summary-modal').classList.add('hidden')">Cancel</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travique | Trip Planner</title>
+    <link rel="stylesheet" href="css/trip-planner.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <!-- Modern Header -->
+    <header class="dashboard-header">
+      <div class="header-content">
+        <div class="logo-section">
+          <h1 class="logo-text">Travique</h1>
+          <span class="dashboard-subtitle">Plan Your Perfect Journey</span>
+        </div>
+        <div class="header-actions">
+          <button
+            class="back-btn dynamic-btn"
+            onclick="location.href='dashboard.html'"
+          >
+            <i class="fas fa-arrow-left"></i>
+            <span>Back to Dashboard</span>
+          </button>
         </div>
       </div>
-    </div>
-  </main>
- 
-  <footer>
-    <p>© 2025 Travique. All rights reserved.</p>
-  </footer>
- 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap" async defer></script>
-  <script type="module" src="js/trip.js"></script>
-  <script type="module" src="/js/liveLocation.js"></script>
-</body>
+    </header>
+
+    <main class="trip-planner-main">
+      <!-- Welcome Section -->
+      <section class="planner-welcome">
+        <div class="welcome-content">
+          <h2 class="welcome-title">Plan Your Adventure</h2>
+          <p class="welcome-subtitle">
+            Create your perfect trip with our intelligent planning tools. From
+            routes to activities, we've got you covered!
+          </p>
+        </div>
+        <div class="welcome-illustration">
+          <div class="floating-element blue-glow"></div>
+          <div class="floating-element orange-glow"></div>
+          <div class="floating-element small-glow"></div>
+        </div>
+      </section>
+
+      <!-- Trip Planning Form -->
+      <section class="trip-form-section">
+        <div class="form-container">
+          <div class="form-header">
+            <h3>Trip Details</h3>
+            <p>
+              Fill in the details below to create your personalized travel plan
+            </p>
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="from-address">
+                <i class="fas fa-map-marker-alt"></i>
+                Your Current Location
+              </label>
+              <div class="input-wrapper">
+                <input
+                  id="from-address"
+                  type="text"
+                  placeholder="Enter your current location"
+                />
+                <button
+                  class="input-action-btn"
+                  type="button"
+                  onclick="getCurrentLocation()"
+                >
+                  <i class="fas fa-crosshairs"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="to-address">
+                <i class="fas fa-map-pin"></i>
+                Destination
+              </label>
+              <div class="input-wrapper">
+                <input
+                  id="to-address"
+                  type="text"
+                  placeholder="Where would you like to go?"
+                />
+                <button class="input-action-btn" type="button">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="travel-mode">
+                <i class="fas fa-route"></i>
+                Travel Mode
+              </label>
+              <div class="select-wrapper">
+                <select id="travel-mode">
+                  <option value="DRIVING">🚗 Driving</option>
+                  <option value="TRANSIT">🚌 Public Transit</option>
+                  <option value="FLYING">✈️ Flying</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="activities">
+                <i class="fas fa-list-check"></i>
+                Planned Activities
+              </label>
+              <textarea
+                id="activities"
+                placeholder="What activities do you plan to do? (separate with commas)
+Example: Sightseeing, Museums, Local cuisine, Shopping, Photography"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button id="route-btn" class="primary-btn dynamic-btn">
+              <i class="fas fa-route"></i>
+              <span>Calculate Route</span>
+              <div class="btn-glow"></div>
+            </button>
+
+            <button id="save-trip-btn" class="secondary-btn dynamic-btn">
+              <i class="fas fa-heart"></i>
+              <span>Save Trip</span>
+              <div class="btn-glow"></div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Map Section -->
+      <section class="map-section">
+        <div class="map-header">
+          <h3>Route Visualization</h3>
+          <p>Your route will appear here once calculated</p>
+        </div>
+        <div class="map-container">
+          <div id="map"></div>
+          <div class="map-overlay">
+            <div class="map-controls">
+              <button class="map-btn" onclick="centerMap()">
+                <i class="fas fa-crosshairs"></i>
+              </button>
+              <button class="map-btn" onclick="toggleMapType()">
+                <i class="fas fa-layer-group"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trip Summary Modal -->
+      <div id="trip-summary-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2><i class="fas fa-clipboard-check"></i> Trip Summary</h2>
+            <button
+              class="modal-close"
+              onclick="document.getElementById('trip-summary-modal').classList.add('hidden')"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="summary-content">
+              <pre id="summary-text"></pre>
+            </div>
+          </div>
+          <div class="modal-actions">
+            <button id="confirm-save-btn" class="primary-btn dynamic-btn">
+              <i class="fas fa-check"></i>
+              <span>Confirm & Save</span>
+            </button>
+            <button
+              class="secondary-btn dynamic-btn"
+              onclick="document.getElementById('trip-summary-modal').classList.add('hidden')"
+            >
+              <i class="fas fa-times"></i>
+              <span>Cancel</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modern Footer -->
+    <footer class="dashboard-footer">
+      <div class="footer-content">
+        <p>&copy; 2025 Travique. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Support</a>
+        </div>
+      </div>
+    </footer>
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap"
+      async
+      defer
+    ></script>
+    <script type="module" src="js/trip.js"></script>
+    <script type="module" src="/js/liveLocation.js"></script>
+
+    <script>
+      // Helper functions for new features
+      function getCurrentLocation() {
+        if (navigator.geolocation) {
+          const btn = document.querySelector(".input-action-btn");
+          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              const geocoder = new google.maps.Geocoder();
+              const latlng = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+
+              geocoder.geocode(
+                { location: latlng },
+                function (results, status) {
+                  if (status === "OK" && results[0]) {
+                    document.getElementById("from-address").value =
+                      results[0].formatted_address;
+                  }
+                  btn.innerHTML = '<i class="fas fa-crosshairs"></i>';
+                },
+              );
+            },
+            function () {
+              btn.innerHTML = '<i class="fas fa-crosshairs"></i>';
+              alert("Unable to get your location");
+            },
+          );
+        }
+      }
+
+      function centerMap() {
+        if (map) {
+          map.setCenter({ lat: 20.0, lng: 0.0 });
+          map.setZoom(2);
+        }
+      }
+
+      let currentMapType = "roadmap";
+      function toggleMapType() {
+        if (map) {
+          currentMapType =
+            currentMapType === "roadmap" ? "satellite" : "roadmap";
+          map.setMapTypeId(currentMapType);
+        }
+      }
+
+      // Animate elements on scroll
+      function animateOnScroll() {
+        const elements = document.querySelectorAll(
+          ".form-container, .map-container",
+        );
+        elements.forEach((element) => {
+          const elementTop = element.getBoundingClientRect().top;
+          const elementVisible = 150;
+
+          if (elementTop < window.innerHeight - elementVisible) {
+            element.classList.add("animate");
+          }
+        });
+      }
+
+      // Initialize animations
+      document.addEventListener("DOMContentLoaded", function () {
+        animateOnScroll();
+        window.addEventListener("scroll", animateOnScroll);
+
+        // Add animation delays
+        const formGroups = document.querySelectorAll(".form-group");
+        formGroups.forEach((group, index) => {
+          group.style.animationDelay = `${index * 0.1}s`;
+        });
+      });
+    </script>
+  </body>
 </html>
