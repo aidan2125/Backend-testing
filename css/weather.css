@@ -490,16 +490,12 @@ body.stormy {
 .detail-icon {
   width: 50px;
   height: 50px;
-  background: linear-gradient(
-    135deg,
-    var(--primary-orange),
-    var(--light-orange)
-  );
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--pure-white);
+  color: var(--white);
   font-size: 1.2rem;
 }
 
