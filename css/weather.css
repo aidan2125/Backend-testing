@@ -442,7 +442,7 @@ body.stormy {
 
 .weather-icon {
   font-size: 3rem;
-  color: var(--primary-orange);
+  color: var(--primary);
   animation: weatherIconPulse 3s ease-in-out infinite;
 }
 
