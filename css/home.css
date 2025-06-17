@@ -409,28 +409,25 @@ body {
 }
 
 /* Staggered word animation for dynamic effect */
-.hero h2 {
-  overflow: hidden;
-}
-
 .hero h2 span {
   display: inline-block;
   animation: wordReveal 0.8s ease-out forwards;
   opacity: 0;
-  transform: translateY(100px) rotateX(-90deg);
+  transform: translateY(50px) rotateX(-45deg);
+  margin-right: 0.2em;
 }
 
 .hero h2 span:nth-child(1) {
-  animation-delay: 0.1s;
+  animation-delay: 0.2s;
 }
 .hero h2 span:nth-child(2) {
-  animation-delay: 0.3s;
+  animation-delay: 0.4s;
 }
 .hero h2 span:nth-child(3) {
-  animation-delay: 0.5s;
+  animation-delay: 0.6s;
 }
 .hero h2 span:nth-child(4) {
-  animation-delay: 0.7s;
+  animation-delay: 0.8s;
 }
 
 @keyframes wordReveal {
