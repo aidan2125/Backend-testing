@@ -170,7 +170,7 @@ body.stormy {
 }
 
 .back-btn:hover {
-  background: var(--primary-orange);
+  background: var(--primary);
   transform: scale(1.1);
 }
 
