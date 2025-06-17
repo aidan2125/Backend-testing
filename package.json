@@ -2,6 +2,7 @@
   "name": "travique",
   "version": "1.0.0",
   "description": "Your Smart Travel Companion",
+  "type": "module",
   "main": "index.html",
   "scripts": {
     "dev": "node server.js",
