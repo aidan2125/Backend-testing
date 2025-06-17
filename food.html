@@ -1,366 +1,438 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SA Travel Food & Shops Finder</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <style>
-    :root {
-      --primary: #246071;
-      --primary-dark: #1b4a58;
-      --accent: #ff8c42;
-      --text-dark: #222;
-      --background: #f7fbff;
-    }
-    body.tips-page {
-      background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
-      font-family: 'Quicksand', sans-serif;
-      margin: 0;
-      min-height: 100vh;
-      color: var(--text-dark);
-      transition: background 0.5s;
-    }
-    #map {
-      height: 450px;
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      border-radius: 1rem;
-      box-shadow: 0 4px 24px rgba(36,96,113,0.08);
-    }
-    #results {
-      max-height: 600px;
-      overflow-y: auto;
-      width: 100vw;
-      max-width: 100vw;
-      margin-left: calc(-50vw + 50%);
-      margin-right: calc(-50vw + 50%);
-      border-radius: 0.75rem;
-      box-sizing: border-box;
-    }
-    .top-bar {
-      width: 100vw;
-      background: rgba(36,96,113,0.95);
-      color: white;
-      padding: 1.5rem 2rem 1.5rem 2rem;
-      position: fixed;
-      top: 0;
-      left: 0;
-      border-bottom: 3px solid var(--accent);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 16px rgba(36,96,113,0.08);
-    }
-    .top-bar h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .back-btn {
-      padding: 10px 22px;
-      background: linear-gradient(90deg, var(--accent), #ffb677);
-      color: var(--primary-dark);
-      border: none;
-      border-radius: 9999px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 2px 8px rgba(255,140,66,0.08);
-      transition: background 0.2s, color 0.2s, transform 0.2s;
-    }
-    .back-btn:hover {
-      background: var(--primary-dark);
-      color: #fff;
-      transform: translateY(-2px) scale(1.04);
-    }
-    @media (max-width: 768px) {
-      .top-bar { padding: 1rem 0.5rem; }
-      .top-bar h2 { font-size: 1.2rem; }
-      .back-btn { padding: 8px 14px; font-size: 0.95rem; }
-    }
-    .search-bar-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      background: rgba(255,255,255,0.7);
-      border-radius: 0.75rem;
-      padding: 1rem 0.5rem;
-      box-shadow: 0 2px 8px rgba(36,96,113,0.04);
-    }
-    .search-bar-container input {
-      padding: 0.6rem 1rem;
-      border: 1.5px solid #e0eafc;
-      border-radius: 0.5rem;
-      width: 260px;
-      font-size: 1rem;
-      background: #f7fbff;
-      transition: border 0.2s;
-    }
-    .search-bar-container input:focus {
-      border: 1.5px solid var(--primary);
-      outline: none;
-    }
-    .search-bar-container button {
-      padding: 0.6rem 1.2rem;
-      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-      color: white;
-      border: none;
-      border-radius: 0.5rem;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      box-shadow: 0 2px 8px rgba(36,96,113,0.06);
-    }
-    .search-bar-container button:hover {
-      background: var(--accent);
-      color: var(--primary-dark);
-      transform: scale(1.04);
-    }
-    .action-btn {
-      transition: background 0.2s, color 0.2s, transform 0.2s;
-      font-weight: 600;
-      border-radius: 0.5rem;
-      box-shadow: 0 2px 8px rgba(36,96,113,0.06);
-    }
-    .action-btn:hover {
-      transform: scale(1.04);
-      filter: brightness(1.1);
-    }
-    .result-card {
-      background: linear-gradient(90deg, #f7fbff 80%, #e0eafc 100%);
-      border-radius: 0.75rem;
-      margin-bottom: 1rem;
-      padding: 1rem 1.2rem;
-      box-shadow: 0 2px 8px rgba(36,96,113,0.04);
-      transition: box-shadow 0.2s;
-      border-left: 4px solid var(--primary);
-    }
-    .result-card:hover {
-      box-shadow: 0 4px 16px rgba(36,96,113,0.10);
-      border-left: 4px solid var(--accent);
-    }
-    .result-title {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--primary-dark);
-      margin-bottom: 0.2rem;
-    }
-    .result-address {
-      font-size: 1rem;
-      color: #444;
-      margin-bottom: 0.2rem;
-    }
-    .result-rating {
-      font-size: 0.95rem;
-      color: #ff8c42;
-      font-weight: 600;
-    }
-    .fade-in {
-      animation: fadeIn 0.7s;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-  </style>
-</head>
-<body class="tips-page">
-  <div class="top-bar">
-    <h2><i class="fas fa-utensils"></i> Food Finder</h2>
-    <button class="back-btn" onclick="window.location.href='dashboard.html'">
-      <i class="fas fa-arrow-left"></i> Dashboard
-    </button>
-  </div>
-  <div class="container mx-auto p-4 max-w-3xl" style="margin-top: 110px;">
-    <h1 class="text-3xl font-bold text-center mb-6 text-primary-dark tracking-tight">South Africa Travel: Find Restaurants & Stores</h1>
-    <div class="flex justify-center mb-6 flex-wrap gap-3">
-      <button id="findRestaurants" class="action-btn bg-blue-500 hover:bg-blue-600 text-white px-5 py-2">Find Restaurants</button>
-      <button id="findStores" class="action-btn bg-green-500 hover:bg-green-600 text-white px-5 py-2">Find Stores</button>
-    </div>
-    <div class="search-bar-container mb-6">
-      <input type="text" id="cuisine-type" placeholder="Search cuisine or restaurant..." />
-      <button id="search-restaurants"><i class="fas fa-search mr-1"></i>Search</button>
-      <button id="search-current"><i class="fas fa-location-arrow mr-1"></i>Nearby</button>
-    </div>
-    <div id="map" class="mb-6 fade-in"></div>
-    <div id="results" class="bg-white p-4 rounded shadow fade-in"></div>
-  </div>
-  <script>
-    let map, service, infowindow, userLocation, markers = [];
- 
-    function clearMarkers() {
-      markers.forEach(marker => marker.setMap(null));
-      markers = [];
-    }
- 
-    function initMap() {
-      const defaultLocation = { lat: -26.2041, lng: 28.0473 };
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: defaultLocation,
-        zoom: 12,
-        styles: [
-          { elementType: "geometry", stylers: [{ color: "#e0eafc" }] },
-          { elementType: "labels.text.stroke", stylers: [{ color: "#ffffff" }] },
-          { elementType: "labels.text.fill", stylers: [{ color: "#246071" }] },
-          {
-            featureType: "poi",
-            elementType: "geometry",
-            stylers: [{ color: "#f7fbff" }]
-          },
-          {
-            featureType: "road",
-            elementType: "geometry",
-            stylers: [{ color: "#cfdef3" }]
-          }
-        ]
-      });
-      infowindow = new google.maps.InfoWindow();
- 
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            userLocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            map.setCenter(userLocation);
-            new google.maps.Marker({
-              position: userLocation,
-              map: map,
-              title: "Your Location",
-              icon: { url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" }
-            });
-          },
-          () => {
-            userLocation = defaultLocation;
-            map.setCenter(userLocation);
-          }
-        );
-      } else {
-        userLocation = defaultLocation;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travique | Food Finder</title>
+    <link rel="stylesheet" href="css/food.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #246071;
+        --primary-dark: #1b4a58;
+        --accent: #ff8c42;
+        --text-dark: #222;
+        --background: #f7fbff;
       }
-      service = new google.maps.places.PlacesService(map);
-    }
- 
-    function searchPlaces(type) {
-      if (!userLocation) {
-        alert("Location not yet available. Please wait...");
-        return;
+      body.tips-page {
+        background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+        font-family: "Quicksand", sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text-dark);
+        transition: background 0.5s;
       }
-      clearMarkers();
-      const request = {
-        location: userLocation,
-        radius: 5000,
-        type: type
-      };
-      service.nearbySearch(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          displayResults(results, type);
-          addMarkers(results);
-        } else {
-          document.getElementById('results').innerHTML = `<p class="text-red-500">No ${type}s found nearby.</p>`;
+      #map {
+        height: 450px;
+        width: 100vw;
+        max-width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        border-radius: 1rem;
+        box-shadow: 0 4px 24px rgba(36, 96, 113, 0.08);
+      }
+      #results {
+        max-height: 600px;
+        overflow-y: auto;
+        width: 100vw;
+        max-width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        border-radius: 0.75rem;
+        box-sizing: border-box;
+      }
+      .top-bar {
+        width: 100vw;
+        background: rgba(36, 96, 113, 0.95);
+        color: white;
+        padding: 1.5rem 2rem 1.5rem 2rem;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-bottom: 3px solid var(--accent);
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 16px rgba(36, 96, 113, 0.08);
+      }
+      .top-bar h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .back-btn {
+        padding: 10px 22px;
+        background: linear-gradient(90deg, var(--accent), #ffb677);
+        color: var(--primary-dark);
+        border: none;
+        border-radius: 9999px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 2px 8px rgba(255, 140, 66, 0.08);
+        transition:
+          background 0.2s,
+          color 0.2s,
+          transform 0.2s;
+      }
+      .back-btn:hover {
+        background: var(--primary-dark);
+        color: #fff;
+        transform: translateY(-2px) scale(1.04);
+      }
+      @media (max-width: 768px) {
+        .top-bar {
+          padding: 1rem 0.5rem;
         }
-      });
-    }
- 
-    function displayResults(places, type) {
-      const resultsDiv = document.getElementById('results');
-      resultsDiv.innerHTML = `<h2 class="text-xl font-semibold mb-3 text-primary-dark">${type.charAt(0).toUpperCase() + type.slice(1)}s Nearby</h2>`;
-      if (!places.length) {
-        resultsDiv.innerHTML += `<p class="text-gray-500">No results found.</p>`;
-        return;
+        .top-bar h2 {
+          font-size: 1.2rem;
+        }
+        .back-btn {
+          padding: 8px 14px;
+          font-size: 0.95rem;
+        }
       }
-      places.forEach(place => {
-        const placeDiv = document.createElement('div');
-        placeDiv.className = 'result-card fade-in';
-        placeDiv.innerHTML = `
-          <div class="result-title">${place.name}</div>
-          <div class="result-address"><i class="fas fa-map-marker-alt text-primary mr-1"></i> ${place.vicinity}</div>
-          <div class="result-rating"><i class="fas fa-star"></i> ${place.rating ? place.rating + '/5' : 'N/A'}</div>
-        `;
-        resultsDiv.appendChild(placeDiv);
-      });
-    }
- 
-    function addMarkers(places) {
-      places.forEach(place => {
-        const marker = new google.maps.Marker({
-          position: place.geometry.location,
-          map: map,
-          title: place.name,
-          icon: {
-            url: "http://maps.google.com/mapfiles/ms/icons/orange-dot.png"
+      .search-bar-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 0.75rem;
+        padding: 1rem 0.5rem;
+        box-shadow: 0 2px 8px rgba(36, 96, 113, 0.04);
+      }
+      .search-bar-container input {
+        padding: 0.6rem 1rem;
+        border: 1.5px solid #e0eafc;
+        border-radius: 0.5rem;
+        width: 260px;
+        font-size: 1rem;
+        background: #f7fbff;
+        transition: border 0.2s;
+      }
+      .search-bar-container input:focus {
+        border: 1.5px solid var(--primary);
+        outline: none;
+      }
+      .search-bar-container button {
+        padding: 0.6rem 1.2rem;
+        background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+        box-shadow: 0 2px 8px rgba(36, 96, 113, 0.06);
+      }
+      .search-bar-container button:hover {
+        background: var(--accent);
+        color: var(--primary-dark);
+        transform: scale(1.04);
+      }
+      .action-btn {
+        transition:
+          background 0.2s,
+          color 0.2s,
+          transform 0.2s;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 8px rgba(36, 96, 113, 0.06);
+      }
+      .action-btn:hover {
+        transform: scale(1.04);
+        filter: brightness(1.1);
+      }
+      .result-card {
+        background: linear-gradient(90deg, #f7fbff 80%, #e0eafc 100%);
+        border-radius: 0.75rem;
+        margin-bottom: 1rem;
+        padding: 1rem 1.2rem;
+        box-shadow: 0 2px 8px rgba(36, 96, 113, 0.04);
+        transition: box-shadow 0.2s;
+        border-left: 4px solid var(--primary);
+      }
+      .result-card:hover {
+        box-shadow: 0 4px 16px rgba(36, 96, 113, 0.1);
+        border-left: 4px solid var(--accent);
+      }
+      .result-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 0.2rem;
+      }
+      .result-address {
+        font-size: 1rem;
+        color: #444;
+        margin-bottom: 0.2rem;
+      }
+      .result-rating {
+        font-size: 0.95rem;
+        color: #ff8c42;
+        font-weight: 600;
+      }
+      .fade-in {
+        animation: fadeIn 0.7s;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body class="tips-page">
+    <div class="top-bar">
+      <h2><i class="fas fa-utensils"></i> Food Finder</h2>
+      <button class="back-btn" onclick="window.location.href='dashboard.html'">
+        <i class="fas fa-arrow-left"></i> Dashboard
+      </button>
+    </div>
+    <div class="container mx-auto p-4 max-w-3xl" style="margin-top: 110px">
+      <h1
+        class="text-3xl font-bold text-center mb-6 text-primary-dark tracking-tight"
+      >
+        South Africa Travel: Find Restaurants & Stores
+      </h1>
+      <div class="flex justify-center mb-6 flex-wrap gap-3">
+        <button
+          id="findRestaurants"
+          class="action-btn bg-blue-500 hover:bg-blue-600 text-white px-5 py-2"
+        >
+          Find Restaurants
+        </button>
+        <button
+          id="findStores"
+          class="action-btn bg-green-500 hover:bg-green-600 text-white px-5 py-2"
+        >
+          Find Stores
+        </button>
+      </div>
+      <div class="search-bar-container mb-6">
+        <input
+          type="text"
+          id="cuisine-type"
+          placeholder="Search cuisine or restaurant..."
+        />
+        <button id="search-restaurants">
+          <i class="fas fa-search mr-1"></i>Search
+        </button>
+        <button id="search-current">
+          <i class="fas fa-location-arrow mr-1"></i>Nearby
+        </button>
+      </div>
+      <div id="map" class="mb-6 fade-in"></div>
+      <div id="results" class="bg-white p-4 rounded shadow fade-in"></div>
+    </div>
+    <script>
+      let map,
+        service,
+        infowindow,
+        userLocation,
+        markers = [];
+
+      function clearMarkers() {
+        markers.forEach((marker) => marker.setMap(null));
+        markers = [];
+      }
+
+      function initMap() {
+        const defaultLocation = { lat: -26.2041, lng: 28.0473 };
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: defaultLocation,
+          zoom: 12,
+          styles: [
+            { elementType: "geometry", stylers: [{ color: "#e0eafc" }] },
+            {
+              elementType: "labels.text.stroke",
+              stylers: [{ color: "#ffffff" }],
+            },
+            {
+              elementType: "labels.text.fill",
+              stylers: [{ color: "#246071" }],
+            },
+            {
+              featureType: "poi",
+              elementType: "geometry",
+              stylers: [{ color: "#f7fbff" }],
+            },
+            {
+              featureType: "road",
+              elementType: "geometry",
+              stylers: [{ color: "#cfdef3" }],
+            },
+          ],
+        });
+        infowindow = new google.maps.InfoWindow();
+
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              };
+              map.setCenter(userLocation);
+              new google.maps.Marker({
+                position: userLocation,
+                map: map,
+                title: "Your Location",
+                icon: {
+                  url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                },
+              });
+            },
+            () => {
+              userLocation = defaultLocation;
+              map.setCenter(userLocation);
+            },
+          );
+        } else {
+          userLocation = defaultLocation;
+        }
+        service = new google.maps.places.PlacesService(map);
+      }
+
+      function searchPlaces(type) {
+        if (!userLocation) {
+          alert("Location not yet available. Please wait...");
+          return;
+        }
+        clearMarkers();
+        const request = {
+          location: userLocation,
+          radius: 5000,
+          type: type,
+        };
+        service.nearbySearch(request, (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            displayResults(results, type);
+            addMarkers(results);
+          } else {
+            document.getElementById("results").innerHTML =
+              `<p class="text-red-500">No ${type}s found nearby.</p>`;
           }
         });
-        markers.push(marker);
-        marker.addListener('click', () => {
-          infowindow.setContent(`
+      }
+
+      function displayResults(places, type) {
+        const resultsDiv = document.getElementById("results");
+        resultsDiv.innerHTML = `<h2 class="text-xl font-semibold mb-3 text-primary-dark">${type.charAt(0).toUpperCase() + type.slice(1)}s Nearby</h2>`;
+        if (!places.length) {
+          resultsDiv.innerHTML += `<p class="text-gray-500">No results found.</p>`;
+          return;
+        }
+        places.forEach((place) => {
+          const placeDiv = document.createElement("div");
+          placeDiv.className = "result-card fade-in";
+          placeDiv.innerHTML = `
+          <div class="result-title">${place.name}</div>
+          <div class="result-address"><i class="fas fa-map-marker-alt text-primary mr-1"></i> ${place.vicinity}</div>
+          <div class="result-rating"><i class="fas fa-star"></i> ${place.rating ? place.rating + "/5" : "N/A"}</div>
+        `;
+          resultsDiv.appendChild(placeDiv);
+        });
+      }
+
+      function addMarkers(places) {
+        places.forEach((place) => {
+          const marker = new google.maps.Marker({
+            position: place.geometry.location,
+            map: map,
+            title: place.name,
+            icon: {
+              url: "http://maps.google.com/mapfiles/ms/icons/orange-dot.png",
+            },
+          });
+          markers.push(marker);
+          marker.addListener("click", () => {
+            infowindow.setContent(`
             <div style="font-family:Quicksand,sans-serif;">
               <strong>${place.name}</strong><br>
               ${place.vicinity}<br>
-              <span style="color:#ff8c42;">Rating: ${place.rating ? place.rating + '/5' : 'N/A'}</span>
+              <span style="color:#ff8c42;">Rating: ${place.rating ? place.rating + "/5" : "N/A"}</span>
             </div>
           `);
-          infowindow.open(map, marker);
+            infowindow.open(map, marker);
+          });
         });
-      });
-    }
- 
-    document.getElementById('findRestaurants').addEventListener('click', () => searchPlaces('restaurant'));
-    document.getElementById('findStores').addEventListener('click', () => searchPlaces('store'));
- 
-    document.getElementById('search-restaurants').addEventListener('click', function () {
-      const cuisine = document.getElementById('cuisine-type').value.trim();
-      if (!userLocation || !cuisine) {
-        alert("Enter a cuisine and ensure location is available.");
-        return;
       }
-      clearMarkers();
-      const request = {
-        location: userLocation,
-        radius: 5000,
-        keyword: cuisine,
-        type: 'restaurant'
-      };
-      service.nearbySearch(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-          displayResults(results, 'restaurant');
-          addMarkers(results);
-        } else {
-          document.getElementById('results').innerHTML = `<p class="text-red-500">No restaurants found for "${cuisine}".</p>`;
-        }
-      });
-    });
- 
-    document.getElementById('search-current').addEventListener('click', function () {
-      searchPlaces('restaurant');
-    });
- 
-    document.getElementById('cuisine-type').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') {
-        document.getElementById('search-restaurants').click();
-      }
-    });
- 
-    window.onload = initMap;
-  </script>
-</body>
+
+      document
+        .getElementById("findRestaurants")
+        .addEventListener("click", () => searchPlaces("restaurant"));
+      document
+        .getElementById("findStores")
+        .addEventListener("click", () => searchPlaces("store"));
+
+      document
+        .getElementById("search-restaurants")
+        .addEventListener("click", function () {
+          const cuisine = document.getElementById("cuisine-type").value.trim();
+          if (!userLocation || !cuisine) {
+            alert("Enter a cuisine and ensure location is available.");
+            return;
+          }
+          clearMarkers();
+          const request = {
+            location: userLocation,
+            radius: 5000,
+            keyword: cuisine,
+            type: "restaurant",
+          };
+          service.nearbySearch(request, (results, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK) {
+              displayResults(results, "restaurant");
+              addMarkers(results);
+            } else {
+              document.getElementById("results").innerHTML =
+                `<p class="text-red-500">No restaurants found for "${cuisine}".</p>`;
+            }
+          });
+        });
+
+      document
+        .getElementById("search-current")
+        .addEventListener("click", function () {
+          searchPlaces("restaurant");
+        });
+
+      document
+        .getElementById("cuisine-type")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            document.getElementById("search-restaurants").click();
+          }
+        });
+
+      window.onload = initMap;
+    </script>
+  </body>
 </html>
- 
- 
