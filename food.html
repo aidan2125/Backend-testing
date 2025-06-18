@@ -314,6 +314,9 @@
       let currentSearchType = "restaurant";
       let searchRadius = 5000;
       let isMapInitialized = false;
+      let autocompleteService, placesService;
+      let searchTimeout;
+      let nearbyPlaces = [];
 
       function showLoading() {
         document.getElementById("loadingOverlay").classList.add("active");
