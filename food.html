@@ -622,6 +622,20 @@
         }
       }
 
+      // Safe querySelector wrapper to prevent '#' errors
+      function safeQuerySelector(selector) {
+        try {
+          if (selector === "#" || selector === "" || !selector) {
+            console.warn("Invalid selector provided:", selector);
+            return null;
+          }
+          return document.querySelector(selector);
+        } catch (error) {
+          console.error("querySelector error:", error, "Selector:", selector);
+          return null;
+        }
+      }
+
       // Initialize when page loads
       window.onload = () => {
         showLoading();
