@@ -701,6 +701,322 @@
         }
       }
 
+      // Search Dropdown Functions
+      function showSearchDropdown() {
+        document.getElementById("searchDropdown").classList.add("active");
+      }
+
+      function hideSearchDropdown() {
+        document.getElementById("searchDropdown").classList.remove("active");
+      }
+
+      function showDefaultSuggestions() {
+        const locationSuggestions = document.getElementById(
+          "locationSuggestions",
+        );
+        const restaurantSuggestions = document.getElementById(
+          "restaurantSuggestions",
+        );
+
+        // Clear previous suggestions
+        locationSuggestions.innerHTML = "";
+        restaurantSuggestions.innerHTML = "";
+
+        // Show nearby places if available
+        if (nearbyPlaces.length > 0) {
+          displayRestaurantSuggestions(nearbyPlaces.slice(0, 5));
+        } else {
+          restaurantSuggestions.innerHTML =
+            '<div class="dropdown-empty"><i class="fas fa-search"></i><p>Start typing to find restaurants...</p></div>';
+        }
+
+        // Show location suggestions
+        if (userLocation) {
+          locationSuggestions.innerHTML = `
+          <div class="suggestion-item" data-type="location" data-value="near me">
+            <i class="fas fa-crosshairs"></i>
+            <span>Restaurants near me</span>
+          </div>
+        `;
+        }
+      }
+
+      function performSearch(query) {
+        const locationSuggestions = document.getElementById(
+          "locationSuggestions",
+        );
+        const restaurantSuggestions = document.getElementById(
+          "restaurantSuggestions",
+        );
+
+        // Show loading state
+        locationSuggestions.innerHTML =
+          '<div class="dropdown-loading"><div class="spinner"></div><p>Searching...</p></div>';
+        restaurantSuggestions.innerHTML =
+          '<div class="dropdown-loading"><div class="spinner"></div><p>Finding restaurants...</p></div>';
+
+        // Search for location predictions
+        if (autocompleteService) {
+          autocompleteService.getPlacePredictions(
+            {
+              input: query,
+              location: userLocation
+                ? new google.maps.LatLng(userLocation.lat, userLocation.lng)
+                : null,
+              radius: searchRadius,
+              types: ["establishment", "geocode"],
+            },
+            (predictions, status) => {
+              if (
+                status === google.maps.places.PlacesServiceStatus.OK &&
+                predictions
+              ) {
+                displayLocationSuggestions(predictions.slice(0, 5));
+              } else {
+                locationSuggestions.innerHTML =
+                  '<div class="dropdown-empty"><i class="fas fa-map-marker-alt"></i><p>No locations found</p></div>';
+              }
+            },
+          );
+        }
+
+        // Search for restaurant predictions specifically
+        if (autocompleteService) {
+          autocompleteService.getPlacePredictions(
+            {
+              input: query,
+              location: userLocation
+                ? new google.maps.LatLng(userLocation.lat, userLocation.lng)
+                : null,
+              radius: searchRadius,
+              types: ["establishment"],
+              componentRestrictions: { country: "ZA" }, // Adjust country as needed
+            },
+            (predictions, status) => {
+              if (
+                status === google.maps.places.PlacesServiceStatus.OK &&
+                predictions
+              ) {
+                // Filter for restaurants, cafes, etc.
+                const restaurantPredictions = predictions.filter((prediction) =>
+                  prediction.types.some((type) =>
+                    [
+                      "restaurant",
+                      "cafe",
+                      "bar",
+                      "food",
+                      "meal_takeaway",
+                      "meal_delivery",
+                    ].includes(type),
+                  ),
+                );
+                if (restaurantPredictions.length > 0) {
+                  displayPlaceSuggestions(restaurantPredictions.slice(0, 5));
+                } else {
+                  // Fallback to nearby search
+                  searchNearbyForDropdown(query);
+                }
+              } else {
+                searchNearbyForDropdown(query);
+              }
+            },
+          );
+        }
+      }
+
+      function displayLocationSuggestions(predictions) {
+        const locationSuggestions = document.getElementById(
+          "locationSuggestions",
+        );
+        locationSuggestions.innerHTML = "";
+
+        predictions.forEach((prediction) => {
+          const suggestionItem = document.createElement("div");
+          suggestionItem.className = "suggestion-item";
+          suggestionItem.dataset.type = "location";
+          suggestionItem.dataset.value = prediction.description;
+          suggestionItem.dataset.placeId = prediction.place_id;
+
+          suggestionItem.innerHTML = `
+          <i class="fas fa-map-marker-alt"></i>
+          <span>${prediction.description}</span>
+        `;
+
+          locationSuggestions.appendChild(suggestionItem);
+        });
+      }
+
+      function displayPlaceSuggestions(predictions) {
+        const restaurantSuggestions = document.getElementById(
+          "restaurantSuggestions",
+        );
+        restaurantSuggestions.innerHTML = "";
+
+        predictions.forEach((prediction) => {
+          const suggestionItem = document.createElement("div");
+          suggestionItem.className = "suggestion-item";
+          suggestionItem.dataset.type = "place";
+          suggestionItem.dataset.placeId = prediction.place_id;
+
+          suggestionItem.innerHTML = `
+          <div class="main-info">
+            <i class="fas fa-utensils"></i>
+            <span>${prediction.structured_formatting.main_text}</span>
+          </div>
+          <div class="sub-info">
+            <span class="distance">${prediction.structured_formatting.secondary_text || ""}</span>
+          </div>
+        `;
+
+          restaurantSuggestions.appendChild(suggestionItem);
+        });
+      }
+
+      function displayRestaurantSuggestions(places) {
+        const restaurantSuggestions = document.getElementById(
+          "restaurantSuggestions",
+        );
+        restaurantSuggestions.innerHTML = "";
+
+        places.forEach((place) => {
+          const suggestionItem = document.createElement("div");
+          suggestionItem.className = "suggestion-item";
+          suggestionItem.dataset.type = "place";
+          suggestionItem.dataset.placeId = place.place_id;
+
+          const rating = place.rating || 0;
+          const isOpen = place.opening_hours?.open_now;
+          const distance = userLocation
+            ? calculateDistanceForDropdown(
+                userLocation,
+                place.geometry.location,
+              )
+            : null;
+
+          suggestionItem.innerHTML = `
+          <div class="main-info">
+            <i class="fas fa-utensils"></i>
+            <span>${place.name}</span>
+            ${isOpen !== undefined ? `<span class="status ${isOpen ? "open" : "closed"}">${isOpen ? "Open" : "Closed"}</span>` : ""}
+          </div>
+          <div class="sub-info">
+            ${rating > 0 ? `<span class="rating"><i class="fas fa-star"></i> ${rating.toFixed(1)}</span>` : ""}
+            ${distance ? `<span class="distance">${distance.toFixed(1)} km</span>` : ""}
+          </div>
+        `;
+
+          restaurantSuggestions.appendChild(suggestionItem);
+        });
+      }
+
+      function searchNearbyForDropdown(query) {
+        if (!userLocation || !service) {
+          document.getElementById("restaurantSuggestions").innerHTML =
+            '<div class="dropdown-empty"><i class="fas fa-exclamation-triangle"></i><p>Location not available</p></div>';
+          return;
+        }
+
+        const request = {
+          location: userLocation,
+          radius: searchRadius,
+          type: ["restaurant", "cafe", "bar", "food"],
+          keyword: query,
+        };
+
+        service.nearbySearch(request, (results, status) => {
+          if (
+            status === google.maps.places.PlacesServiceStatus.OK &&
+            results.length > 0
+          ) {
+            displayRestaurantSuggestions(results.slice(0, 5));
+          } else {
+            document.getElementById("restaurantSuggestions").innerHTML =
+              '<div class="dropdown-empty"><i class="fas fa-utensils"></i><p>No restaurants found</p></div>';
+          }
+        });
+      }
+
+      function getPlaceDetailsAndShow(placeId) {
+        showLoading();
+
+        const request = {
+          placeId: placeId,
+          fields: [
+            "name",
+            "geometry",
+            "place_id",
+            "types",
+            "vicinity",
+            "rating",
+            "opening_hours",
+            "photos",
+          ],
+        };
+
+        placesService.getDetails(request, (place, status) => {
+          hideLoading();
+
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            // Center map on the place
+            map.setCenter(place.geometry.location);
+            map.setZoom(16);
+
+            // Clear existing markers
+            clearMarkers();
+
+            // Add marker for the place
+            const marker = new google.maps.Marker({
+              position: place.geometry.location,
+              map: map,
+              title: place.name,
+              animation: google.maps.Animation.DROP,
+              icon: {
+                url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6b35'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
+                scaledSize: new google.maps.Size(35, 35),
+              },
+            });
+
+            markers.push(marker);
+
+            // Show place details
+            showPlaceDetails(place);
+
+            // Update results
+            displayResults([place], currentSearchType);
+            document.getElementById("resultsCount").textContent =
+              "1 place found";
+
+            showToast(`Found ${place.name}!`, "success");
+          } else {
+            showToast("Could not get place details", "error");
+          }
+        });
+      }
+
+      function calculateDistanceForDropdown(from, to) {
+        const fromLat = from.lat;
+        const fromLng = from.lng;
+        const toLat = typeof to.lat === "function" ? to.lat() : to.lat;
+        const toLng = typeof to.lng === "function" ? to.lng() : to.lng;
+
+        const R = 6371; // Radius of the earth in km
+        const dLat = deg2rad(toLat - fromLat);
+        const dLon = deg2rad(toLng - fromLng);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(fromLat)) *
+            Math.cos(deg2rad(toLat)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance;
+      }
+
+      function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+      }
+
       // Initialize when page loads
       window.onload = () => {
         showLoading();
