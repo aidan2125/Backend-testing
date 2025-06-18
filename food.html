@@ -731,17 +731,81 @@
           });
         });
 
-        // Quick search
-        document
-          .getElementById("quickSearch")
-          .addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-              const query = e.target.value.trim();
-              if (query) {
-                searchPlaces("restaurant", query);
-              }
+        // Enhanced Quick search with dropdown
+        const quickSearchInput = document.getElementById("quickSearch");
+        const searchDropdown = document.getElementById("searchDropdown");
+
+        // Show dropdown on focus
+        quickSearchInput.addEventListener("focus", () => {
+          showSearchDropdown();
+          if (quickSearchInput.value.trim()) {
+            performSearch(quickSearchInput.value.trim());
+          } else {
+            showDefaultSuggestions();
+          }
+        });
+
+        // Search as user types
+        quickSearchInput.addEventListener("input", (e) => {
+          const query = e.target.value.trim();
+
+          // Clear existing timeout
+          if (searchTimeout) {
+            clearTimeout(searchTimeout);
+          }
+
+          if (query.length > 0) {
+            // Debounce search for better performance
+            searchTimeout = setTimeout(() => {
+              performSearch(query);
+            }, 300);
+          } else {
+            showDefaultSuggestions();
+          }
+        });
+
+        // Handle Enter key
+        quickSearchInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            const query = e.target.value.trim();
+            if (query) {
+              hideSearchDropdown();
+              searchPlaces("restaurant", query);
             }
-          });
+          }
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener("click", (e) => {
+          if (!e.target.closest(".search-input-wrapper")) {
+            hideSearchDropdown();
+          }
+        });
+
+        // Handle suggestion clicks
+        document.addEventListener("click", (e) => {
+          if (e.target.closest(".suggestion-item")) {
+            const suggestionItem = e.target.closest(".suggestion-item");
+            const type = suggestionItem.dataset.type;
+            const value = suggestionItem.dataset.value;
+            const placeId = suggestionItem.dataset.placeId;
+
+            hideSearchDropdown();
+
+            if (type === "place" && placeId) {
+              // Search for specific place
+              getPlaceDetailsAndShow(placeId);
+            } else if (type === "location" && value) {
+              // Set search input and search
+              quickSearchInput.value = value;
+              searchPlaces("restaurant", value);
+            } else if (type === "cuisine" && value) {
+              // Search for cuisine
+              quickSearchInput.value = value;
+              searchPlaces("restaurant", value);
+            }
+          }
+        });
 
         // Filter panel
         document.getElementById("menuToggle").addEventListener("click", () => {
