@@ -1558,6 +1558,30 @@ input:checked + .toggle-slider:before {
     bottom: 15px;
     right: 15px;
   }
+
+  .search-dropdown {
+    max-height: 250px;
+    font-size: 0.9rem;
+  }
+
+  .dropdown-section h4 {
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+  }
+
+  .suggestion-item {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .suggestion-item span {
+    font-size: 0.9rem;
+  }
+
+  .suggestion-item .distance,
+  .suggestion-item .rating {
+    font-size: 0.8rem;
+  }
 }
 
 /* Landscape Mode Adjustments */
