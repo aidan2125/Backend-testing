@@ -401,6 +401,8 @@
 
         infowindow = new google.maps.InfoWindow();
         service = new google.maps.places.PlacesService(map);
+        autocompleteService = new google.maps.places.AutocompleteService();
+        placesService = new google.maps.places.PlacesService(map);
         isMapInitialized = true;
 
         updateLocationIndicator("getting");
