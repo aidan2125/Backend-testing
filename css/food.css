@@ -316,6 +316,179 @@ body.food-finder-page {
   box-shadow: var(--glow-orange);
 }
 
+/* Search Dropdown */
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-heavy);
+  border: 1px solid rgba(33, 150, 243, 0.1);
+  z-index: var(--z-overlay);
+  max-height: 400px;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: var(--transition);
+  margin-top: 5px;
+}
+
+.search-dropdown.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-section {
+  padding: 15px 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dropdown-section:last-child {
+  border-bottom: none;
+}
+
+.dropdown-section h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 5px;
+  border: 1px solid transparent;
+}
+
+.suggestion-item:last-child {
+  margin-bottom: 0;
+}
+
+.suggestion-item:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 53, 0.05),
+    rgba(33, 150, 243, 0.05)
+  );
+  border-color: rgba(33, 150, 243, 0.2);
+  transform: translateX(5px);
+}
+
+.suggestion-item i {
+  width: 20px;
+  text-align: center;
+  color: var(--primary-orange);
+  font-size: 1.1rem;
+}
+
+.suggestion-item span {
+  font-weight: 500;
+  color: var(--text-dark);
+  flex: 1;
+}
+
+.suggestion-item .distance {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.suggestion-item .rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--warning);
+}
+
+.suggestion-item .status {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.suggestion-item .status.open {
+  background: rgba(46, 204, 113, 0.1);
+  color: var(--success);
+}
+
+.suggestion-item .status.closed {
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+}
+
+/* Location Suggestions */
+.location-suggestions .suggestion-item i {
+  color: var(--primary-blue);
+}
+
+/* Restaurant Suggestions */
+.restaurant-suggestions .suggestion-item {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.restaurant-suggestions .suggestion-item .main-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.restaurant-suggestions .suggestion-item .sub-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  margin-left: 32px;
+}
+
+/* Empty state for dropdown */
+.dropdown-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.dropdown-empty i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--text-muted);
+  opacity: 0.5;
+}
+
+/* Loading state for dropdown */
+.dropdown-loading {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.dropdown-loading .spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(33, 150, 243, 0.2);
+  border-top: 2px solid var(--primary-blue);
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  animation: spin 1s linear infinite;
+}
+
 /* Filter Panel */
 .filter-panel {
   position: fixed;
