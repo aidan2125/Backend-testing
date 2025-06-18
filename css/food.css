@@ -1508,6 +1508,25 @@ input:checked + .toggle-slider:before {
     padding: 0 15px 12px;
   }
 
+  .search-dropdown {
+    max-height: 300px;
+    margin-top: 3px;
+  }
+
+  .dropdown-section {
+    padding: 12px 15px;
+  }
+
+  .suggestion-item {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .restaurant-suggestions .suggestion-item .sub-info {
+    margin-left: 22px;
+    gap: 10px;
+  }
+
   .main-content {
     margin-top: 130px;
     padding: 0 10px 100px;
