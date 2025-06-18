@@ -472,12 +472,16 @@
           hideLoading();
 
           if (status === google.maps.places.PlacesServiceStatus.OK) {
+            // Store results for dropdown suggestions
+            nearbyPlaces = results;
+
             displayResults(results, type);
             addMarkers(results);
             document.getElementById("resultsCount").textContent =
               `${results.length} places found`;
             showToast(`Found ${results.length} ${type}s nearby!`, "success");
           } else {
+            nearbyPlaces = [];
             document.getElementById("results").innerHTML = getEmptyState();
             document.getElementById("resultsCount").textContent =
               "0 places found";
