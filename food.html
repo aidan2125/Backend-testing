@@ -62,6 +62,66 @@
           <button class="voice-search-btn" id="voiceSearch">
             <i class="fas fa-microphone"></i>
           </button>
+          <!-- Search Dropdown -->
+          <div class="search-dropdown" id="searchDropdown">
+            <div class="dropdown-section">
+              <h4>Suggested Locations</h4>
+              <div class="location-suggestions" id="locationSuggestions">
+                <!-- Location suggestions will be populated here -->
+              </div>
+            </div>
+            <div class="dropdown-section">
+              <h4>Restaurants Near You</h4>
+              <div class="restaurant-suggestions" id="restaurantSuggestions">
+                <!-- Restaurant suggestions will be populated here -->
+              </div>
+            </div>
+            <div class="dropdown-section">
+              <h4>Popular Searches</h4>
+              <div class="popular-searches" id="popularSearches">
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="pizza"
+                >
+                  <i class="fas fa-pizza-slice"></i>
+                  <span>Pizza places</span>
+                </div>
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="coffee"
+                >
+                  <i class="fas fa-coffee"></i>
+                  <span>Coffee shops</span>
+                </div>
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="sushi"
+                >
+                  <i class="fas fa-fish"></i>
+                  <span>Sushi restaurants</span>
+                </div>
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="burger"
+                >
+                  <i class="fas fa-hamburger"></i>
+                  <span>Burger joints</span>
+                </div>
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="chinese"
+                >
+                  <i class="fas fa-chopsticks"></i>
+                  <span>Chinese food</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
