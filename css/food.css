@@ -2018,9 +2018,9 @@ input:checked + .toggle-slider:before {
   }
 
   .map-container {
-    height: 200px;
+    height: 320px;
     margin: 0 -10px 20px;
-    border-radius: 0;
+    border-radius: var(--border-radius);
   }
 
   .fab-container {
