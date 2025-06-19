@@ -213,7 +213,7 @@
           <button class="action-chip" data-cuisine="sushi">🍣 Sushi</button>
           <button class="action-chip" data-cuisine="burger">🍔 Burgers</button>
           <button class="action-chip" data-cuisine="coffee">☕ Coffee</button>
-          <button class="action-chip" data-cuisine="indian">🍛 Indian</button>
+          <button class="action-chip" data-cuisine="indian">�� Indian</button>
           <button class="action-chip" data-cuisine="chinese">🥡 Chinese</button>
           <button class="action-chip" data-cuisine="italian">🍝 Italian</button>
           <button class="action-chip" data-cuisine="mexican">🌮 Mexican</button>
@@ -509,49 +509,361 @@
           return;
         }
 
-        places.forEach((place, index) => {
+        // Create results header with sorting options
+        const resultsHeader = document.createElement("div");
+        resultsHeader.className = "results-header";
+        resultsHeader.innerHTML = `
+        <div class="results-info">
+          <h3 class="results-title">
+            <i class="fas fa-utensils"></i>
+            Found ${places.length} ${type}${places.length !== 1 ? "s" : ""}
+          </h3>
+          <p class="results-subtitle">Showing results near your location</p>
+        </div>
+        <div class="results-controls">
+          <div class="sort-dropdown">
+            <button class="sort-btn" id="sortBtn">
+              <i class="fas fa-sort"></i>
+              <span>Sort by</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="sort-options" id="sortOptions">
+              <button class="sort-option active" data-sort="distance">
+                <i class="fas fa-location-arrow"></i>
+                Distance
+              </button>
+              <button class="sort-option" data-sort="rating">
+                <i class="fas fa-star"></i>
+                Rating
+              </button>
+              <button class="sort-option" data-sort="name">
+                <i class="fas fa-font"></i>
+                Name
+              </button>
+              <button class="sort-option" data-sort="price">
+                <i class="fas fa-dollar-sign"></i>
+                Price
+              </button>
+            </div>
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="grid" id="gridViewBtn">
+              <i class="fas fa-th"></i>
+            </button>
+            <button class="view-btn" data-view="list" id="listViewBtn">
+              <i class="fas fa-list"></i>
+            </button>
+          </div>
+        </div>
+      `;
+
+        // Create results grid container
+        const resultsGrid = document.createElement("div");
+        resultsGrid.className = "results-grid";
+        resultsGrid.id = "resultsGrid";
+
+        // Sort places by distance (default)
+        const sortedPlaces = [...places].sort((a, b) => {
+          if (userLocation) {
+            const distanceA = calculateDistance(
+              userLocation.lat,
+              userLocation.lng,
+              a.geometry.location.lat(),
+              a.geometry.location.lng(),
+            );
+            const distanceB = calculateDistance(
+              userLocation.lat,
+              userLocation.lng,
+              b.geometry.location.lat(),
+              b.geometry.location.lng(),
+            );
+            return distanceA - distanceB;
+          }
+          return 0;
+        });
+
+        // Create place cards with enhanced information
+        sortedPlaces.forEach((place, index) => {
           const placeCard = document.createElement("div");
-          placeCard.className = "place-card";
+          placeCard.className = "place-card enhanced-card";
           placeCard.style.animationDelay = `${index * 0.1}s`;
+          placeCard.dataset.placeId = place.place_id;
 
           const rating = place.rating || 0;
           const priceLevel = place.price_level || 0;
           const isOpen = place.opening_hours?.open_now;
+          const totalRatings = place.user_ratings_total || 0;
+
+          // Calculate distance if user location is available
+          let distance = "";
+          if (userLocation) {
+            const dist = calculateDistance(
+              userLocation.lat,
+              userLocation.lng,
+              place.geometry.location.lat(),
+              place.geometry.location.lng(),
+            );
+            distance = `<div class="place-distance">
+            <i class="fas fa-walking"></i>
+            <span>${dist < 1 ? (dist * 1000).toFixed(0) + "m" : dist.toFixed(1) + "km"}</span>
+          </div>`;
+          }
+
+          // Generate price indicator
+          const priceIndicator =
+            priceLevel > 0
+              ? `<div class="price-indicator">
+            <span class="price-text">${"$".repeat(priceLevel)}</span>
+            <span class="price-label">${getPriceLabel(priceLevel)}</span>
+          </div>`
+              : "";
 
           placeCard.innerHTML = `
           <div class="place-image">
-            <img src="${place.photos?.[0]?.getUrl({ maxWidth: 300, maxHeight: 200 }) || "https://via.placeholder.com/300x200?text=No+Image"}"
-                 alt="${place.name}" loading="lazy">
+            <img src="${place.photos?.[0]?.getUrl({ maxWidth: 400, maxHeight: 250 }) || "https://via.placeholder.com/400x250/ff6b35/ffffff?text=" + encodeURIComponent(place.name)}"
+                 alt="${place.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ff6b35/ffffff?text=Restaurant'">
             <div class="place-badges">
-              ${isOpen !== undefined ? `<span class="status-badge ${isOpen ? "open" : "closed"}">${isOpen ? "Open" : "Closed"}</span>` : ""}
+              ${
+                isOpen !== undefined
+                  ? `<span class="status-badge ${isOpen ? "open" : "closed"}">
+                <i class="fas fa-${isOpen ? "check" : "times"}-circle"></i>
+                ${isOpen ? "Open" : "Closed"}
+              </span>`
+                  : ""
+              }
               ${priceLevel > 0 ? `<span class="price-badge">${"$".repeat(priceLevel)}</span>` : ""}
+            </div>
+            <div class="favorite-btn" onclick="toggleFavorite('${place.place_id}')">
+              <i class="far fa-heart"></i>
             </div>
           </div>
           <div class="place-info">
-            <h3 class="place-name">${place.name}</h3>
+            <div class="place-header">
+              <h3 class="place-name" title="${place.name}">${place.name}</h3>
+              ${distance}
+            </div>
+
             <div class="place-rating">
               <div class="stars">
                 ${generateStars(rating)}
               </div>
               <span class="rating-text">${rating > 0 ? rating.toFixed(1) : "No rating"}</span>
+              ${totalRatings > 0 ? `<span class="rating-count">(${totalRatings})</span>` : ""}
             </div>
+
             <p class="place-address">
               <i class="fas fa-map-marker-alt"></i>
-              ${place.vicinity}
+              <span title="${place.vicinity}">${place.vicinity}</span>
             </p>
+
+            ${priceIndicator}
+
+            <div class="place-quick-info">
+              ${
+                place.types
+                  ? `
+                <div class="place-tags">
+                  ${place.types
+                    .slice(0, 2)
+                    .map(
+                      (type) =>
+                        `<span class="place-tag">${formatPlaceType(type)}</span>`,
+                    )
+                    .join("")}
+                </div>
+              `
+                  : ""
+              }
+            </div>
+
             <div class="place-actions">
-              <button class="action-btn-small" onclick="openPlaceDetails('${place.place_id}')">
-                <i class="fas fa-info-circle"></i> Details
+              <button class="action-btn-primary" onclick="openPlaceDetails('${place.place_id}')">
+                <i class="fas fa-info-circle"></i>
+                <span>View Details</span>
               </button>
-              <button class="action-btn-small" onclick="getDirections(${place.geometry.location.lat()}, ${place.geometry.location.lng()})">
-                <i class="fas fa-directions"></i> Directions
+              <button class="action-btn-secondary" onclick="getDirections(${place.geometry.location.lat()}, ${place.geometry.location.lng()})">
+                <i class="fas fa-directions"></i>
+                <span>Directions</span>
+              </button>
+              <button class="action-btn-icon" onclick="sharePlace('${place.name}', '${place.vicinity}')" title="Share">
+                <i class="fas fa-share-alt"></i>
               </button>
             </div>
           </div>
         `;
 
-          resultsDiv.appendChild(placeCard);
+          resultsGrid.appendChild(placeCard);
         });
+
+        // Append header and grid to results container
+        resultsDiv.appendChild(resultsHeader);
+        resultsDiv.appendChild(resultsGrid);
+
+        // Setup sorting and view toggle functionality
+        setupResultsControls(sortedPlaces, type);
+      }
+
+      // Helper functions for enhanced display
+      function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the earth in km
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(lat1)) *
+            Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      }
+
+      function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+      }
+
+      function getPriceLabel(priceLevel) {
+        const labels = [
+          "",
+          "Budget",
+          "Moderate",
+          "Expensive",
+          "Very Expensive",
+        ];
+        return labels[priceLevel] || "";
+      }
+
+      function formatPlaceType(type) {
+        return type.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+      }
+
+      function toggleFavorite(placeId) {
+        const favoriteBtn = event.target.closest(".favorite-btn");
+        const icon = favoriteBtn.querySelector("i");
+
+        if (icon.classList.contains("far")) {
+          icon.classList.remove("far");
+          icon.classList.add("fas");
+          favoriteBtn.classList.add("favorited");
+          showToast("Added to favorites!", "success");
+        } else {
+          icon.classList.remove("fas");
+          icon.classList.add("far");
+          favoriteBtn.classList.remove("favorited");
+          showToast("Removed from favorites", "info");
+        }
+      }
+
+      function setupResultsControls(places, type) {
+        // Sort dropdown functionality
+        const sortBtn = document.getElementById("sortBtn");
+        const sortOptions = document.getElementById("sortOptions");
+
+        if (sortBtn && sortOptions) {
+          sortBtn.addEventListener("click", () => {
+            sortOptions.classList.toggle("active");
+          });
+
+          document.addEventListener("click", (e) => {
+            if (!e.target.closest(".sort-dropdown")) {
+              sortOptions.classList.remove("active");
+            }
+          });
+
+          // Sort option handlers
+          sortOptions.querySelectorAll(".sort-option").forEach((option) => {
+            option.addEventListener("click", () => {
+              const sortType = option.dataset.sort;
+              sortResults(places, sortType, type);
+
+              // Update active state
+              sortOptions
+                .querySelectorAll(".sort-option")
+                .forEach((opt) => opt.classList.remove("active"));
+              option.classList.add("active");
+
+              // Update sort button text
+              sortBtn.querySelector("span").textContent =
+                option.textContent.trim();
+              sortOptions.classList.remove("active");
+            });
+          });
+        }
+
+        // View toggle functionality
+        const gridViewBtn = document.getElementById("gridViewBtn");
+        const listViewBtn = document.getElementById("listViewBtn");
+        const resultsGrid = document.getElementById("resultsGrid");
+
+        if (gridViewBtn && listViewBtn && resultsGrid) {
+          gridViewBtn.addEventListener("click", () => {
+            resultsGrid.classList.remove("list-view");
+            resultsGrid.classList.add("grid-view");
+            gridViewBtn.classList.add("active");
+            listViewBtn.classList.remove("active");
+          });
+
+          listViewBtn.addEventListener("click", () => {
+            resultsGrid.classList.remove("grid-view");
+            resultsGrid.classList.add("list-view");
+            listViewBtn.classList.add("active");
+            gridViewBtn.classList.remove("active");
+          });
+        }
+      }
+
+      function sortResults(places, sortType, type) {
+        let sortedPlaces = [...places];
+
+        switch (sortType) {
+          case "distance":
+            if (userLocation) {
+              sortedPlaces.sort((a, b) => {
+                const distA = calculateDistance(
+                  userLocation.lat,
+                  userLocation.lng,
+                  a.geometry.location.lat(),
+                  a.geometry.location.lng(),
+                );
+                const distB = calculateDistance(
+                  userLocation.lat,
+                  userLocation.lng,
+                  b.geometry.location.lat(),
+                  b.geometry.location.lng(),
+                );
+                return distA - distB;
+              });
+            }
+            break;
+          case "rating":
+            sortedPlaces.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+            break;
+          case "name":
+            sortedPlaces.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+          case "price":
+            sortedPlaces.sort(
+              (a, b) => (a.price_level || 0) - (b.price_level || 0),
+            );
+            break;
+        }
+
+        // Re-render results with new sorting
+        const resultsGrid = document.getElementById("resultsGrid");
+        if (resultsGrid) {
+          resultsGrid.innerHTML = "";
+          sortedPlaces.forEach((place, index) => {
+            // Re-create cards with new order (simplified version)
+            const existingCard = document.querySelector(
+              `[data-place-id="${place.place_id}"]`,
+            );
+            if (existingCard) {
+              const newCard = existingCard.cloneNode(true);
+              newCard.style.animationDelay = `${index * 0.05}s`;
+              resultsGrid.appendChild(newCard);
+            }
+          });
+        }
       }
 
       function generateStars(rating) {
