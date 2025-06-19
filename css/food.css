@@ -795,7 +795,7 @@ input:checked + .toggle-slider:before {
 /* Map and Results Layout */
 .map-results-layout {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-rows: 600px auto;
   gap: 25px;
   margin-bottom: 30px;
   min-height: 600px;
@@ -942,6 +942,7 @@ input:checked + .toggle-slider:before {
   flex-direction: column;
   overflow: hidden;
   transition: var(--transition);
+  min-height: 400px;
 }
 
 .results-panel.collapsed {
