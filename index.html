@@ -473,6 +473,102 @@
           header.classList.remove("scrolled");
         }
       });
+
+      // Enhanced navigation features
+      // Quick navigation button clicks with smooth animations
+      document
+        .querySelectorAll(".nav-card, .quick-action-btn")
+        .forEach((card) => {
+          card.addEventListener("click", function (e) {
+            // Add click animation
+            this.style.transform = "scale(0.95)";
+            setTimeout(() => {
+              this.style.transform = "";
+            }, 150);
+          });
+        });
+
+      // Show floating navigation button on scroll
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector(".modern-header");
+        const floatingNav = document.querySelector(".floating-nav");
+
+        if (window.scrollY > 100) {
+          header.classList.add("scrolled");
+          if (floatingNav) floatingNav.classList.add("visible");
+        } else {
+          header.classList.remove("scrolled");
+          if (floatingNav) floatingNav.classList.remove("visible");
+        }
+      });
+
+      // Stagger animation for navigation cards
+      const navCards = document.querySelectorAll(".nav-card");
+      navCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add("fade-in-up");
+      });
+
+      // Add intersection observer for navigation section
+      const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-in");
+          }
+        });
+      }, observerOptions);
+
+      // Observe navigation cards
+      document.querySelectorAll(".nav-card").forEach((card) => {
+        navObserver.observe(card);
+      });
+    </script>
+
+    <!-- Floating Navigation Button -->
+    <div class="floating-nav" id="floatingNav">
+      <button class="floating-nav-btn" id="floatingNavBtn">
+        <i class="fas fa-compass"></i>
+      </button>
+      <div class="floating-nav-menu" id="floatingNavMenu">
+        <a href="dashboard.html" class="floating-nav-item" title="Dashboard">
+          <i class="fas fa-tachometer-alt"></i>
+        </a>
+        <a href="trip-planner.html" class="floating-nav-item" title="Plan Trip">
+          <i class="fas fa-route"></i>
+        </a>
+        <a href="expenses.html" class="floating-nav-item" title="Expenses">
+          <i class="fas fa-chart-line"></i>
+        </a>
+        <a href="food.html" class="floating-nav-item" title="Food Finder">
+          <i class="fas fa-utensils"></i>
+        </a>
+        <a href="profile.html" class="floating-nav-item" title="Profile">
+          <i class="fas fa-user"></i>
+        </a>
+      </div>
+    </div>
+
+    <script>
+      // Floating navigation functionality
+      document.addEventListener("DOMContentLoaded", () => {
+        const floatingNavBtn = document.getElementById("floatingNavBtn");
+        const floatingNavMenu = document.getElementById("floatingNavMenu");
+
+        if (floatingNavBtn && floatingNavMenu) {
+          floatingNavBtn.addEventListener("click", () => {
+            floatingNavMenu.classList.toggle("active");
+            floatingNavBtn.classList.toggle("active");
+          });
+
+          // Close menu when clicking outside
+          document.addEventListener("click", (e) => {
+            if (!e.target.closest(".floating-nav")) {
+              floatingNavMenu.classList.remove("active");
+              floatingNavBtn.classList.remove("active");
+            }
+          });
+        }
+      });
     </script>
 
     <!-- Live Location JS -->
