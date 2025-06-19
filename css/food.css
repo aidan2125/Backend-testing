@@ -1202,8 +1202,9 @@ input:checked + .toggle-slider:before {
 
 .place-image {
   position: relative;
-  height: 180px;
+  height: 220px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .place-image img {
@@ -1214,43 +1215,91 @@ input:checked + .toggle-slider:before {
 }
 
 .place-card:hover .place-image img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .place-badges {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 12px;
   display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
 .status-badge {
-  padding: 4px 10px;
+  padding: 6px 12px;
   border-radius: var(--border-radius-pill);
   font-size: 0.75rem;
   font-weight: 600;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  max-width: fit-content;
 }
 
 .status-badge.open {
   background: rgba(46, 204, 113, 0.9);
   color: var(--pure-white);
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.3);
 }
 
 .status-badge.closed {
   background: rgba(231, 76, 60, 0.9);
   color: var(--pure-white);
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.3);
 }
 
 .price-badge {
-  padding: 4px 8px;
-  background: rgba(255, 255, 255, 0.9);
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.95);
   color: var(--primary-orange);
   border-radius: var(--border-radius-pill);
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 107, 53, 0.2);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.2);
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 35px;
+  height: 35px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.favorite-btn:hover {
+  background: var(--pure-white);
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.favorite-btn.favorited {
+  background: rgba(231, 76, 60, 0.9);
+  color: var(--pure-white);
+}
+
+.favorite-btn i {
+  font-size: 1rem;
+  color: var(--danger);
+  transition: var(--transition);
+}
+
+.favorite-btn.favorited i {
+  color: var(--pure-white);
 }
 
 .place-info {
