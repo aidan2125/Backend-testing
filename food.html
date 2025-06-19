@@ -526,11 +526,17 @@
       }
 
       function displayResults(places, type) {
-        const resultsDiv = document.getElementById("results");
-        resultsDiv.innerHTML = "";
+        const resultsDiv = document.getElementById("results"); // Desktop results
+        const mobileResultsDiv = document.getElementById("mobileResults"); // Mobile results
+
+        // Clear both containers
+        if (resultsDiv) resultsDiv.innerHTML = "";
+        if (mobileResultsDiv) mobileResultsDiv.innerHTML = "";
 
         if (!places.length) {
-          resultsDiv.innerHTML = getEmptyState();
+          const emptyState = getEmptyState();
+          if (resultsDiv) resultsDiv.innerHTML = emptyState;
+          if (mobileResultsDiv) mobileResultsDiv.innerHTML = emptyState;
           return;
         }
 
