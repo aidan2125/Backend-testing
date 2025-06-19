@@ -431,12 +431,17 @@
         });
       }
 
-      // Smooth scrolling for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      // Smooth scrolling for anchor links (only for internal page anchors)
+      document.querySelectorAll('a[href^="#"]:not([id])').forEach((anchor) => {
+        // Skip buttons that have specific handlers (like get-started-btn)
+        if (anchor.id && anchor.id.includes("btn")) {
+          return;
+        }
+
         anchor.addEventListener("click", function (e) {
           const href = this.getAttribute("href");
 
-          // Skip if href is just '#' or empty
+          // Skip if href is just '#' or empty, or if it's a button
           if (!href || href === "#" || href.length <= 1) {
             e.preventDefault();
             return;
