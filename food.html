@@ -470,6 +470,15 @@
                 "Could not get your location. Using default location.",
                 "error",
               );
+
+              // Search for restaurants at default location
+              setTimeout(() => {
+                searchPlaces("restaurant");
+                showToast(
+                  "Searching for restaurants in Johannesburg...",
+                  "info",
+                );
+              }, 1500);
             },
           );
         } else {
@@ -477,6 +486,12 @@
           updateLocationIndicator("error");
           hideLoading();
           showToast("Geolocation not supported by this browser.", "error");
+
+          // Search for restaurants at default location
+          setTimeout(() => {
+            searchPlaces("restaurant");
+            showToast("Searching for restaurants in Johannesburg...", "info");
+          }, 1500);
         }
       }
 
