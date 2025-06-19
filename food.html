@@ -726,9 +726,19 @@
           resultsGrid.appendChild(placeCard);
         });
 
-        // Append header and grid to results container
-        resultsDiv.appendChild(resultsHeader);
-        resultsDiv.appendChild(resultsGrid);
+        // Append header and grid to desktop results container
+        if (resultsDiv) {
+          resultsDiv.appendChild(resultsHeader);
+          resultsDiv.appendChild(resultsGrid);
+        }
+
+        // Clone content for mobile container
+        if (mobileResultsDiv) {
+          const mobileHeader = resultsHeader.cloneNode(true);
+          const mobileGrid = resultsGrid.cloneNode(true);
+          mobileResultsDiv.appendChild(mobileHeader);
+          mobileResultsDiv.appendChild(mobileGrid);
+        }
 
         // Setup sorting and view toggle functionality
         setupResultsControls(sortedPlaces, type);
