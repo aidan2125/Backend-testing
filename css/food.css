@@ -878,6 +878,7 @@ input:checked + .toggle-slider:before {
   transition: var(--transition);
   z-index: 100;
   overflow: hidden;
+  display: none; /* Hidden on desktop */
 }
 
 .map-overlay.expanded {
