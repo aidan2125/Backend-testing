@@ -2133,9 +2133,15 @@ input:checked + .toggle-slider:before {
     padding: 0 10px 100px;
   }
 
+  /* Extra small mobile layout */
+  .map-results-layout {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin: 0 -10px 20px;
+  }
+
   .map-container {
     height: 320px;
-    margin: 0 -10px 20px;
     border-radius: var(--border-radius);
   }
 
