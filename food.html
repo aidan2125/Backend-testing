@@ -1519,22 +1519,14 @@
         });
 
         // Filter panel
-        document.getElementById("menuToggle").addEventListener("click", () => {
-          document.getElementById("filterPanel").classList.add("active");
+        document.getElementById("menuToggle")?.addEventListener("click", () => {
+          document.getElementById("filterPanel")?.classList.add("active");
         });
 
-        document.getElementById("closeFilter").addEventListener("click", () => {
-          document.getElementById("filterPanel").classList.remove("active");
-        });
-
-        // Radius slider
         document
-          .getElementById("radiusSlider")
-          .addEventListener("input", (e) => {
-            searchRadius = parseInt(e.target.value);
-            document.getElementById("radiusValue").textContent = (
-              searchRadius / 1000
-            ).toFixed(1);
+          .getElementById("closeFilter")
+          ?.addEventListener("click", () => {
+            document.getElementById("filterPanel")?.classList.remove("active");
           });
 
         // Map controls
