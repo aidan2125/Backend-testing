@@ -792,15 +792,23 @@ input:checked + .toggle-slider:before {
   box-shadow: var(--glow-orange);
 }
 
+/* Map and Results Layout */
+.map-results-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 25px;
+  margin-bottom: 30px;
+  min-height: 600px;
+}
+
 /* Map Container */
 .map-container {
   position: relative;
-  height: 500px;
+  height: 600px;
   border-radius: var(--border-radius-large);
   overflow: hidden;
   box-shadow: var(--shadow-heavy);
   border: 3px solid rgba(33, 150, 243, 0.1);
-  margin-bottom: 30px;
 }
 
 .map-header {
