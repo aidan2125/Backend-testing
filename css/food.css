@@ -801,6 +801,21 @@ input:checked + .toggle-slider:before {
   min-height: 600px;
 }
 
+/* Desktop optimization */
+@media (min-width: 1200px) {
+  .map-results-layout {
+    grid-template-rows: 700px auto;
+  }
+
+  .map-container {
+    height: 700px;
+  }
+
+  .results-panel {
+    min-height: 500px;
+  }
+}
+
 /* Map Container */
 .map-container {
   position: relative;
