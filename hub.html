@@ -299,6 +299,231 @@
           </div>
         </section>
 
+        <!-- Saved Trips Management Card -->
+        <section class="dashboard-card saved-trips-card">
+          <div class="card-header">
+            <h3><i class="fas fa-bookmark"></i> Saved Trips</h3>
+            <div class="card-actions">
+              <button
+                class="card-action-btn"
+                id="viewAllTripsBtn"
+                onclick="window.location.href='saved_trips.html'"
+              >
+                <i class="fas fa-external-link-alt"></i>
+              </button>
+              <button class="card-action-btn" id="addNewTripBtn">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <!-- Quick Trip Creation Form -->
+            <div id="quick-trip-form" class="quick-trip-form hidden">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="trip-destination">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Destination
+                  </label>
+                  <input
+                    type="text"
+                    id="trip-destination"
+                    placeholder="Where are you going?"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="trip-country">
+                    <i class="fas fa-flag"></i>
+                    Country
+                  </label>
+                  <input type="text" id="trip-country" placeholder="Country" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="trip-start-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    Start Date
+                  </label>
+                  <input type="date" id="trip-start-date" />
+                </div>
+                <div class="form-group">
+                  <label for="trip-end-date">
+                    <i class="fas fa-calendar-check"></i>
+                    End Date
+                  </label>
+                  <input type="date" id="trip-end-date" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="trip-budget">
+                  <i class="fas fa-dollar-sign"></i>
+                  Budget (Optional)
+                </label>
+                <input
+                  type="number"
+                  id="trip-budget"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="trip-activities">
+                  <i class="fas fa-hiking"></i>
+                  Activities
+                </label>
+                <div class="activities-selector">
+                  <div class="activity-tags">
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="sightseeing"
+                    >
+                      <i class="fas fa-camera"></i> Sightseeing
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="food"
+                    >
+                      <i class="fas fa-utensils"></i> Food & Dining
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="adventure"
+                    >
+                      <i class="fas fa-mountain"></i> Adventure
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="culture"
+                    >
+                      <i class="fas fa-theater-masks"></i> Culture
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="beach"
+                    >
+                      <i class="fas fa-umbrella-beach"></i> Beach
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="shopping"
+                    >
+                      <i class="fas fa-shopping-bag"></i> Shopping
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="nightlife"
+                    >
+                      <i class="fas fa-glass-cheers"></i> Nightlife
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="nature"
+                    >
+                      <i class="fas fa-tree"></i> Nature
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    id="custom-activity"
+                    placeholder="Add custom activity..."
+                    class="custom-activity-input"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="trip-notes">
+                  <i class="fas fa-sticky-note"></i>
+                  Trip Notes
+                </label>
+                <textarea
+                  id="trip-notes"
+                  placeholder="Add any special notes, requirements, or reminders for this trip..."
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn-primary" id="saveTripBtn">
+                  <i class="fas fa-save"></i>
+                  Save Trip
+                </button>
+                <button type="button" class="btn-secondary" id="cancelTripBtn">
+                  <i class="fas fa-times"></i>
+                  Cancel
+                </button>
+              </div>
+            </div>
+
+            <!-- Recent Trips Summary -->
+            <div id="recent-trips-summary" class="recent-trips-summary">
+              <div class="trips-stats">
+                <div class="trip-stat">
+                  <div class="stat-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-number" id="totalSavedTrips">0</span>
+                    <span class="stat-label">Saved Trips</span>
+                  </div>
+                </div>
+                <div class="trip-stat">
+                  <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-number" id="upcomingTrips">0</span>
+                    <span class="stat-label">Upcoming</span>
+                  </div>
+                </div>
+                <div class="trip-stat">
+                  <div class="stat-icon">
+                    <i class="fas fa-heart"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-number" id="favoriteTripsCount">0</span>
+                    <span class="stat-label">Favorites</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="recent-trips-list" id="recentTripsList">
+                <div class="loading-placeholder">
+                  <i class="fas fa-spinner fa-spin"></i>
+                  <span>Loading your trips...</span>
+                </div>
+              </div>
+
+              <div class="trips-actions">
+                <button
+                  class="trips-action-btn"
+                  onclick="window.location.href='saved_trips.html'"
+                >
+                  <i class="fas fa-eye"></i>
+                  View All Trips
+                </button>
+                <button class="trips-action-btn" id="quickAddTripBtn">
+                  <i class="fas fa-plus-circle"></i>
+                  Add New Trip
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Trip Notes Card -->
         <section class="dashboard-card notes-card">
           <div class="card-header">
@@ -544,15 +769,15 @@
       function showEmergencyNumbers() {
         const emergencyInfo = `
         🚨 EMERGENCY CONTACTS 🚨
-        
+
         🚓 Police: 10111
         🚑 Ambulance: 10177
         🚒 Fire: 10177
         📞 General Emergency: 112
-        
+
         🏥 Netcare 911: 082 911
         🆘 ER24: 084 124
-        
+
         📍 Tourist Helpline: 083 123 69 19
       `;
 
