@@ -454,6 +454,12 @@
               updateLocationIndicator("success");
               hideLoading();
               showToast("Location found successfully!", "success");
+
+              // Auto-search for nearby restaurants
+              setTimeout(() => {
+                searchPlaces("restaurant");
+                showToast("Searching for nearby restaurants...", "info");
+              }, 1000);
             },
             (error) => {
               userLocation = defaultLocation;
