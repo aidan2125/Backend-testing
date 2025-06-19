@@ -1864,7 +1864,7 @@ input:checked + .toggle-slider:before {
   }
 
   .map-container {
-    height: 250px;
+    height: 400px;
   }
 
   .fab-container {
