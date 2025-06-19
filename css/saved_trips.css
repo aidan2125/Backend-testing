@@ -469,49 +469,199 @@ body.saved-trips-page {
 
 /* Trip Card */
 .trip-card {
-  background-color: var(--white);
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  padding: 20px;
-  transition: transform 0.2s ease;
+  background: var(--pure-white);
+  border-radius: var(--border-radius-large);
+  box-shadow: var(--shadow-light);
+  border: 2px solid rgba(33, 150, 243, 0.1);
+  overflow: hidden;
+  transition: var(--transition-bounce);
+  position: relative;
 }
 
 .trip-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-heavy);
+  border-color: var(--primary-blue);
 }
 
-.trip-card button {
-  margin-top: 12px;
-  margin-right: 8px;
-  padding: 16px 32px;
+.trip-card-header {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-orange),
+    var(--primary-blue)
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pure-white);
+  overflow: hidden;
+}
+
+.trip-card-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></svg>')
+    repeat;
+  opacity: 0.1;
+}
+
+.trip-destination {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+}
+
+.trip-card-content {
+  padding: 20px;
+}
+
+.trip-dates {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.trip-dates i {
+  color: var(--primary-orange);
+}
+
+.trip-activities {
+  margin-bottom: 15px;
+}
+
+.trip-activities-label {
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.activities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.activity-tag {
+  background: rgba(33, 150, 243, 0.1);
+  color: var(--primary-blue);
+  padding: 4px 10px;
+  border-radius: var(--border-radius-pill);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.trip-notes {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.trip-card-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(33, 150, 243, 0.1);
+}
+
+.trip-action-btn {
+  flex: 1;
+  padding: 12px 16px;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
-/* Details Button */
 .details-btn {
-  background-color: var(--primary);
-  color: var(--white);
+  background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+  color: var(--pure-white);
 }
 
 .details-btn:hover {
-  background-color: var(--primary-dark);
+  background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue));
   transform: translateY(-2px);
+  box-shadow: var(--glow-blue);
 }
 
-/* Delete Button */
+.edit-btn {
+  background: rgba(255, 107, 53, 0.1);
+  color: var(--primary-orange);
+  border: 2px solid rgba(255, 107, 53, 0.2);
+}
+
+.edit-btn:hover {
+  background: var(--primary-orange);
+  color: var(--pure-white);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-orange);
+}
+
 .delete-btn {
-  background-color: #e07b39;
-  color: var(--white);
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+  border: 2px solid rgba(231, 76, 60, 0.2);
 }
 
 .delete-btn:hover {
-  background-color: #c56832;
+  background: var(--danger);
+  color: var(--pure-white);
   transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(231, 76, 60, 0.3);
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  z-index: 2;
+}
+
+.favorite-btn:hover {
+  background: var(--pure-white);
+  transform: scale(1.1);
+}
+
+.favorite-btn.favorited {
+  color: var(--danger);
+}
+
+.favorite-btn:not(.favorited) {
+  color: var(--text-muted);
 }
 
 /* Modal Styles */
