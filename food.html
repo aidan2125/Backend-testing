@@ -220,44 +220,69 @@
         </div>
       </div>
 
-      <!-- Map Container -->
-      <div class="map-container" id="mapContainer">
-        <div class="map-header">
-          <div class="map-controls">
-            <button class="map-control-btn" id="centerMapBtn">
-              <i class="fas fa-crosshairs"></i>
-            </button>
-            <button class="map-control-btn" id="listViewBtn">
-              <i class="fas fa-list"></i>
-            </button>
-            <button class="map-control-btn" id="fullscreenBtn">
-              <i class="fas fa-expand"></i>
-            </button>
-          </div>
-          <div class="results-counter">
-            <span id="resultsCount">0 places found</span>
-          </div>
-        </div>
-        <div id="map" class="map-element"></div>
-
-        <!-- Map Overlay for Mobile -->
-        <div class="map-overlay" id="mapOverlay">
-          <div class="overlay-handle"></div>
-          <div class="overlay-content">
-            <div class="overlay-header">
-              <h3>Search Results</h3>
-              <button class="overlay-toggle" id="overlayToggle">
-                <i class="fas fa-chevron-up"></i>
+      <!-- Map and Results Container -->
+      <div class="map-results-layout">
+        <!-- Map Container -->
+        <div class="map-container" id="mapContainer">
+          <div class="map-header">
+            <div class="map-controls">
+              <button class="map-control-btn" id="centerMapBtn">
+                <i class="fas fa-crosshairs"></i>
+              </button>
+              <button class="map-control-btn" id="listViewBtn">
+                <i class="fas fa-list"></i>
+              </button>
+              <button class="map-control-btn" id="fullscreenBtn">
+                <i class="fas fa-expand"></i>
               </button>
             </div>
-            <div class="results-container" id="results">
-              <div class="empty-state">
-                <i class="fas fa-search"></i>
-                <h4>Start Your Food Journey</h4>
-                <p>
-                  Search for restaurants, cafés, or any cuisine you're craving!
-                </p>
+            <div class="results-counter">
+              <span id="resultsCount">0 places found</span>
+            </div>
+          </div>
+          <div id="map" class="map-element"></div>
+
+          <!-- Map Overlay for Mobile -->
+          <div class="map-overlay" id="mapOverlay">
+            <div class="overlay-handle"></div>
+            <div class="overlay-content">
+              <div class="overlay-header">
+                <h3>Search Results</h3>
+                <button class="overlay-toggle" id="overlayToggle">
+                  <i class="fas fa-chevron-up"></i>
+                </button>
               </div>
+              <div class="results-container mobile-results" id="mobileResults">
+                <div class="empty-state">
+                  <i class="fas fa-search"></i>
+                  <h4>Start Your Food Journey</h4>
+                  <p>
+                    Search for restaurants, cafés, or any cuisine you're
+                    craving!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Results Panel -->
+        <div class="results-panel" id="resultsPanel">
+          <div class="results-panel-header">
+            <h3><i class="fas fa-utensils"></i> Search Results</h3>
+            <div class="panel-controls">
+              <button class="panel-control-btn" id="toggleResultsPanel">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </div>
+          </div>
+          <div class="results-container desktop-results" id="results">
+            <div class="empty-state">
+              <i class="fas fa-search"></i>
+              <h4>Start Your Food Journey</h4>
+              <p>
+                Search for restaurants, cafés, or any cuisine you're craving!
+              </p>
             </div>
           </div>
         </div>
