@@ -1951,8 +1951,35 @@ input:checked + .toggle-slider:before {
     padding: 0 15px 100px;
   }
 
+  /* Mobile layout - stack vertically */
+  .map-results-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 400px auto;
+    gap: 20px;
+    min-height: auto;
+  }
+
   .map-container {
     height: 400px;
+  }
+
+  .results-panel {
+    display: none; /* Hide desktop panel on mobile */
+  }
+
+  .map-overlay {
+    display: block; /* Show mobile overlay */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--pure-white);
+    border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+    max-height: 50%;
+    transform: translateY(calc(100% - 80px));
+    transition: var(--transition);
+    z-index: 100;
+    overflow: hidden;
   }
 
   .fab-container {
