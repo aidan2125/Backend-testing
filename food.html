@@ -1065,10 +1065,15 @@
         }
       }
 
-      // Safe querySelector wrapper to prevent '#' errors
+      // Enhanced safe querySelector wrapper to prevent '#' errors
       function safeQuerySelector(selector) {
         try {
-          if (selector === "#" || selector === "" || !selector) {
+          if (
+            !selector ||
+            selector === "#" ||
+            selector === "" ||
+            selector.length <= 1
+          ) {
             console.warn("Invalid selector provided:", selector);
             return null;
           }
@@ -1078,6 +1083,18 @@
           return null;
         }
       }
+
+      // Global handler to catch and prevent anchor link errors
+      document.addEventListener("DOMContentLoaded", () => {
+        // Find and fix any problematic anchor links
+        document.querySelectorAll('a[href="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.warn("Prevented click on empty anchor link");
+            return false;
+          });
+        });
+      });
 
       // Search Dropdown Functions
       function showSearchDropdown() {
