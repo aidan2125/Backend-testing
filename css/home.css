@@ -1842,3 +1842,249 @@ body.menu-open {
     font-size: 1.1rem;
   }
 }
+
+/* ==========================================
+   FLOATING NAVIGATION BUTTON
+   ========================================== */
+
+.floating-nav {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-nav.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.floating-nav-btn {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-orange),
+    var(--primary-blue)
+  );
+  border: none;
+  border-radius: 50%;
+  color: var(--pure-white);
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.floating-nav-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(255, 107, 53, 0.4);
+}
+
+.floating-nav-btn.active {
+  transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--dark-orange), var(--dark-blue));
+}
+
+.floating-nav-menu {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.8);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.floating-nav-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+
+.floating-nav-item {
+  width: 50px;
+  height: 50px;
+  background: var(--pure-white);
+  border: 2px solid rgba(255, 107, 53, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-orange);
+  text-decoration: none;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.floating-nav-item:hover {
+  background: linear-gradient(
+    135deg,
+    var(--primary-orange),
+    var(--primary-blue)
+  );
+  color: var(--pure-white);
+  transform: scale(1.1);
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.3);
+}
+
+.floating-nav-item::before {
+  content: attr(title);
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: var(--pure-white);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.floating-nav-item:hover::before {
+  opacity: 1;
+  visibility: visible;
+  right: 65px;
+}
+
+/* ==========================================
+   ENHANCED ANIMATIONS
+   ========================================== */
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: slideInScale 0.6s ease forwards;
+}
+
+@keyframes slideInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Staggered animation delays */
+.nav-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.nav-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.nav-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.nav-card:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.nav-card:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.nav-card:nth-child(6) {
+  animation-delay: 0.6s;
+}
+
+/* Enhanced hover effects */
+.nav-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: all 0.6s ease;
+}
+
+.nav-card:hover::after {
+  left: 100%;
+}
+
+/* Responsive adjustments for floating nav */
+@media (max-width: 768px) {
+  .floating-nav {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .floating-nav-btn {
+    width: 55px;
+    height: 55px;
+    font-size: 1.3rem;
+  }
+
+  .floating-nav-item {
+    width: 45px;
+    height: 45px;
+    font-size: 1.1rem;
+  }
+
+  .floating-nav-item::before {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-nav {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .floating-nav-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .floating-nav-item {
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
+  }
+}
