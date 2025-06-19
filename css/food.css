@@ -995,8 +995,7 @@ input:checked + .toggle-slider:before {
 }
 
 .panel-controls {
-  display: flex;
-  gap: 8px;
+  display: none;
 }
 
 .panel-control-btn {
