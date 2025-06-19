@@ -671,16 +671,26 @@
 
       // Simulate data refresh
       setTimeout(() => {
-        // Navigation links click handlers
-        document.querySelectorAll(".nav-link").forEach((link) => {
-          link.addEventListener("click", function (e) {
-            e.preventDefault();
-            const href = this.getAttribute("href");
-            if (href && href !== "#") {
-              showToast("Navigating...", "info");
-              setTimeout(() => {
-                window.location.href = href;
-              }, 500);
-            }
-          });
+        // Remove refresh animation from all cards
+        document.querySelectorAll('.dashboard-card').forEach(card => {
+          card.classList.remove('refreshing');
         });
+
+        showToast('Travel data refreshed!', 'success');
+      }, 2000);
+    }
+
+    // Navigation links click handlers
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll(".nav-link").forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const href = this.getAttribute("href");
+          if (href && href !== "#") {
+            showToast("Navigating...", "info");
+            setTimeout(() => {
+              window.location.href = href;
+            }, 500);
+          }
+        });
+      });
