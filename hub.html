@@ -1,638 +1,759 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>Travique | Travel Command Center</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>Travique | Travel Command Center</title>
 
-  <!-- Modern CSS -->
-  <link rel="stylesheet" href="css/hub.css"/>
+    <!-- Modern CSS -->
+    <link rel="stylesheet" href="css/hub.css" />
 
-  <!-- Modern Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <!-- Modern Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- FontAwesome icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <!-- FontAwesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
 
-  <!-- Meta tags for mobile optimization -->
-  <meta name="theme-color" content="#ff6b35">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-</head>
-<body class="travel-hub-page">
-  <!-- Loading Screen -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="loading-spinner">
-      <div class="spinner-ring"></div>
-      <div class="loading-text">Initializing your travel hub...</div>
-    </div>
-  </div>
-
-  <!-- Modern Header -->
-  <header class="modern-header">
-    <div class="header-content">
-      <button class="back-btn dynamic-btn" onclick="window.location.href='dashboard.html'">
-        <i class="fas fa-arrow-left"></i>
-      </button>
-      <div class="header-title">
-        <h1><i class="fas fa-globe-americas"></i> Travel Command Center</h1>
-        <span class="header-subtitle">Your ultimate travel management hub</span>
-      </div>
-      <div class="header-actions">
+    <!-- Meta tags for mobile optimization -->
+    <meta name="theme-color" content="#ff6b35" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  </head>
+  <body class="travel-hub-page">
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <div class="loading-text">Initializing your travel hub...</div>
       </div>
     </div>
 
-    <!-- Modern Navigation -->
-    <nav class="modern-nav">
-      <a href="expenses.html" class="nav-link">
-        <i class="fas fa-chart-line"></i>
-        <span>Expenses</span>
-      </a>
-      <a href="food.html" class="nav-link">
-        <i class="fas fa-utensils"></i>
-        <span>Food Finder</span>
-      </a>
-      <a href="trip-planner.html" class="nav-link">
-        <i class="fas fa-route"></i>
-        <span>Trip Planner</span>
-      </a>
-      <a href="weather.html" class="nav-link">
-        <i class="fas fa-cloud-sun"></i>
-        <span>Weather</span>
-      </a>
-    </nav>
-  </header>
-
-  <!-- Main Content -->
-  <main class="main-content">
-    <!-- Welcome Section -->
-    <section class="welcome-section">
-      <div class="welcome-content">
-        <h2>Welcome to Your Travel Hub</h2>
-        <p>Manage all aspects of your journey from one centralized location</p>
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <div class="header-content">
+        <button
+          class="back-btn dynamic-btn"
+          onclick="window.location.href='dashboard.html'"
+        >
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="header-title">
+          <h1><i class="fas fa-globe-americas"></i> Travel Command Center</h1>
+          <span class="header-subtitle"
+            >Your ultimate travel management hub</span
+          >
+        </div>
+        <div class="header-actions"></div>
       </div>
-      <div class="floating-elements">
-        <div class="floating-icon" style="--delay: 0s">
-          <i class="fas fa-plane"></i>
-        </div>
-        <div class="floating-icon" style="--delay: 1s">
-          <i class="fas fa-map-marked-alt"></i>
-        </div>
-        <div class="floating-icon" style="--delay: 2s">
-          <i class="fas fa-suitcase"></i>
-        </div>
-      </div>
-    </section>
 
-    <!-- Dashboard Grid -->
-    <div class="dashboard-grid">
-      <!-- Trip Overview Card -->
-      <section class="dashboard-card trip-overview-card">
-        <div class="card-header">
-          <h3><i class="fas fa-calendar-alt"></i> Trip Overview</h3>
-          <button class="card-action-btn" onclick="window.location.href='trip-planner.html'">
-            <i class="fas fa-plus"></i>
-          </button>
+      <!-- Modern Navigation -->
+      <nav class="modern-nav">
+        <a href="expenses.html" class="nav-link">
+          <i class="fas fa-chart-line"></i>
+          <span>Expenses</span>
+        </a>
+        <a href="food.html" class="nav-link">
+          <i class="fas fa-utensils"></i>
+          <span>Food Finder</span>
+        </a>
+        <a href="trip-planner.html" class="nav-link">
+          <i class="fas fa-route"></i>
+          <span>Trip Planner</span>
+        </a>
+        <a href="weather.html" class="nav-link">
+          <i class="fas fa-cloud-sun"></i>
+          <span>Weather</span>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Welcome Section -->
+      <section class="welcome-section">
+        <div class="welcome-content">
+          <h2>Welcome to Your Travel Hub</h2>
+          <p>
+            Manage all aspects of your journey from one centralized location
+          </p>
         </div>
-        <div class="card-content">
-          <div id="upcoming-trips-container" class="trips-container">
-            <div class="loading-placeholder">
-              <i class="fas fa-spinner fa-spin"></i>
-              <span>Loading your trips...</span>
-            </div>
+        <div class="floating-elements">
+          <div class="floating-icon" style="--delay: 0s">
+            <i class="fas fa-plane"></i>
+          </div>
+          <div class="floating-icon" style="--delay: 1s">
+            <i class="fas fa-map-marked-alt"></i>
+          </div>
+          <div class="floating-icon" style="--delay: 2s">
+            <i class="fas fa-suitcase"></i>
           </div>
         </div>
       </section>
 
-      <!-- Map & Location Card -->
-      <section class="dashboard-card map-card">
-        <div class="card-header">
-          <h3><i class="fas fa-map"></i> Interactive Map</h3>
-          <div class="map-controls">
-            <button class="map-control-btn" id="currentLocationBtn">
-              <i class="fas fa-crosshairs"></i>
-            </button>
-            <button class="map-control-btn" id="fullscreenMapBtn">
-              <i class="fas fa-expand"></i>
-            </button>
-          </div>
-        </div>
-        <div class="card-content">
-          <div class="location-search-wrapper">
-            <div class="tab-buttons">
-              <button id="current-tab" class="tab-btn active">
-                <i class="fas fa-location-dot"></i>
-                Current Location
-              </button>
-              <button id="destination-tab" class="tab-btn">
-                <i class="fas fa-map-pin"></i>
-                Destination
-              </button>
-            </div>
-            <div class="search-input-container">
-              <input
-                id="current-location-search"
-                type="text"
-                placeholder="Search current location..."
-                class="location-input"
-              />
-              <input
-                id="destination-search"
-                type="text"
-                placeholder="Search destination..."
-                class="location-input"
-                style="display:none;"
-              />
-              <button class="search-btn">
-                <i class="fas fa-search"></i>
-              </button>
-            </div>
-          </div>
-          <div id="map" class="map-container"></div>
-        </div>
-      </section>
-
-      <!-- Quick Actions Card -->
-      <section class="dashboard-card quick-actions-card">
-        <div class="card-header">
-          <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
-        </div>
-        <div class="card-content">
-          <div class="quick-actions-grid">
-            <a href="weather.html" class="quick-action-btn">
-              <i class="fas fa-cloud-sun"></i>
-              <span>Weather</span>
-            </a>
-            <a href="food.html" class="quick-action-btn">
-              <i class="fas fa-utensils"></i>
-              <span>Food</span>
-            </a>
-            <a href="expenses.html" class="quick-action-btn">
-              <i class="fas fa-chart-line"></i>
-              <span>Expenses</span>
-            </a>
-            <a href="health.html" class="quick-action-btn">
-              <i class="fas fa-heartbeat"></i>
-              <span>Health</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Currency Converter Card -->
-      <section class="dashboard-card currency-card">
-        <div class="card-header">
-          <h3><i class="fas fa-dollar-sign"></i> Currency Converter</h3>
-        </div>
-        <div class="card-content">
-          <form id="converter-form" class="converter-form">
-            <div class="input-group">
-              <label>Amount</label>
-              <input type="number" id="convert-amount" placeholder="0.00" min="0" step="any" required />
-            </div>
-            <div class="currency-selectors">
-              <div class="select-group">
-                <label>From</label>
-                <select id="from-currency" class="currency-select"></select>
-              </div>
-              <button type="button" class="swap-btn" id="swapCurrencies">
-                <i class="fas fa-exchange-alt"></i>
-              </button>
-              <div class="select-group">
-                <label>To</label>
-                <select id="to-currency" class="currency-select"></select>
-              </div>
-            </div>
-            <button type="submit" class="convert-btn">
-              <i class="fas fa-calculator"></i>
-              Convert
-            </button>
-          </form>
-          <div id="converted-result" class="conversion-result"></div>
-        </div>
-      </section>
-
-      <!-- Travel Assistant Card -->
-      <section class="dashboard-card assistant-card">
-        <div class="card-header">
-          <h3><i class="fas fa-robot"></i> Travel Assistant</h3>
-        </div>
-        <div class="card-content">
-          <div id="travel-alerts" class="travel-alerts">
-            <div class="alert-item">
-              <i class="fas fa-info-circle"></i>
-              <span>Check weather conditions for your next destination</span>
-            </div>
-            <div class="alert-item">
-              <i class="fas fa-passport"></i>
-              <span>Ensure your travel documents are up to date</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Budget Snapshot Card -->
-      <section class="dashboard-card budget-card">
-        <div class="card-header">
-          <h3><i class="fas fa-chart-pie"></i> Budget Overview</h3>
-          <button class="card-action-btn" onclick="window.location.href='expenses.html'">
-            <i class="fas fa-external-link-alt"></i>
-          </button>
-        </div>
-        <div class="card-content">
-          <div id="budget-summary" class="budget-summary">
-            <div class="loading-placeholder">
-              <i class="fas fa-spinner fa-spin"></i>
-              <span>Loading budget data...</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Packing Checklist Card -->
-      <section class="dashboard-card packing-card">
-        <div class="card-header">
-          <h3><i class="fas fa-list-check"></i> Packing Checklist</h3>
-          <button class="card-action-btn" id="addPackingItem">
-            <i class="fas fa-plus"></i>
-          </button>
-        </div>
-        <div class="card-content">
-          <ul id="packing-list" class="packing-list">
-            <!-- Packing items dynamically loaded -->
-          </ul>
-        </div>
-      </section>
-
-      <!-- Saved Trips Management Card -->
-      <section class="dashboard-card saved-trips-card">
-        <div class="card-header">
-          <h3><i class="fas fa-bookmark"></i> Saved Trips</h3>
-          <div class="card-actions">
-            <button class="card-action-btn" id="viewAllTripsBtn" onclick="window.location.href='saved_trips.html'">
-              <i class="fas fa-external-link-alt"></i>
-            </button>
-            <button class="card-action-btn" id="addNewTripBtn">
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+        <!-- Trip Overview Card -->
+        <section class="dashboard-card trip-overview-card">
+          <div class="card-header">
+            <h3><i class="fas fa-calendar-alt"></i> Trip Overview</h3>
+            <button
+              class="card-action-btn"
+              onclick="window.location.href='trip-planner.html'"
+            >
               <i class="fas fa-plus"></i>
             </button>
           </div>
-        </div>
-        <div class="card-content">
-          <!-- Quick Trip Creation Form -->
-          <div id="quick-trip-form" class="quick-trip-form hidden">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="trip-destination">
-                  <i class="fas fa-map-marker-alt"></i>
-                  Destination
-                </label>
-                <input type="text" id="trip-destination" placeholder="Where are you going?" />
-              </div>
-              <div class="form-group">
-                <label for="trip-country">
-                  <i class="fas fa-flag"></i>
-                  Country
-                </label>
-                <input type="text" id="trip-country" placeholder="Country" />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="trip-start-date">
-                  <i class="fas fa-calendar-alt"></i>
-                  Start Date
-                </label>
-                <input type="date" id="trip-start-date" />
-              </div>
-              <div class="form-group">
-                <label for="trip-end-date">
-                  <i class="fas fa-calendar-check"></i>
-                  End Date
-                </label>
-                <input type="date" id="trip-end-date" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="trip-budget">
-                <i class="fas fa-dollar-sign"></i>
-                Budget (Optional)
-              </label>
-              <input type="number" id="trip-budget" placeholder="0.00" min="0" step="0.01" />
-            </div>
-
-            <div class="form-group">
-              <label for="trip-activities">
-                <i class="fas fa-hiking"></i>
-                Activities
-              </label>
-              <div class="activities-selector">
-                <div class="activity-tags">
-                  <button type="button" class="activity-tag" data-activity="sightseeing">
-                    <i class="fas fa-camera"></i> Sightseeing
-                  </button>
-                  <button type="button" class="activity-tag" data-activity="food">
-                    <i class="fas fa-utensils"></i> Food & Dining
-                  </button>
-                  <button type="button" class="activity-tag" data-activity="adventure">
-                    <i class="fas fa-mountain"></i> Adventure
-                  </button>
-                  <button type="button" class="activity-tag" data-activity="culture">
-                    <i class="fas fa-theater-masks"></i> Culture
-                  </button>
-                  <button type="button" class="activity-tag" data-activity="beach">
-                    <i class="fas fa-umbrella-beach"></i> Beach
-                  </button>
-                  <button type="button" class="activity-tag" data-activity="shopping">
-                    <i class="fas fa-shopping-bag"></i> Shopping
-                  </button>
-                  <button type="button" class="activity-tag" data-activity="nightlife">
-                    <i class="fas fa-glass-cheers"></i> Nightlife
-                  </button>
-                  <button type="button" class="activity-tag" data-activity="nature">
-                    <i class="fas fa-tree"></i> Nature
-                  </button>
-                </div>
-                <input type="text" id="custom-activity" placeholder="Add custom activity..." class="custom-activity-input" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="trip-notes">
-                <i class="fas fa-sticky-note"></i>
-                Trip Notes
-              </label>
-              <textarea id="trip-notes" placeholder="Add any special notes, requirements, or reminders for this trip..." rows="3"></textarea>
-            </div>
-
-            <div class="form-actions">
-              <button type="button" class="btn-primary" id="saveTripBtn">
-                <i class="fas fa-save"></i>
-                Save Trip
-              </button>
-              <button type="button" class="btn-secondary" id="cancelTripBtn">
-                <i class="fas fa-times"></i>
-                Cancel
-              </button>
-            </div>
-          </div>
-
-          <!-- Recent Trips Summary -->
-          <div id="recent-trips-summary" class="recent-trips-summary">
-            <div class="trips-stats">
-              <div class="trip-stat">
-                <div class="stat-icon">
-                  <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <div class="stat-info">
-                  <span class="stat-number" id="totalSavedTrips">0</span>
-                  <span class="stat-label">Saved Trips</span>
-                </div>
-              </div>
-              <div class="trip-stat">
-                <div class="stat-icon">
-                  <i class="fas fa-clock"></i>
-                </div>
-                <div class="stat-info">
-                  <span class="stat-number" id="upcomingTrips">0</span>
-                  <span class="stat-label">Upcoming</span>
-                </div>
-              </div>
-              <div class="trip-stat">
-                <div class="stat-icon">
-                  <i class="fas fa-heart"></i>
-                </div>
-                <div class="stat-info">
-                  <span class="stat-number" id="favoriteTripsCount">0</span>
-                  <span class="stat-label">Favorites</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="recent-trips-list" id="recentTripsList">
+          <div class="card-content">
+            <div id="upcoming-trips-container" class="trips-container">
               <div class="loading-placeholder">
                 <i class="fas fa-spinner fa-spin"></i>
                 <span>Loading your trips...</span>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div class="trips-actions">
-              <button class="trips-action-btn" onclick="window.location.href='saved_trips.html'">
-                <i class="fas fa-eye"></i>
-                View All Trips
+        <!-- Map & Location Card -->
+        <section class="dashboard-card map-card">
+          <div class="card-header">
+            <h3><i class="fas fa-map"></i> Interactive Map</h3>
+            <div class="map-controls">
+              <button class="map-control-btn" id="currentLocationBtn">
+                <i class="fas fa-crosshairs"></i>
               </button>
-              <button class="trips-action-btn" id="quickAddTripBtn">
-                <i class="fas fa-plus-circle"></i>
-                Add New Trip
+              <button class="map-control-btn" id="fullscreenMapBtn">
+                <i class="fas fa-expand"></i>
               </button>
             </div>
           </div>
-        </div>
-      </section>
+          <div class="card-content">
+            <div class="location-search-wrapper">
+              <div class="tab-buttons">
+                <button id="current-tab" class="tab-btn active">
+                  <i class="fas fa-location-dot"></i>
+                  Current Location
+                </button>
+                <button id="destination-tab" class="tab-btn">
+                  <i class="fas fa-map-pin"></i>
+                  Destination
+                </button>
+              </div>
+              <div class="search-input-container">
+                <input
+                  id="current-location-search"
+                  type="text"
+                  placeholder="Search current location..."
+                  class="location-input"
+                />
+                <input
+                  id="destination-search"
+                  type="text"
+                  placeholder="Search destination..."
+                  class="location-input"
+                  style="display: none"
+                />
+                <button class="search-btn">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+            <div id="map" class="map-container"></div>
+          </div>
+        </section>
 
-      <!-- Trip Notes Card -->
-      <section class="dashboard-card notes-card">
-        <div class="card-header">
-          <h3><i class="fas fa-sticky-note"></i> Trip Notes</h3>
-          <button class="card-action-btn" id="save-notes-btn">
-            <i class="fas fa-save"></i>
+        <!-- Quick Actions Card -->
+        <section class="dashboard-card quick-actions-card">
+          <div class="card-header">
+            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+          </div>
+          <div class="card-content">
+            <div class="quick-actions-grid">
+              <a href="weather.html" class="quick-action-btn">
+                <i class="fas fa-cloud-sun"></i>
+                <span>Weather</span>
+              </a>
+              <a href="food.html" class="quick-action-btn">
+                <i class="fas fa-utensils"></i>
+                <span>Food</span>
+              </a>
+              <a href="expenses.html" class="quick-action-btn">
+                <i class="fas fa-chart-line"></i>
+                <span>Expenses</span>
+              </a>
+              <a href="health.html" class="quick-action-btn">
+                <i class="fas fa-heartbeat"></i>
+                <span>Health</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Currency Converter Card -->
+        <section class="dashboard-card currency-card">
+          <div class="card-header">
+            <h3><i class="fas fa-dollar-sign"></i> Currency Converter</h3>
+          </div>
+          <div class="card-content">
+            <form id="converter-form" class="converter-form">
+              <div class="input-group">
+                <label>Amount</label>
+                <input
+                  type="number"
+                  id="convert-amount"
+                  placeholder="0.00"
+                  min="0"
+                  step="any"
+                  required
+                />
+              </div>
+              <div class="currency-selectors">
+                <div class="select-group">
+                  <label>From</label>
+                  <select id="from-currency" class="currency-select"></select>
+                </div>
+                <button type="button" class="swap-btn" id="swapCurrencies">
+                  <i class="fas fa-exchange-alt"></i>
+                </button>
+                <div class="select-group">
+                  <label>To</label>
+                  <select id="to-currency" class="currency-select"></select>
+                </div>
+              </div>
+              <button type="submit" class="convert-btn">
+                <i class="fas fa-calculator"></i>
+                Convert
+              </button>
+            </form>
+            <div id="converted-result" class="conversion-result"></div>
+          </div>
+        </section>
+
+        <!-- Travel Assistant Card -->
+        <section class="dashboard-card assistant-card">
+          <div class="card-header">
+            <h3><i class="fas fa-robot"></i> Travel Assistant</h3>
+          </div>
+          <div class="card-content">
+            <div id="travel-alerts" class="travel-alerts">
+              <div class="alert-item">
+                <i class="fas fa-info-circle"></i>
+                <span>Check weather conditions for your next destination</span>
+              </div>
+              <div class="alert-item">
+                <i class="fas fa-passport"></i>
+                <span>Ensure your travel documents are up to date</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Budget Snapshot Card -->
+        <section class="dashboard-card budget-card">
+          <div class="card-header">
+            <h3><i class="fas fa-chart-pie"></i> Budget Overview</h3>
+            <button
+              class="card-action-btn"
+              onclick="window.location.href='expenses.html'"
+            >
+              <i class="fas fa-external-link-alt"></i>
+            </button>
+          </div>
+          <div class="card-content">
+            <div id="budget-summary" class="budget-summary">
+              <div class="loading-placeholder">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Loading budget data...</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Packing Checklist Card -->
+        <section class="dashboard-card packing-card">
+          <div class="card-header">
+            <h3><i class="fas fa-list-check"></i> Packing Checklist</h3>
+            <button class="card-action-btn" id="addPackingItem">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <div class="card-content">
+            <ul id="packing-list" class="packing-list">
+              <!-- Packing items dynamically loaded -->
+            </ul>
+          </div>
+        </section>
+
+        <!-- Saved Trips Management Card -->
+        <section class="dashboard-card saved-trips-card">
+          <div class="card-header">
+            <h3><i class="fas fa-bookmark"></i> Saved Trips</h3>
+            <div class="card-actions">
+              <button
+                class="card-action-btn"
+                id="viewAllTripsBtn"
+                onclick="window.location.href='saved_trips.html'"
+              >
+                <i class="fas fa-external-link-alt"></i>
+              </button>
+              <button class="card-action-btn" id="addNewTripBtn">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+            <!-- Quick Trip Creation Form -->
+            <div id="quick-trip-form" class="quick-trip-form hidden">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="trip-destination">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Destination
+                  </label>
+                  <input
+                    type="text"
+                    id="trip-destination"
+                    placeholder="Where are you going?"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="trip-country">
+                    <i class="fas fa-flag"></i>
+                    Country
+                  </label>
+                  <input type="text" id="trip-country" placeholder="Country" />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="trip-start-date">
+                    <i class="fas fa-calendar-alt"></i>
+                    Start Date
+                  </label>
+                  <input type="date" id="trip-start-date" />
+                </div>
+                <div class="form-group">
+                  <label for="trip-end-date">
+                    <i class="fas fa-calendar-check"></i>
+                    End Date
+                  </label>
+                  <input type="date" id="trip-end-date" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="trip-budget">
+                  <i class="fas fa-dollar-sign"></i>
+                  Budget (Optional)
+                </label>
+                <input
+                  type="number"
+                  id="trip-budget"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="trip-activities">
+                  <i class="fas fa-hiking"></i>
+                  Activities
+                </label>
+                <div class="activities-selector">
+                  <div class="activity-tags">
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="sightseeing"
+                    >
+                      <i class="fas fa-camera"></i> Sightseeing
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="food"
+                    >
+                      <i class="fas fa-utensils"></i> Food & Dining
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="adventure"
+                    >
+                      <i class="fas fa-mountain"></i> Adventure
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="culture"
+                    >
+                      <i class="fas fa-theater-masks"></i> Culture
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="beach"
+                    >
+                      <i class="fas fa-umbrella-beach"></i> Beach
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="shopping"
+                    >
+                      <i class="fas fa-shopping-bag"></i> Shopping
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="nightlife"
+                    >
+                      <i class="fas fa-glass-cheers"></i> Nightlife
+                    </button>
+                    <button
+                      type="button"
+                      class="activity-tag"
+                      data-activity="nature"
+                    >
+                      <i class="fas fa-tree"></i> Nature
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    id="custom-activity"
+                    placeholder="Add custom activity..."
+                    class="custom-activity-input"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="trip-notes">
+                  <i class="fas fa-sticky-note"></i>
+                  Trip Notes
+                </label>
+                <textarea
+                  id="trip-notes"
+                  placeholder="Add any special notes, requirements, or reminders for this trip..."
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn-primary" id="saveTripBtn">
+                  <i class="fas fa-save"></i>
+                  Save Trip
+                </button>
+                <button type="button" class="btn-secondary" id="cancelTripBtn">
+                  <i class="fas fa-times"></i>
+                  Cancel
+                </button>
+              </div>
+            </div>
+
+            <!-- Recent Trips Summary -->
+            <div id="recent-trips-summary" class="recent-trips-summary">
+              <div class="trips-stats">
+                <div class="trip-stat">
+                  <div class="stat-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-number" id="totalSavedTrips">0</span>
+                    <span class="stat-label">Saved Trips</span>
+                  </div>
+                </div>
+                <div class="trip-stat">
+                  <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-number" id="upcomingTrips">0</span>
+                    <span class="stat-label">Upcoming</span>
+                  </div>
+                </div>
+                <div class="trip-stat">
+                  <div class="stat-icon">
+                    <i class="fas fa-heart"></i>
+                  </div>
+                  <div class="stat-info">
+                    <span class="stat-number" id="favoriteTripsCount">0</span>
+                    <span class="stat-label">Favorites</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="recent-trips-list" id="recentTripsList">
+                <div class="loading-placeholder">
+                  <i class="fas fa-spinner fa-spin"></i>
+                  <span>Loading your trips...</span>
+                </div>
+              </div>
+
+              <div class="trips-actions">
+                <button
+                  class="trips-action-btn"
+                  onclick="window.location.href='saved_trips.html'"
+                >
+                  <i class="fas fa-eye"></i>
+                  View All Trips
+                </button>
+                <button class="trips-action-btn" id="quickAddTripBtn">
+                  <i class="fas fa-plus-circle"></i>
+                  Add New Trip
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Trip Notes Card -->
+        <section class="dashboard-card notes-card">
+          <div class="card-header">
+            <h3><i class="fas fa-sticky-note"></i> Trip Notes</h3>
+            <button class="card-action-btn" id="save-notes-btn">
+              <i class="fas fa-save"></i>
+            </button>
+          </div>
+          <div class="card-content">
+            <textarea
+              id="trip-notes-textarea"
+              placeholder="Write your travel thoughts, reminders, or discoveries here..."
+              class="notes-textarea"
+            ></textarea>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Trip Summary Modal -->
+    <div class="modal-overlay" id="trip-summary-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3>Trip Summary</h3>
+          <button
+            class="modal-close"
+            onclick="document.getElementById('trip-summary-modal').style.display='none'"
+          >
+            <i class="fas fa-times"></i>
           </button>
         </div>
-        <div class="card-content">
-          <textarea
-            id="trip-notes-textarea"
-            placeholder="Write your travel thoughts, reminders, or discoveries here..."
-            class="notes-textarea"
-          ></textarea>
+        <div class="modal-body">
+          <pre id="summary-text" class="summary-text"></pre>
         </div>
-      </section>
-    </div>
-  </main>
-
-  <!-- Trip Summary Modal -->
-  <div class="modal-overlay" id="trip-summary-modal">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h3>Trip Summary</h3>
-        <button class="modal-close" onclick="document.getElementById('trip-summary-modal').style.display='none'">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <pre id="summary-text" class="summary-text"></pre>
-      </div>
-      <div class="modal-footer">
-        <button id="confirm-save-btn" class="btn-primary">
-          <i class="fas fa-save"></i>
-          Save Trip
-        </button>
-        <button onclick="document.getElementById('trip-summary-modal').style.display='none'" class="btn-secondary">
-          Cancel
-        </button>
+        <div class="modal-footer">
+          <button id="confirm-save-btn" class="btn-primary">
+            <i class="fas fa-save"></i>
+            Save Trip
+          </button>
+          <button
+            onclick="document.getElementById('trip-summary-modal').style.display='none'"
+            class="btn-secondary"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Trip Planner Form Modal -->
-  <div class="modal-overlay" id="trip-planner-modal">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h3>Plan New Trip</h3>
-        <button class="modal-close" onclick="document.getElementById('trip-planner-modal').style.display='none'">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form id="trip-planner-form" class="trip-form">
-          <div class="form-group">
-            <label for="from-address">
-              <i class="fas fa-map-marker-alt"></i>
-              From
-            </label>
-            <input type="text" id="from-address" placeholder="Starting location" />
-          </div>
+    <!-- Trip Planner Form Modal -->
+    <div class="modal-overlay" id="trip-planner-modal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3>Plan New Trip</h3>
+          <button
+            class="modal-close"
+            onclick="document.getElementById('trip-planner-modal').style.display='none'"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="trip-planner-form" class="trip-form">
+            <div class="form-group">
+              <label for="from-address">
+                <i class="fas fa-map-marker-alt"></i>
+                From
+              </label>
+              <input
+                type="text"
+                id="from-address"
+                placeholder="Starting location"
+              />
+            </div>
 
-          <div class="form-group">
-            <label for="to-address">
-              <i class="fas fa-flag-checkered"></i>
-              To
-            </label>
-            <input type="text" id="to-address" placeholder="Destination" />
-          </div>
+            <div class="form-group">
+              <label for="to-address">
+                <i class="fas fa-flag-checkered"></i>
+                To
+              </label>
+              <input type="text" id="to-address" placeholder="Destination" />
+            </div>
 
-          <div class="form-group">
-            <label for="travel-mode">
-              <i class="fas fa-route"></i>
-              Travel Mode
-            </label>
-            <select id="travel-mode" class="travel-select">
-              <option value="DRIVING">🚗 Driving</option>
-              <option value="TRANSIT">🚌 Public Transit</option>
-              <option value="FLYING">✈️ Flying</option>
-            </select>
-          </div>
+            <div class="form-group">
+              <label for="travel-mode">
+                <i class="fas fa-route"></i>
+                Travel Mode
+              </label>
+              <select id="travel-mode" class="travel-select">
+                <option value="DRIVING">🚗 Driving</option>
+                <option value="TRANSIT">🚌 Public Transit</option>
+                <option value="FLYING">✈️ Flying</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label for="activities">
-              <i class="fas fa-calendar-check"></i>
-              Planned Activities
-            </label>
-            <input type="text" id="activities" placeholder="e.g., Hiking, Museums, Food Tour" />
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button id="route-btn" class="btn-primary">
-          <i class="fas fa-route"></i>
-          Calculate Route
-        </button>
-        <button onclick="document.getElementById('trip-planner-modal').style.display='none'" class="btn-secondary">
-          Cancel
-        </button>
+            <div class="form-group">
+              <label for="activities">
+                <i class="fas fa-calendar-check"></i>
+                Planned Activities
+              </label>
+              <input
+                type="text"
+                id="activities"
+                placeholder="e.g., Hiking, Museums, Food Tour"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="route-btn" class="btn-primary">
+            <i class="fas fa-route"></i>
+            Calculate Route
+          </button>
+          <button
+            onclick="document.getElementById('trip-planner-modal').style.display='none'"
+            class="btn-secondary"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Toast Notifications -->
-  <div class="toast-container" id="toastContainer"></div>
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
 
-  <!-- Google Maps API -->
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initHubMap">
-  </script>
+    <!-- Google Maps API -->
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initHubMap"
+    ></script>
 
-  <!-- JavaScript -->
-  <script type="module" src="js/hub.js"></script>
-  <script>
-    // Enhanced Quick Access Button Functionality
-    document.addEventListener('DOMContentLoaded', function () {
-      // Show loading initially
-      showLoading();
+    <!-- JavaScript -->
+    <script type="module" src="js/hub.js"></script>
+    <script>
+      // Enhanced Quick Access Button Functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        // Show loading initially
+        showLoading();
 
-      // Hide loading after initialization
-      setTimeout(() => {
-        hideLoading();
-      }, 1500);
-
-      // Weather button
-      document.getElementById('weather-btn')?.addEventListener('click', function () {
-        showToast('Opening weather forecast...', 'info');
+        // Hide loading after initialization
         setTimeout(() => {
-          window.location.href = 'weather.html';
-        }, 500);
-      });
+          hideLoading();
+        }, 1500);
 
-      // Currency button - scroll to converter
-      document.getElementById('currency-btn')?.addEventListener('click', function () {
-        const converterCard = document.querySelector('.currency-card');
-        if (converterCard) {
-          converterCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          converterCard.classList.add('highlight');
-          setTimeout(() => {
-            converterCard.classList.remove('highlight');
-          }, 2000);
-        }
-      });
+        // Weather button
+        document
+          .getElementById("weather-btn")
+          ?.addEventListener("click", function () {
+            showToast("Opening weather forecast...", "info");
+            setTimeout(() => {
+              window.location.href = "weather.html";
+            }, 500);
+          });
 
-      // Food button
-      document.getElementById('food-btn')?.addEventListener('click', function () {
-        showToast('Opening food finder...', 'info');
-        setTimeout(() => {
-          window.location.href = 'food.html';
-        }, 500);
-      });
+        // Currency button - scroll to converter
+        document
+          .getElementById("currency-btn")
+          ?.addEventListener("click", function () {
+            const converterCard = document.querySelector(".currency-card");
+            if (converterCard) {
+              converterCard.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+              converterCard.classList.add("highlight");
+              setTimeout(() => {
+                converterCard.classList.remove("highlight");
+              }, 2000);
+            }
+          });
 
-      // Emergency button with modern modal
-      document.getElementById('emergency-btn')?.addEventListener('click', function () {
-        showEmergencyNumbers();
-      });
+        // Food button
+        document
+          .getElementById("food-btn")
+          ?.addEventListener("click", function () {
+            showToast("Opening food finder...", "info");
+            setTimeout(() => {
+              window.location.href = "food.html";
+            }, 500);
+          });
 
-      // Navigation links with smooth transitions
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function(e) {
-          e.preventDefault();
-          const href = this.getAttribute('href');
-          showToast('Navigating...', 'info');
-          setTimeout(() => {
-            window.location.href = href;
-          }, 300);
+        // Emergency button with modern modal
+        document
+          .getElementById("emergency-btn")
+          ?.addEventListener("click", function () {
+            showEmergencyNumbers();
+          });
+
+        // Navigation links with smooth transitions
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const href = this.getAttribute("href");
+            showToast("Navigating...", "info");
+            setTimeout(() => {
+              window.location.href = href;
+            }, 300);
+          });
         });
+
+        // Currency swap button
+        document
+          .getElementById("swapCurrencies")
+          ?.addEventListener("click", function () {
+            swapCurrencies();
+          });
       });
 
-      // Currency swap button
-      document.getElementById('swapCurrencies')?.addEventListener('click', function() {
-        swapCurrencies();
-      });
-    });
+      // Utility Functions
+      function showLoading() {
+        document.getElementById("loadingOverlay")?.classList.add("active");
+      }
 
-    // Utility Functions
-    function showLoading() {
-      document.getElementById('loadingOverlay')?.classList.add('active');
-    }
+      function hideLoading() {
+        document.getElementById("loadingOverlay")?.classList.remove("active");
+      }
 
-    function hideLoading() {
-      document.getElementById('loadingOverlay')?.classList.remove('active');
-    }
-
-    function showToast(message, type = 'info') {
-      const toast = document.createElement('div');
-      toast.className = `toast toast-${type}`;
-      toast.innerHTML = `
-        <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+      function showToast(message, type = "info") {
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+        <i class="fas fa-${type === "error" ? "exclamation-circle" : type === "success" ? "check-circle" : "info-circle"}"></i>
         <span>${message}</span>
       `;
-      document.getElementById('toastContainer')?.appendChild(toast);
+        document.getElementById("toastContainer")?.appendChild(toast);
 
-      setTimeout(() => toast.classList.add('active'), 100);
-      setTimeout(() => {
-        toast.classList.remove('active');
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
-    }
+        setTimeout(() => toast.classList.add("active"), 100);
+        setTimeout(() => {
+          toast.classList.remove("active");
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
 
-    function showEmergencyNumbers() {
-      const emergencyInfo = `
+      function showEmergencyNumbers() {
+        const emergencyInfo = `
         🚨 EMERGENCY CONTACTS 🚨
 
         🚓 Police: 10111
@@ -646,46 +767,52 @@
         📍 Tourist Helpline: 083 123 69 19
       `;
 
-      showToast('Emergency numbers copied to clipboard', 'info');
+        showToast("Emergency numbers copied to clipboard", "info");
 
-      // Try to copy to clipboard
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(emergencyInfo.replace(/🚨|🚓|���|🚒|📞|🏥|🆘|📍/g, '').trim());
+        // Try to copy to clipboard
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(
+            emergencyInfo.replace(/🚨|🚓|🚑|🚒|📞|🏥|🆘|📍/g, "").trim(),
+          );
+        }
+
+        alert(emergencyInfo);
       }
 
-      alert(emergencyInfo);
-    }
+      function refreshAllData() {
+        showToast("Refreshing travel data...", "info");
 
-    function refreshAllData() {
-      showToast('Refreshing travel data...', 'info');
-
-      // Add refresh animation to all cards
-      document.querySelectorAll('.dashboard-card').forEach(card => {
-        card.classList.add('refreshing');
-      });
-
-      // Simulate data refresh
-      setTimeout(() => {
-        // Remove refresh animation from all cards
-        document.querySelectorAll('.dashboard-card').forEach(card => {
-          card.classList.remove('refreshing');
+        // Add refresh animation to all cards
+        document.querySelectorAll(".dashboard-card").forEach((card) => {
+          card.classList.add("refreshing");
         });
 
-        showToast('Travel data refreshed!', 'success');
-      }, 2000);
-    }
+        // Simulate data refresh
+        setTimeout(() => {
+          // Remove refresh animation from all cards
+          document.querySelectorAll(".dashboard-card").forEach((card) => {
+            card.classList.remove("refreshing");
+          });
 
-    // Navigation links click handlers
-    document.addEventListener("DOMContentLoaded", function() {
-      document.querySelectorAll(".nav-link").forEach((link) => {
-        link.addEventListener("click", function (e) {
-          e.preventDefault();
-          const href = this.getAttribute("href");
-          if (href && href !== "#") {
-            showToast("Navigating...", "info");
-            setTimeout(() => {
-              window.location.href = href;
-            }, 500);
-          }
+          showToast("Travel data refreshed!", "success");
+        }, 2000);
+      }
+
+      // Navigation links click handlers
+      document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".nav-link").forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const href = this.getAttribute("href");
+            if (href && href !== "#") {
+              showToast("Navigating...", "info");
+              setTimeout(() => {
+                window.location.href = href;
+              }, 500);
+            }
+          });
         });
       });
+    </script>
+  </body>
+</html>
