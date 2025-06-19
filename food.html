@@ -1520,11 +1520,37 @@
         });
 
         // Overlay toggle for mobile
-        document
-          .getElementById("overlayToggle")
-          .addEventListener("click", () => {
+        const overlayToggle = document.getElementById("overlayToggle");
+        if (overlayToggle) {
+          overlayToggle.addEventListener("click", () => {
             document.getElementById("mapOverlay").classList.toggle("expanded");
           });
+        }
+
+        // Results panel toggle for desktop
+        const toggleResultsPanel =
+          document.getElementById("toggleResultsPanel");
+        if (toggleResultsPanel) {
+          toggleResultsPanel.addEventListener("click", () => {
+            const resultsPanel = document.getElementById("resultsPanel");
+            const toggleIcon = toggleResultsPanel.querySelector("i");
+
+            if (resultsPanel.classList.contains("collapsed")) {
+              resultsPanel.classList.remove("collapsed");
+              toggleIcon.className = "fas fa-chevron-left";
+            } else {
+              resultsPanel.classList.add("collapsed");
+              toggleIcon.className = "fas fa-chevron-right";
+            }
+          });
+        }
+
+        // Auto-search for nearby restaurants on load
+        if (userLocation) {
+          setTimeout(() => {
+            searchPlaces("restaurant");
+          }, 2000);
+        }
 
         // Prevent querySelector '#' errors by safely handling anchor links
         document.addEventListener("click", (e) => {
