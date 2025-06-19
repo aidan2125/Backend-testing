@@ -1540,13 +1540,13 @@
           });
 
         // FAB menu
-        document.getElementById("mainFab").addEventListener("click", () => {
-          document.getElementById("fabMenu").classList.toggle("active");
+        document.getElementById("mainFab")?.addEventListener("click", () => {
+          document.getElementById("fabMenu")?.classList.toggle("active");
         });
 
-        document.getElementById("nearbyBtn").addEventListener("click", () => {
+        document.getElementById("nearbyBtn")?.addEventListener("click", () => {
           searchPlaces(currentSearchType);
-          document.getElementById("fabMenu").classList.remove("active");
+          document.getElementById("fabMenu")?.classList.remove("active");
         });
 
         // Overlay toggle for mobile
