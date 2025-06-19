@@ -2000,6 +2000,10 @@ input:checked + .toggle-slider:before {
     overflow: hidden;
   }
 
+  .results-container {
+    max-height: 400px;
+  }
+
   .fab-container {
     bottom: 20px;
     right: 20px;
