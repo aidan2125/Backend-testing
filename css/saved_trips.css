@@ -773,59 +773,217 @@ body.saved-trips-page {
   line-height: 1.6;
 }
 
-/* Responsive */
+/* Footer */
+footer {
+  background: linear-gradient(135deg, var(--text-dark), var(--text-light));
+  color: var(--pure-white);
+  text-align: center;
+  padding: 20px;
+  margin-top: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Responsive Design */
 @media (max-width: 1024px) {
-  .top-bar {
-    padding: 16px 1.5rem;
+  .main-content {
+    padding: 30px 15px 100px;
   }
 
-  .top-bar h2 {
-    font-size: 1.6rem;
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
   }
 
-  main {
-    padding: 20px;
+  .trips-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
   }
 }
 
 @media (max-width: 768px) {
-  .top-bar {
-    padding: 14px 1rem;
+  .main-content {
+    margin-top: 140px;
+    padding: 20px 15px 100px;
   }
 
-  .top-bar h2 {
+  .header-content {
+    padding: 12px 15px;
+  }
+
+  .header-title h1 {
+    font-size: 1.2rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .trip-filters {
+    padding: 12px 15px;
+    gap: 8px;
+  }
+
+  .filter-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .section-header h2 {
     font-size: 1.4rem;
   }
 
-  #trips-container {
+  .trips-container {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .trip-card-header {
+    height: 150px;
+  }
+
+  .trip-destination {
+    font-size: 1.3rem;
+  }
+
+  .trip-card-content {
+    padding: 15px;
+  }
+
+  .trip-card-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .trip-action-btn {
+    padding: 10px 14px;
+    font-size: 0.85rem;
   }
 }
 
-@media (max-width: 600px) {
-  .top-bar {
-    padding: 12px 1rem;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
+@media (max-width: 480px) {
+  .main-content {
+    margin-top: 130px;
+    padding: 15px 10px 80px;
   }
 
-  .top-bar h2 {
-    font-size: 1.2rem;
+  .header-content {
+    padding: 10px 15px;
+  }
+
+  .header-title h1 {
+    font-size: 1.1rem;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .header-actions {
+    gap: 6px;
+  }
+
+  .action-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 0.8rem;
+  }
+
+  .trip-filters {
+    padding: 10px 15px;
+  }
+
+  .filter-btn {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 12px;
+    gap: 10px;
+    flex-direction: column;
     text-align: center;
   }
 
-  .back-btn {
-    padding: 10px 20px;
+  .stat-icon {
+    width: 35px;
+    height: 35px;
     font-size: 0.9rem;
   }
 
+  .stat-number {
+    font-size: 1.3rem;
+  }
+
+  .view-controls {
+    align-self: stretch;
+  }
+
+  .view-btn {
+    height: 35px;
+    font-size: 0.8rem;
+  }
+
+  .trip-card-header {
+    height: 120px;
+  }
+
+  .trip-destination {
+    font-size: 1.1rem;
+  }
+
   .modal-content {
-    padding: 20px;
-    width: 95%;
+    padding: 25px 20px;
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .modal-title {
+    font-size: 1.4rem;
+  }
+
+  .close-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
   }
 
   footer {
+    padding: 15px;
     font-size: 0.8rem;
   }
 }
