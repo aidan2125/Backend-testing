@@ -297,16 +297,174 @@ body.saved-trips-page {
 }
 
 /* Main Content */
-main {
-  padding: 30px;
-  margin-top: 100px;
-  flex: 1;
+.main-content {
+  margin-top: 150px;
+  padding: 30px 20px 100px;
+  animation: fadeInUp 0.8s ease-out;
 }
 
-#trips-container {
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Trip Statistics Section */
+.trip-stats-section {
+  margin-bottom: 40px;
+}
+
+.stats-grid {
   display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: var(--shadow-light);
+  border: 2px solid rgba(33, 150, 243, 0.1);
+  transition: var(--transition-bounce);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--primary-blue);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(
+    135deg,
+    var(--primary-orange),
+    var(--light-orange)
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--pure-white);
+  font-size: 1.2rem;
+}
+
+.stat-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Trips Section */
+.trips-section {
+  margin-bottom: 40px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(33, 150, 243, 0.1);
+}
+
+.section-header h2 {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.view-controls {
+  display: flex;
+  gap: 5px;
+  background: rgba(33, 150, 243, 0.1);
+  padding: 5px;
+  border-radius: var(--border-radius);
+}
+
+.view-btn {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  color: var(--primary-blue);
+  border: none;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+}
+
+.view-btn.active {
+  background: var(--primary-blue);
+  color: var(--pure-white);
+  box-shadow: var(--shadow-light);
+}
+
+.view-btn:hover:not(.active) {
+  background: rgba(33, 150, 243, 0.2);
+}
+
+/* Trips Container */
+.trips-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.trips-container.list-view {
+  grid-template-columns: 1fr;
+}
+
+.loading-placeholder {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.loading-placeholder i {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: var(--primary-blue);
+  opacity: 0.5;
+}
+
+.loading-placeholder span {
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 /* Trip Card */
