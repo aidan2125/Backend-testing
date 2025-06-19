@@ -1590,14 +1590,28 @@
           }, 2000);
         }
 
-        // Prevent querySelector '#' errors by safely handling anchor links
+        // Enhanced error prevention for querySelector operations
         document.addEventListener("click", (e) => {
+          if (e.target.tagName === "A") {
+            const href = e.target.getAttribute("href");
+            if (!href || href === "#" || href === "javascript:void(0)") {
+              e.preventDefault();
+              console.warn("Prevented click on problematic anchor link:", href);
+              return false;
+            }
+          }
+        });
+
+        // Global error handler for unhandled errors
+        window.addEventListener("error", (e) => {
           if (
-            e.target.tagName === "A" &&
-            e.target.getAttribute("href") === "#"
+            e.message &&
+            e.message.includes("querySelector") &&
+            e.message.includes("not a valid selector")
           ) {
-            e.preventDefault();
-            return false;
+            console.error("Caught querySelector error:", e.message);
+            e.preventDefault(); // Prevent error from propagating
+            return true;
           }
         });
 
