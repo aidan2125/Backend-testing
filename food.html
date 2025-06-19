@@ -344,11 +344,11 @@
       let nearbyPlaces = [];
 
       function showLoading() {
-        document.getElementById("loadingOverlay").classList.add("active");
+        document.getElementById("loadingOverlay")?.classList.add("active");
       }
 
       function hideLoading() {
-        document.getElementById("loadingOverlay").classList.remove("active");
+        document.getElementById("loadingOverlay")?.classList.remove("active");
       }
 
       function showToast(message, type = "info") {
@@ -358,7 +358,7 @@
         <i class="fas fa-${type === "error" ? "exclamation-circle" : type === "success" ? "check-circle" : "info-circle"}"></i>
         <span>${message}</span>
       `;
-        document.getElementById("toastContainer").appendChild(toast);
+        document.getElementById("toastContainer")?.appendChild(toast);
 
         setTimeout(() => toast.classList.add("active"), 100);
         setTimeout(() => {
