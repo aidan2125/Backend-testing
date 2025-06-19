@@ -957,18 +957,212 @@ input:checked + .toggle-slider:before {
   line-height: 1.5;
 }
 
-/* Place Cards */
+/* Results Header */
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding: 20px 0;
+  border-bottom: 2px solid rgba(33, 150, 243, 0.1);
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.results-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.results-title {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.results-title i {
+  color: var(--primary-orange);
+}
+
+.results-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.results-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Sort Dropdown */
+.sort-dropdown {
+  position: relative;
+}
+
+.sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 15px;
+  background: var(--pure-white);
+  border: 2px solid rgba(33, 150, 243, 0.2);
+  border-radius: var(--border-radius);
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 500;
+}
+
+.sort-btn:hover {
+  border-color: var(--primary-blue);
+  background: rgba(33, 150, 243, 0.05);
+}
+
+.sort-options {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--pure-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-heavy);
+  border: 1px solid rgba(33, 150, 243, 0.1);
+  min-width: 180px;
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: var(--transition);
+  margin-top: 5px;
+}
+
+.sort-options.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.sort-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  border: none;
+  background: transparent;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+  text-align: left;
+  font-weight: 500;
+}
+
+.sort-option:hover {
+  background: rgba(33, 150, 243, 0.05);
+}
+
+.sort-option.active {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107, 53, 0.1),
+    rgba(33, 150, 243, 0.1)
+  );
+  color: var(--primary-blue);
+}
+
+.sort-option i {
+  color: var(--primary-orange);
+  width: 16px;
+}
+
+/* View Toggle */
+.view-toggle {
+  display: flex;
+  border: 2px solid rgba(33, 150, 243, 0.2);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.view-btn {
+  padding: 10px 12px;
+  border: none;
+  background: var(--pure-white);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-btn:hover {
+  background: rgba(33, 150, 243, 0.05);
+  color: var(--primary-blue);
+}
+
+.view-btn.active {
+  background: linear-gradient(
+    135deg,
+    var(--primary-orange),
+    var(--primary-blue)
+  );
+  color: var(--pure-white);
+}
+
+/* Results Grid */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+  padding: 0;
+}
+
+.results-grid.list-view {
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.results-grid.list-view .place-card {
+  display: flex;
+  flex-direction: row;
+  max-height: 200px;
+}
+
+.results-grid.list-view .place-image {
+  width: 250px;
+  height: 200px;
+  flex-shrink: 0;
+}
+
+.results-grid.list-view .place-info {
+  flex: 1;
+  padding: 20px 25px;
+}
+
+/* Enhanced Place Cards */
 .place-card {
   background: var(--pure-white);
   border-radius: var(--border-radius-large);
   box-shadow: var(--shadow-medium);
-  margin-bottom: 20px;
   overflow: hidden;
   transition: var(--transition-bounce);
   opacity: 0;
   transform: translateY(20px);
   animation: slideInUp 0.6s ease-out forwards;
   border: 2px solid rgba(33, 150, 243, 0.1);
+  position: relative;
+}
+
+.place-card.enhanced-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 @keyframes slideInUp {
@@ -979,9 +1173,31 @@ input:checked + .toggle-slider:before {
 }
 
 .place-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
   box-shadow: var(--shadow-extreme);
   border-color: var(--primary-blue);
+}
+
+.place-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: all 0.6s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.place-card:hover::before {
+  left: 100%;
 }
 
 .place-image {
