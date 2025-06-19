@@ -664,53 +664,113 @@ body.saved-trips-page {
   color: var(--text-muted);
 }
 
-/* Modal Styles */
+/* Trip Details Modal */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1000;
+  z-index: var(--z-modal);
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
 }
 
-.modal-content {
-  background-color: var(--white);
-  margin: 10% auto;
-  padding: 30px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 520px;
-  position: relative;
-  box-shadow: var(--shadow);
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.close-btn {
-  position: absolute;
-  right: 16px;
-  top: 12px;
-  font-size: 24px;
-  font-weight: bold;
-  cursor: pointer;
-  color: var(--text-light);
-  background-color: var(--white);
-  border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
+.modal.active {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.modal-content {
+  background: var(--pure-white);
+  margin: 20px;
+  padding: 40px;
+  border-radius: var(--border-radius-large);
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  box-shadow: var(--shadow-extreme);
+  border: 2px solid rgba(33, 150, 243, 0.1);
+  animation: modalSlideIn 0.4s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid rgba(33, 150, 243, 0.1);
+}
+
+.modal-title {
+  font-family: "Outfit", sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.close-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(231, 76, 60, 0.1);
+  color: var(--danger);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
   transition: var(--transition);
+  font-size: 1.2rem;
 }
 
 .close-btn:hover {
-  color: var(--white);
-  background-color: var(--accent);
+  background: var(--danger);
+  color: var(--pure-white);
   transform: scale(1.1);
+}
+
+.modal-detail {
+  margin-bottom: 20px;
+}
+
+.modal-detail strong {
+  display: block;
+  color: var(--text-dark);
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+.modal-detail span {
+  color: var(--text-light);
+  line-height: 1.6;
 }
 
 /* Responsive */
