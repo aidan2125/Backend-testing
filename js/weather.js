@@ -526,20 +526,108 @@ class WeatherApp {
   }
 
   async loadQuickCities() {
-    const cities = ["Cape Town", "Johannesburg", "Durban", "London"];
+    // Load saved quick cities from localStorage or use defaults
+    const savedCities = JSON.parse(
+      localStorage.getItem("quickCities") ||
+        '["Cape Town", "Johannesburg", "Durban", "London"]',
+    );
 
-    for (const city of cities) {
+    // Clear current cities grid
+    const citiesGrid = document.getElementById("quickCities");
+    citiesGrid.innerHTML = "";
+
+    // Create cards for each city
+    for (const city of savedCities) {
       try {
         // For demo purposes, using random temperatures
         const temp = Math.round(15 + Math.random() * 15);
-        const card = document.querySelector(`[data-city="${city}"]`);
-        if (card) {
-          card.querySelector(".quick-temp").textContent = `${temp}°`;
-        }
+
+        // Create city card element
+        const cardHTML = `
+          <div class="quick-city-card" data-city="${city}">
+            <button class="remove-city-btn" onclick="removeQuickCity('${city}')" title="Remove from Quick Access">
+              <i class="fas fa-times"></i>
+            </button>
+            <span class="city-name">${city}</span>
+            <div class="quick-temp">${temp}°</div>
+          </div>
+        `;
+
+        citiesGrid.insertAdjacentHTML("beforeend", cardHTML);
       } catch (error) {
         console.error(`Error loading temperature for ${city}:`, error);
       }
     }
+
+    // Re-attach click events for the new cards
+    this.attachQuickCityEvents();
+  }
+
+  attachQuickCityEvents() {
+    document.querySelectorAll(".quick-city-card").forEach((card) => {
+      // Remove existing listeners to avoid duplicates
+      card.replaceWith(card.cloneNode(true));
+    });
+
+    // Add click events to the new cards
+    document.querySelectorAll(".quick-city-card").forEach((card) => {
+      card.addEventListener("click", (e) => {
+        // Don't trigger if remove button was clicked
+        if (e.target.closest(".remove-city-btn")) {
+          return;
+        }
+        const city = card.dataset.city;
+        this.searchWeather(city);
+      });
+    });
+  }
+
+  removeQuickCity(cityName) {
+    // Get current saved cities
+    const savedCities = JSON.parse(
+      localStorage.getItem("quickCities") ||
+        '["Cape Town", "Johannesburg", "Durban", "London"]',
+    );
+
+    // Remove the city from the array
+    const updatedCities = savedCities.filter((city) => city !== cityName);
+
+    // Save updated array to localStorage
+    localStorage.setItem("quickCities", JSON.stringify(updatedCities));
+
+    // Reload the quick cities display
+    this.loadQuickCities();
+
+    // Show a confirmation message
+    this.showRemoveConfirmation(cityName);
+  }
+
+  showRemoveConfirmation(cityName) {
+    // Create a confirmation toast
+    const toast = document.createElement("div");
+    toast.style.cssText = `
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: rgba(46, 204, 113, 0.9);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      z-index: 10000;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+    `;
+    toast.innerHTML = `
+      <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+      ${cityName} removed from Quick Access
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      if (document.body.contains(toast)) {
+        document.body.removeChild(toast);
+      }
+    }, 3000);
   }
 
   showSearchSuggestions(query) {
