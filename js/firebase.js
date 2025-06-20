@@ -1,8 +1,24 @@
-import { createClient } from '@supabase/supabase-js';
+// firebaseConfig.js
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-const supabase = createClient(
-  'https://lmtvzmagwdegwravdcue.supabase.co', // Or from environment if using bundler
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtdHZ6bWFnd2RlZ3dyYXZkY3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU0OTMzMTYsImV4cCI6MjA2MTA2OTMxNn0.Kc7eVAIdPTSOnCBaMpFowYBPBjuBgkwyJA6nZD-F2yU'
-);
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyC00rwqJP9wIG735L258jgneUKQLhVSKB8",
+  authDomain: "travique-7c851.firebaseapp.com",
+  projectId: "travique-7c851",
+  storageBucket: "travique-7c851.firebasestorage.app",
+  messagingSenderId: "1001728909577",
+  appId: "1:1001728909577:web:68b8981e097e5b71b5b3d8",
+  measurementId: "G-GBBZWDJHMW"
+}; 
+// Initialize Firebase app
+const app = initializeApp(firebaseConfig);
 
-export default supabase;
+// Export services for use
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const storage = getStorage(app);

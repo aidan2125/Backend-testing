@@ -1,4 +1,4 @@
-import { getCurrentUser, supabase } from './auth.js'; // Your auth helpers
+
  
 const form = document.getElementById('expense-form');
 const list = document.getElementById('expense-list');
