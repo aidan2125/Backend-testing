@@ -351,12 +351,45 @@ body.stormy {
   cursor: pointer;
   transition: var(--transition);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
 }
 
 .quick-city-card:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px);
   box-shadow: var(--shadow-medium);
+}
+
+.remove-city-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: scale(0.8);
+  z-index: 10;
+}
+
+.quick-city-card:hover .remove-city-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.remove-city-btn:hover {
+  background: #ff4757;
+  color: var(--white);
+  transform: scale(1.1);
 }
 
 .city-name {
