@@ -266,6 +266,15 @@ body.tips-page {
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Tips Container */
 .tips-container {
   max-width: 1000px;
