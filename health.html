@@ -889,42 +889,165 @@
 
       const CategoryIcon = memo(({ category }) => {
         const iconConfig = {
-          Hydration: { icon: "fas fa-tint", color: "#06B6D4" },
-          Hygiene: { icon: "fas fa-soap", color: "#14B8A6" },
-          "Mental Wellness": { icon: "fas fa-brain", color: "#EC4899" },
-          Vaccinations: { icon: "fas fa-syringe", color: "#F43F5E" },
-          Safety: { icon: "fas fa-shield-alt", color: "#10B981" },
-          "Insect Protection": { icon: "fas fa-bug", color: "#059669" },
-          "Food Safety": { icon: "fas fa-utensils", color: "#F59E0B" },
+          Hydration: {
+            icon: "fas fa-tint",
+            gradient: "linear-gradient(135deg, #06B6D4, #0891B2)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(8, 145, 178, 0.05))",
+            shadow: "0 4px 15px rgba(6, 182, 212, 0.2)",
+          },
+          Hygiene: {
+            icon: "fas fa-soap",
+            gradient: "linear-gradient(135deg, #14B8A6, #059669)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(20, 184, 166, 0.1), rgba(5, 150, 105, 0.05))",
+            shadow: "0 4px 15px rgba(20, 184, 166, 0.2)",
+          },
+          "Mental Wellness": {
+            icon: "fas fa-brain",
+            gradient: "linear-gradient(135deg, #EC4899, #DB2777)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(219, 39, 119, 0.05))",
+            shadow: "0 4px 15px rgba(236, 72, 153, 0.2)",
+          },
+          Vaccinations: {
+            icon: "fas fa-syringe",
+            gradient: "linear-gradient(135deg, #F43F5E, #DC2626)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(244, 63, 94, 0.1), rgba(220, 38, 38, 0.05))",
+            shadow: "0 4px 15px rgba(244, 63, 94, 0.2)",
+          },
+          Safety: {
+            icon: "fas fa-shield-alt",
+            gradient: "linear-gradient(135deg, #10B981, #059669)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05))",
+            shadow: "0 4px 15px rgba(16, 185, 129, 0.2)",
+          },
+          "Insect Protection": {
+            icon: "fas fa-bug",
+            gradient: "linear-gradient(135deg, #059669, #065F46)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(6, 95, 70, 0.05))",
+            shadow: "0 4px 15px rgba(5, 150, 105, 0.2)",
+          },
+          "Food Safety": {
+            icon: "fas fa-utensils",
+            gradient: "linear-gradient(135deg, #F59E0B, #D97706)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05))",
+            shadow: "0 4px 15px rgba(245, 158, 11, 0.2)",
+          },
           "Emergency Preparedness": {
             icon: "fas fa-first-aid",
-            color: "#EF4444",
+            gradient: "linear-gradient(135deg, #EF4444, #DC2626)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.05))",
+            shadow: "0 4px 15px rgba(239, 68, 68, 0.2)",
           },
-          "Transport Safety": { icon: "fas fa-car", color: "#6B7280" },
-          "Sun Protection": { icon: "fas fa-sun", color: "#F59E0B" },
-          "Cultural Awareness": { icon: "fas fa-globe", color: "#3B82F6" },
-          "Water Safety": { icon: "fas fa-swimmer", color: "#0891B2" },
-          "Personal Safety": { icon: "fas fa-user-shield", color: "#2563EB" },
-          Altitude: { icon: "fas fa-mountain", color: "#D97706" },
-          "Malaria Prevention": { icon: "fas fa-pills", color: "#DB2777" },
-          "Wildlife Safety": { icon: "fas fa-paw", color: "#F59E0B" },
-          "Weather Safety": { icon: "fas fa-cloud-rain", color: "#3B82F6" },
+          "Transport Safety": {
+            icon: "fas fa-car",
+            gradient: "linear-gradient(135deg, #6B7280, #4B5563)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(107, 114, 128, 0.1), rgba(75, 85, 99, 0.05))",
+            shadow: "0 4px 15px rgba(107, 114, 128, 0.2)",
+          },
+          "Sun Protection": {
+            icon: "fas fa-sun",
+            gradient: "linear-gradient(135deg, #F59E0B, #F97316)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(249, 115, 22, 0.05))",
+            shadow: "0 4px 15px rgba(245, 158, 11, 0.2)",
+          },
+          "Cultural Awareness": {
+            icon: "fas fa-globe",
+            gradient: "linear-gradient(135deg, #3B82F6, #2563EB)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05))",
+            shadow: "0 4px 15px rgba(59, 130, 246, 0.2)",
+          },
+          "Water Safety": {
+            icon: "fas fa-swimmer",
+            gradient: "linear-gradient(135deg, #0891B2, #0E7490)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(8, 145, 178, 0.1), rgba(14, 116, 144, 0.05))",
+            shadow: "0 4px 15px rgba(8, 145, 178, 0.2)",
+          },
+          "Personal Safety": {
+            icon: "fas fa-user-shield",
+            gradient: "linear-gradient(135deg, #2563EB, #1D4ED8)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(29, 78, 216, 0.05))",
+            shadow: "0 4px 15px rgba(37, 99, 235, 0.2)",
+          },
+          Altitude: {
+            icon: "fas fa-mountain",
+            gradient: "linear-gradient(135deg, #D97706, #B45309)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(217, 119, 6, 0.1), rgba(180, 83, 9, 0.05))",
+            shadow: "0 4px 15px rgba(217, 119, 6, 0.2)",
+          },
+          "Malaria Prevention": {
+            icon: "fas fa-pills",
+            gradient: "linear-gradient(135deg, #DB2777, #BE185D)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(219, 39, 119, 0.1), rgba(190, 24, 93, 0.05))",
+            shadow: "0 4px 15px rgba(219, 39, 119, 0.2)",
+          },
+          "Wildlife Safety": {
+            icon: "fas fa-paw",
+            gradient: "linear-gradient(135deg, #F59E0B, #D97706)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(217, 119, 6, 0.05))",
+            shadow: "0 4px 15px rgba(245, 158, 11, 0.2)",
+          },
+          "Weather Safety": {
+            icon: "fas fa-cloud-rain",
+            gradient: "linear-gradient(135deg, #3B82F6, #1E40AF)",
+            bgGradient:
+              "linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 64, 175, 0.05))",
+            shadow: "0 4px 15px rgba(59, 130, 246, 0.2)",
+          },
         };
 
         const config = iconConfig[category] || {
           icon: "fas fa-info-circle",
-          color: "#6B7280",
+          gradient: "linear-gradient(135deg, #6B7280, #4B5563)",
+          bgGradient:
+            "linear-gradient(135deg, rgba(107, 114, 128, 0.1), rgba(75, 85, 99, 0.05))",
+          shadow: "0 4px 15px rgba(107, 114, 128, 0.2)",
         };
 
         return (
           <div
-            className="relative w-12 h-12 flex items-center justify-center rounded-xl shadow-sm border border-gray-200 bg-white group"
+            className="relative w-14 h-14 flex items-center justify-center rounded-2xl shadow-lg border border-white/20 backdrop-blur-sm group transition-all duration-300 hover:scale-110 hover:-translate-y-1"
+            style={{
+              background: config.bgGradient,
+              boxShadow: config.shadow,
+            }}
             role="img"
             aria-label={category}
           >
+            <div
+              className="absolute inset-0 rounded-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"
+              style={{ background: config.gradient }}
+            />
             <i
-              className={`${config.icon} text-xl transition-all duration-200 group-hover:scale-110`}
-              style={{ color: config.color }}
+              className={`${config.icon} text-2xl relative z-10 transition-all duration-300 group-hover:scale-110`}
+              style={{
+                background: config.gradient,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.1))",
+              }}
+            />
+            <div
+              className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              style={{
+                background: `radial-gradient(circle at center, ${config.gradient.split(",")[0].split("(")[1]} 0%, transparent 70%)`,
+                filter: "blur(8px)",
+              }}
             />
           </div>
         );
