@@ -261,7 +261,7 @@ body.stormy {
 
 #cityInput {
   width: 100%;
-  padding: 15px 50px 15px 45px;
+  padding: 15px 90px 15px 45px;
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 50px;
@@ -279,6 +279,29 @@ body.stormy {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 20px rgba(36, 96, 113, 0.3);
+}
+
+.search-btn {
+  position: absolute;
+  right: 50px;
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: var(--white);
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.search-btn:hover {
+  background: linear-gradient(135deg, #ff8c42, #ff6b35);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
 }
 
 .voice-search-btn {
@@ -351,12 +374,45 @@ body.stormy {
   cursor: pointer;
   transition: var(--transition);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
 }
 
 .quick-city-card:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-5px);
   box-shadow: var(--shadow-medium);
+}
+
+.remove-city-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transform: scale(0.8);
+  z-index: 10;
+}
+
+.quick-city-card:hover .remove-city-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.remove-city-btn:hover {
+  background: #ff4757;
+  color: var(--white);
+  transform: scale(1.1);
 }
 
 .city-name {
@@ -757,12 +813,15 @@ body.stormy {
 }
 
 .modal-content {
-  background: var(--pure-white);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   width: 90%;
   max-width: 500px;
   max-height: 80vh;
   overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .modal-header {
@@ -770,13 +829,16 @@ body.stormy {
   justify-content: space-between;
   align-items: center;
   padding: 25px 30px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
 }
 
 .modal-header h3 {
   font-family: "Outfit", sans-serif;
   font-weight: 600;
-  color: var(--text-dark);
+  color: #333;
+  font-size: 1.3rem;
 }
 
 .close-modal {
@@ -794,17 +856,20 @@ body.stormy {
 
 .modal-body {
   padding: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
 }
 
 .setting-group {
   margin-bottom: 25px;
 }
 
-.setting-group label {
+.setting-group > label {
   display: block;
   margin-bottom: 10px;
-  font-weight: 500;
-  color: var(--text-dark);
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
 }
 
 .radio-group {
@@ -818,12 +883,25 @@ body.stormy {
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: var(--transition);
+  color: #333;
+  font-weight: 500;
+}
+
+.radio-option:hover {
+  background: rgba(36, 96, 113, 0.1);
 }
 
 .radio-option input[type="radio"] {
   width: 18px;
   height: 18px;
   accent-color: var(--primary);
+}
+
+.radio-option span {
+  color: #333;
 }
 
 /* Toggle Switch */
