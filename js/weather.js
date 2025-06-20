@@ -852,7 +852,14 @@ class WeatherApp {
   }
 }
 
-// Initialize the weather app when DOM is loaded
+// Global function to remove quick city (called from HTML onclick)
+function removeQuickCity(cityName) {
+  if (window.weatherApp) {
+    window.weatherApp.removeQuickCity(cityName);
+  }
+}
+
+// Initialize the weather app when the page loads
 document.addEventListener("DOMContentLoaded", () => {
   window.weatherApp = new WeatherApp();
 });
