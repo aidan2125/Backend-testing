@@ -86,6 +86,8 @@ body.health-page {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  flex-grow: 1;
+  text-align: center;
 }
 
 .logo-text {
