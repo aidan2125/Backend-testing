@@ -35,6 +35,12 @@ class WeatherApp {
       this.showSearchSuggestions(e.target.value);
     });
 
+    // Search button functionality
+    const searchBtn = document.getElementById("searchBtn");
+    searchBtn.addEventListener("click", () => {
+      this.searchWeather(cityInput.value);
+    });
+
     locationBtn.addEventListener("click", () => {
       this.getCurrentLocation();
     });
@@ -164,10 +170,16 @@ class WeatherApp {
       await this.displayWeatherData(data);
       await this.loadForecastData();
       this.hideSearchSuggestions();
+
+      // Auto-add to Quick Access if not already there
+      this.autoAddToQuickAccess(data.name);
     } catch (error) {
       console.error("Error fetching weather:", error);
       this.showError(`Unable to fetch weather for ${city}. Using demo data.`);
       this.loadDemoData();
+
+      // Still add to Quick Access for demo data
+      this.autoAddToQuickAccess(city);
     }
 
     this.showLoading(false);
@@ -596,7 +608,35 @@ class WeatherApp {
     this.showRemoveConfirmation(cityName);
   }
 
-  showRemoveConfirmation(cityName) {
+  autoAddToQuickAccess(cityName) {
+    // Get current saved cities
+    const savedCities = JSON.parse(
+      localStorage.getItem("quickCities") ||
+        '["Cape Town", "Johannesburg", "Durban", "London"]',
+    );
+
+    // Check if city is already in Quick Access
+    if (!savedCities.includes(cityName)) {
+      // Add new city to the beginning of the array
+      savedCities.unshift(cityName);
+
+      // Keep only the most recent 8 cities to avoid overcrowding
+      if (savedCities.length > 8) {
+        savedCities.pop();
+      }
+
+      // Save updated array to localStorage
+      localStorage.setItem("quickCities", JSON.stringify(savedCities));
+
+      // Reload the quick cities display
+      this.loadQuickCities();
+
+      // Show confirmation
+      this.showAddConfirmation(cityName);
+    }
+  }
+
+  showAddConfirmation(cityName) {
     // Create a confirmation toast
     const toast = document.createElement("div");
     toast.style.cssText = `
@@ -612,7 +652,35 @@ class WeatherApp {
       font-weight: 500;
     `;
     toast.innerHTML = `
-      <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+      <i class="fas fa-plus-circle" style="margin-right: 8px;"></i>
+      ${cityName} added to Quick Access
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      if (document.body.contains(toast)) {
+        document.body.removeChild(toast);
+      }
+    }, 3000);
+  }
+
+  showRemoveConfirmation(cityName) {
+    // Create a confirmation toast
+    const toast = document.createElement("div");
+    toast.style.cssText = `
+      position: fixed;
+      top: 100px;
+      right: 20px;
+      background: rgba(231, 76, 60, 0.9);
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      z-index: 10000;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+    `;
+    toast.innerHTML = `
+      <i class="fas fa-times-circle" style="margin-right: 8px;"></i>
       ${cityName} removed from Quick Access
     `;
     document.body.appendChild(toast);
