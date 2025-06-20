@@ -611,18 +611,6 @@ body.health-page {
     padding: 15px 4%;
   }
 
-  .back-btn span {
-    display: none;
-  }
-
-  .back-btn {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border-radius: 50%;
-    justify-content: center;
-  }
-
   .health-main {
     margin-top: 70px;
     padding: 25px 4%;
