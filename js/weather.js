@@ -86,13 +86,7 @@ class WeatherApp {
       });
     });
 
-    // Quick cities
-    document.querySelectorAll(".quick-city-card").forEach((card) => {
-      card.addEventListener("click", () => {
-        const city = card.dataset.city;
-        this.searchWeather(city);
-      });
-    });
+    // Quick cities events will be attached in loadQuickCities method
 
     // Voice search
     document.getElementById("voiceSearchBtn").addEventListener("click", () => {
