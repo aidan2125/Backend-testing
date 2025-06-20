@@ -1,90 +1,656 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>User Profile | Travique</title>
-  <link rel="stylesheet" href="css/profile.css" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
-</head>
-<body>
-  <!-- Back Button -->
-  <button
-    id="top-right-back-btn"
-    class="back-btn"
-    onclick="location.href='dashboard.html'"
-  >
-    <i class="fas fa-arrow-left"></i> Back to Dashboard
-  </button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <title>Travique | User Profile</title>
 
-  <!-- Profile Container -->
-  <div class="profile-container">
-    <div class="profile-header">
-      <label for="profile-pic-upload" class="profile-picture">
-        <img
-          id="profile-img"
-          src="images/default-avatar.png"
-          alt="Profile Picture"
-          onerror="this.onerror=null; this.src='images/default-avatar.png';"
-        />
-        <div class="upload-label">
-          <i class="fas fa-camera"></i> Change Picture
+    <!-- Modern CSS -->
+    <link rel="stylesheet" href="css/profile.css" />
+
+    <!-- Modern Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FontAwesome icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- Meta tags for mobile optimization -->
+    <meta name="theme-color" content="#ff6b35" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  </head>
+  <body class="profile-page">
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <div class="loading-text">Loading your profile...</div>
+      </div>
+    </div>
+
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <div class="header-content">
+        <button
+          class="back-btn dynamic-btn"
+          onclick="window.location.href='dashboard.html'"
+        >
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="header-title">
+          <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+          <span class="header-subtitle">Manage your account settings</span>
         </div>
-      </label>
-      <input type="file" id="profile-pic-upload" accept="image/*" hidden />
-      <h1>User Profile</h1>
+        <div class="header-actions">
+          <button class="action-btn" id="editModeToggle">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button class="action-btn" id="settingsBtn">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Profile Overview Section -->
+      <section class="profile-overview">
+        <div class="profile-card">
+          <!-- Profile Picture Section -->
+          <div class="profile-picture-section">
+            <label for="profile-pic-upload" class="profile-picture-wrapper">
+              <div class="profile-picture">
+                <img
+                  id="profile-img"
+                  src="https://ui-avatars.com/api/?name=User&background=ff6b35&color=ffffff&size=200"
+                  alt="Profile Picture"
+                  onerror="this.src='https://ui-avatars.com/api/?name=User&background=ff6b35&color=ffffff&size=200';"
+                />
+                <div class="upload-overlay">
+                  <i class="fas fa-camera"></i>
+                  <span>Change Photo</span>
+                </div>
+              </div>
+            </label>
+            <input
+              type="file"
+              id="profile-pic-upload"
+              accept="image/*"
+              hidden
+            />
+
+            <!-- Upload Progress -->
+            <div class="upload-progress" id="uploadProgress">
+              <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <span class="progress-text" id="progressText">Uploading...</span>
+            </div>
+          </div>
+
+          <!-- Profile Header Info -->
+          <div class="profile-header-info">
+            <h2 class="profile-name" id="profileDisplayName">Loading...</h2>
+            <p class="profile-email" id="profileDisplayEmail">Loading...</p>
+            <div class="profile-badges">
+              <span class="badge verified" id="verifiedBadge">
+                <i class="fas fa-check-circle"></i>
+                Verified
+              </span>
+              <span class="badge member-since" id="memberSince">
+                <i class="fas fa-calendar"></i>
+                Member since 2024
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="tripsCount">0</h3>
+              <p>Trips Planned</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="totalSpent">R0</h3>
+              <p>Total Spent</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-flag"></i>
+            </div>
+            <div class="stat-info">
+              <h3 id="countriesVisited">0</h3>
+              <p>Countries</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Details Section -->
+      <section class="profile-details">
+        <div class="details-grid">
+          <!-- Personal Information Card -->
+          <div class="detail-card">
+            <div class="card-header">
+              <h3><i class="fas fa-user"></i> Personal Information</h3>
+              <button class="edit-section-btn" data-section="personal">
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+            <div class="card-content">
+              <!-- View Mode -->
+              <div class="view-mode" id="personalViewMode">
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-user"></i>
+                    First Name
+                  </span>
+                  <span class="info-value" id="displayFirstName"
+                    >Loading...</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-user"></i>
+                    Last Name
+                  </span>
+                  <span class="info-value" id="displayLastName"
+                    >Loading...</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-birthday-cake"></i>
+                    Date of Birth
+                  </span>
+                  <span class="info-value" id="displayDateOfBirth"
+                    >Not specified</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-venus-mars"></i>
+                    Gender
+                  </span>
+                  <span class="info-value" id="displayGender"
+                    >Not specified</span
+                  >
+                </div>
+              </div>
+
+              <!-- Edit Mode -->
+              <div
+                class="edit-mode"
+                id="personalEditMode"
+                style="display: none"
+              >
+                <div class="form-group">
+                  <label for="editFirstName">
+                    <i class="fas fa-user"></i>
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    id="editFirstName"
+                    placeholder="Enter your first name"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editLastName">
+                    <i class="fas fa-user"></i>
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    id="editLastName"
+                    placeholder="Enter your last name"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editDateOfBirth">
+                    <i class="fas fa-birthday-cake"></i>
+                    Date of Birth
+                  </label>
+                  <input type="date" id="editDateOfBirth" />
+                </div>
+                <div class="form-group">
+                  <label for="editGender">
+                    <i class="fas fa-venus-mars"></i>
+                    Gender
+                  </label>
+                  <select id="editGender">
+                    <option value="">Prefer not to say</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="edit-actions">
+                  <button class="save-btn" onclick="saveSection('personal')">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+                  <button class="cancel-btn" onclick="cancelEdit('personal')">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Information Card -->
+          <div class="detail-card">
+            <div class="card-header">
+              <h3><i class="fas fa-address-book"></i> Contact Information</h3>
+              <button class="edit-section-btn" data-section="contact">
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+            <div class="card-content">
+              <!-- View Mode -->
+              <div class="view-mode" id="contactViewMode">
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-envelope"></i>
+                    Email Address
+                  </span>
+                  <span class="info-value" id="displayEmail">Loading...</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-phone"></i>
+                    Phone Number
+                  </span>
+                  <span class="info-value" id="displayPhone"
+                    >Not specified</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Address
+                  </span>
+                  <span class="info-value" id="displayAddress"
+                    >Not specified</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-city"></i>
+                    City
+                  </span>
+                  <span class="info-value" id="displayCity">Not specified</span>
+                </div>
+              </div>
+
+              <!-- Edit Mode -->
+              <div class="edit-mode" id="contactEditMode" style="display: none">
+                <div class="form-group">
+                  <label for="editEmail">
+                    <i class="fas fa-envelope"></i>
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="editEmail"
+                    placeholder="Enter your email"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editPhone">
+                    <i class="fas fa-phone"></i>
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="editPhone"
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editAddress">
+                    <i class="fas fa-map-marker-alt"></i>
+                    Address
+                  </label>
+                  <input
+                    type="text"
+                    id="editAddress"
+                    placeholder="Enter your address"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editCity">
+                    <i class="fas fa-city"></i>
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    id="editCity"
+                    placeholder="Enter your city"
+                  />
+                </div>
+                <div class="edit-actions">
+                  <button class="save-btn" onclick="saveSection('contact')">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+                  <button class="cancel-btn" onclick="cancelEdit('contact')">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Travel Preferences Card -->
+          <div class="detail-card">
+            <div class="card-header">
+              <h3><i class="fas fa-plane"></i> Travel Preferences</h3>
+              <button class="edit-section-btn" data-section="travel">
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+            <div class="card-content">
+              <!-- View Mode -->
+              <div class="view-mode" id="travelViewMode">
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-globe"></i>
+                    Preferred Destinations
+                  </span>
+                  <span class="info-value" id="displayDestinations"
+                    >Not specified</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-suitcase"></i>
+                    Travel Style
+                  </span>
+                  <span class="info-value" id="displayTravelStyle"
+                    >Not specified</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-dollar-sign"></i>
+                    Budget Range
+                  </span>
+                  <span class="info-value" id="displayBudgetRange"
+                    >Not specified</span
+                  >
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-language"></i>
+                    Languages
+                  </span>
+                  <span class="info-value" id="displayLanguages"
+                    >Not specified</span
+                  >
+                </div>
+              </div>
+
+              <!-- Edit Mode -->
+              <div class="edit-mode" id="travelEditMode" style="display: none">
+                <div class="form-group">
+                  <label for="editDestinations">
+                    <i class="fas fa-globe"></i>
+                    Preferred Destinations
+                  </label>
+                  <input
+                    type="text"
+                    id="editDestinations"
+                    placeholder="e.g., Europe, Asia, Africa"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="editTravelStyle">
+                    <i class="fas fa-suitcase"></i>
+                    Travel Style
+                  </label>
+                  <select id="editTravelStyle">
+                    <option value="">Select travel style</option>
+                    <option value="budget">Budget Traveler</option>
+                    <option value="comfort">Comfort Seeker</option>
+                    <option value="luxury">Luxury Traveler</option>
+                    <option value="adventure">Adventure Seeker</option>
+                    <option value="cultural">Cultural Explorer</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="editBudgetRange">
+                    <i class="fas fa-dollar-sign"></i>
+                    Budget Range (per trip)
+                  </label>
+                  <select id="editBudgetRange">
+                    <option value="">Select budget range</option>
+                    <option value="under-5000">Under R5,000</option>
+                    <option value="5000-15000">R5,000 - R15,000</option>
+                    <option value="15000-30000">R15,000 - R30,000</option>
+                    <option value="over-30000">Over R30,000</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="editLanguages">
+                    <i class="fas fa-language"></i>
+                    Languages Spoken
+                  </label>
+                  <input
+                    type="text"
+                    id="editLanguages"
+                    placeholder="e.g., English, Afrikaans, Zulu"
+                  />
+                </div>
+                <div class="edit-actions">
+                  <button class="save-btn" onclick="saveSection('travel')">
+                    <i class="fas fa-save"></i>
+                    Save Changes
+                  </button>
+                  <button class="cancel-btn" onclick="cancelEdit('travel')">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Security Card -->
+          <div class="detail-card">
+            <div class="card-header">
+              <h3><i class="fas fa-shield-alt"></i> Account Security</h3>
+              <button class="edit-section-btn" data-section="security">
+                <i class="fas fa-edit"></i>
+              </button>
+            </div>
+            <div class="card-content">
+              <!-- View Mode -->
+              <div class="view-mode" id="securityViewMode">
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-key"></i>
+                    Password
+                  </span>
+                  <span class="info-value">••••••••</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-mobile-alt"></i>
+                    Two-Factor Auth
+                  </span>
+                  <span class="info-value">
+                    <span class="status-badge disabled">Disabled</span>
+                  </span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-clock"></i>
+                    Last Login
+                  </span>
+                  <span class="info-value" id="displayLastLogin">Today</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">
+                    <i class="fas fa-devices"></i>
+                    Active Sessions
+                  </span>
+                  <span class="info-value">1 device</span>
+                </div>
+              </div>
+
+              <!-- Edit Mode -->
+              <div
+                class="edit-mode"
+                id="securityEditMode"
+                style="display: none"
+              >
+                <div class="form-group">
+                  <label for="currentPassword">
+                    <i class="fas fa-lock"></i>
+                    Current Password
+                  </label>
+                  <input
+                    type="password"
+                    id="currentPassword"
+                    placeholder="Enter current password"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="newPassword">
+                    <i class="fas fa-key"></i>
+                    New Password
+                  </label>
+                  <input
+                    type="password"
+                    id="newPassword"
+                    placeholder="Enter new password"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">
+                    <i class="fas fa-key"></i>
+                    Confirm New Password
+                  </label>
+                  <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Confirm new password"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="checkbox-label">
+                    <input type="checkbox" id="enable2FA" />
+                    <span class="checkmark"></span>
+                    Enable Two-Factor Authentication
+                  </label>
+                </div>
+                <div class="edit-actions">
+                  <button class="save-btn" onclick="saveSection('security')">
+                    <i class="fas fa-save"></i>
+                    Update Security
+                  </button>
+                  <button class="cancel-btn" onclick="cancelEdit('security')">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Account Actions Section -->
+      <section class="account-actions">
+        <div class="actions-card">
+          <div class="card-header">
+            <h3><i class="fas fa-cog"></i> Account Actions</h3>
+          </div>
+          <div class="card-content">
+            <div class="action-buttons">
+              <button class="action-btn-large export-btn" id="exportDataBtn">
+                <i class="fas fa-download"></i>
+                <div class="btn-content">
+                  <span class="btn-title">Export Data</span>
+                  <span class="btn-subtitle">Download your account data</span>
+                </div>
+              </button>
+              <button class="action-btn-large privacy-btn" id="privacyBtn">
+                <i class="fas fa-user-shield"></i>
+                <div class="btn-content">
+                  <span class="btn-title">Privacy Settings</span>
+                  <span class="btn-subtitle">Manage data privacy</span>
+                </div>
+              </button>
+              <button class="action-btn-large logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <div class="btn-content">
+                  <span class="btn-title">Sign Out</span>
+                  <span class="btn-subtitle">Log out of your account</span>
+                </div>
+              </button>
+              <button class="action-btn-large delete-btn" id="deleteAccountBtn">
+                <i class="fas fa-trash-alt"></i>
+                <div class="btn-content">
+                  <span class="btn-title">Delete Account</span>
+                  <span class="btn-subtitle">Permanently delete account</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 id="modalTitle">Confirm Action</h3>
+          <button class="modal-close" onclick="closeModal()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="modalMessage">Are you sure you want to perform this action?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="confirmBtn" class="btn-primary">
+            <i class="fas fa-check"></i>
+            Confirm
+          </button>
+          <button onclick="closeModal()" class="btn-secondary">Cancel</button>
+        </div>
+      </div>
     </div>
 
-    <!-- Display User Info (read-only) -->
-    <div class="user-info">
-      <div class="profile-field">
-        <span class="profile-label"><i class="fas fa-user"></i> First Name:</span>
-        <span class="profile-value" id="name">Loading...</span>
-      </div>
-      <div class="profile-field">
-        <span class="profile-label"><i class="fas fa-user"></i> Last Name:</span>
-        <span class="profile-value" id="surname">Loading...</span>
-      </div>
-      <div class="profile-field">
-        <span class="profile-label"><i class="fas fa-envelope"></i> Email Address:</span>
-        <span class="profile-value" id="email">Loading...</span>
-      </div>
-      <div class="profile-field">
-        <span class="profile-label"><i class="fas fa-phone"></i> Phone Number:</span>
-        <span class="profile-value" id="phone">Loading...</span>
-      </div>
-    </div>
-
-    <!-- Editable Profile Form -->
-    <div class="edit-profile">
-      <h2>Edit Profile</h2>
-      <div class="form-group">
-        <label for="edit-name">First Name:</label>
-        <input type="text" id="edit-name" placeholder="Enter first name" />
-      </div>
-      <div class="form-group">
-        <label for="edit-surname">Last Name:</label>
-        <input type="text" id="edit-surname" placeholder="Enter last name" />
-      </div>
-      <div class="form-group">
-        <label for="edit-email">Email:</label>
-        <input type="email" id="edit-email" placeholder="Enter email" />
-      </div>
-      <div class="form-group">
-        <label for="edit-phone">Phone Number:</label>
-        <input type="tel" id="edit-phone" placeholder="Enter phone number" />
-      </div>
-      <button id="save-profile-btn">Save Changes</button>
-    </div>
-  </div>
-
-  <script type="module" src="js/profile.js"></script>
-</body>
+    <script type="module" src="js/profile.js"></script>
+  </body>
 </html>

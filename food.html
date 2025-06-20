@@ -2,11 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>Travique | Food Finder</title>
     <link rel="stylesheet" href="css/food.css" />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
@@ -15,56 +16,370 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <meta name="theme-color" content="#ff6b35" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   </head>
-  <body class="tips-page">
-    <div class="top-bar">
-      <h2><i class="fas fa-utensils"></i> Food Finder</h2>
-      <button class="back-btn" onclick="window.location.href='dashboard.html'">
-        <i class="fas fa-arrow-left"></i> Dashboard
+  <body class="food-finder-page">
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <div class="loading-text">Finding delicious places...</div>
+      </div>
+    </div>
+
+    <!-- Modern Header with Search -->
+    <header class="modern-header" id="header">
+      <div class="header-top">
+        <button
+          class="back-btn dynamic-btn"
+          onclick="window.location.href='dashboard.html'"
+        >
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="header-title">
+          <h1><i class="fas fa-utensils"></i> Food Finder</h1>
+          <span class="location-indicator" id="locationIndicator">
+            <i class="fas fa-map-marker-alt"></i> Getting location...
+          </span>
+        </div>
+        <button class="menu-toggle" id="menuToggle">
+          <i class="fas fa-filter"></i>
+        </button>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="quick-search-container">
+        <div class="search-input-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input
+            type="text"
+            id="quickSearch"
+            placeholder="Search restaurants, cuisine..."
+            autocomplete="off"
+          />
+          <button class="voice-search-btn" id="voiceSearch">
+            <i class="fas fa-microphone"></i>
+          </button>
+          <!-- Search Dropdown -->
+          <div class="search-dropdown" id="searchDropdown">
+            <div class="dropdown-section">
+              <h4>Suggested Locations</h4>
+              <div class="location-suggestions" id="locationSuggestions">
+                <!-- Location suggestions will be populated here -->
+              </div>
+            </div>
+            <div class="dropdown-section">
+              <h4>Restaurants Near You</h4>
+              <div class="restaurant-suggestions" id="restaurantSuggestions">
+                <!-- Restaurant suggestions will be populated here -->
+              </div>
+            </div>
+            <div class="dropdown-section">
+              <h4>Popular Searches</h4>
+              <div class="popular-searches" id="popularSearches">
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="pizza"
+                >
+                  <i class="fas fa-pizza-slice"></i>
+                  <span>Pizza places</span>
+                </div>
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="coffee"
+                >
+                  <i class="fas fa-coffee"></i>
+                  <span>Coffee shops</span>
+                </div>
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="sushi"
+                >
+                  <i class="fas fa-fish"></i>
+                  <span>Sushi restaurants</span>
+                </div>
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="burger"
+                >
+                  <i class="fas fa-hamburger"></i>
+                  <span>Burger joints</span>
+                </div>
+                <div
+                  class="suggestion-item"
+                  data-type="cuisine"
+                  data-value="chinese"
+                >
+                  <i class="fas fa-chopsticks"></i>
+                  <span>Chinese food</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Filter Panel (Slide-out) -->
+    <div class="filter-panel" id="filterPanel">
+      <div class="filter-header">
+        <h3>Filters & Options</h3>
+        <button class="close-filter" id="closeFilter">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="filter-content">
+        <div class="filter-section">
+          <h4>Search Radius</h4>
+          <div class="radius-slider">
+            <input
+              type="range"
+              id="radiusSlider"
+              min="500"
+              max="10000"
+              value="5000"
+              step="500"
+            />
+            <div class="radius-display">
+              <span id="radiusValue">5.0</span> km
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h4>Price Range</h4>
+          <div class="price-filters">
+            <button class="price-filter active" data-price="1">$ Budget</button>
+            <button class="price-filter" data-price="2">$$ Moderate</button>
+            <button class="price-filter" data-price="3">$$$ Upscale</button>
+            <button class="price-filter" data-price="4">$$$$ Luxury</button>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h4>Rating</h4>
+          <div class="rating-filters">
+            <button class="rating-filter" data-rating="3">3+ Stars</button>
+            <button class="rating-filter active" data-rating="4">
+              4+ Stars
+            </button>
+            <button class="rating-filter" data-rating="4.5">4.5+ Stars</button>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h4>Open Now</h4>
+          <label class="toggle-switch">
+            <input type="checkbox" id="openNowToggle" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Category Tabs -->
+      <div class="category-tabs" id="categoryTabs">
+        <button class="category-tab active" data-type="restaurant">
+          <i class="fas fa-utensils"></i>
+          <span>Restaurants</span>
+        </button>
+        <button class="category-tab" data-type="cafe">
+          <i class="fas fa-coffee"></i>
+          <span>Cafés</span>
+        </button>
+        <button class="category-tab" data-type="bakery">
+          <i class="fas fa-bread-slice"></i>
+          <span>Bakeries</span>
+        </button>
+        <button class="category-tab" data-type="store">
+          <i class="fas fa-store"></i>
+          <span>Stores</span>
+        </button>
+      </div>
+
+      <!-- Quick Action Chips -->
+      <div class="quick-actions">
+        <div class="action-chips" id="actionChips">
+          <button class="action-chip" data-cuisine="pizza">🍕 Pizza</button>
+          <button class="action-chip" data-cuisine="sushi">🍣 Sushi</button>
+          <button class="action-chip" data-cuisine="burger">🍔 Burgers</button>
+          <button class="action-chip" data-cuisine="coffee">☕ Coffee</button>
+          <button class="action-chip" data-cuisine="indian">�� Indian</button>
+          <button class="action-chip" data-cuisine="chinese">🥡 Chinese</button>
+          <button class="action-chip" data-cuisine="italian">🍝 Italian</button>
+          <button class="action-chip" data-cuisine="mexican">🌮 Mexican</button>
+        </div>
+      </div>
+
+      <!-- Map and Results Container -->
+      <div class="map-results-layout">
+        <!-- Map Container -->
+        <div class="map-container" id="mapContainer">
+          <div class="map-header">
+            <div class="map-controls">
+              <button class="map-control-btn" id="centerMapBtn">
+                <i class="fas fa-crosshairs"></i>
+              </button>
+              <button class="map-control-btn" id="listViewBtn">
+                <i class="fas fa-list"></i>
+              </button>
+              <button class="map-control-btn" id="fullscreenBtn">
+                <i class="fas fa-expand"></i>
+              </button>
+            </div>
+            <div class="results-counter">
+              <span id="resultsCount">0 places found</span>
+            </div>
+          </div>
+          <div id="map" class="map-element"></div>
+
+          <!-- Map Overlay for Mobile -->
+          <div class="map-overlay" id="mapOverlay">
+            <div class="overlay-handle"></div>
+            <div class="overlay-content">
+              <div class="overlay-header">
+                <h3>Search Results</h3>
+                <button class="overlay-toggle" id="overlayToggle">
+                  <i class="fas fa-chevron-up"></i>
+                </button>
+              </div>
+              <div class="results-container mobile-results" id="mobileResults">
+                <div class="empty-state">
+                  <i class="fas fa-search"></i>
+                  <h4>Start Your Food Journey</h4>
+                  <p>
+                    Search for restaurants, cafés, or any cuisine you're
+                    craving!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Results Panel -->
+        <div class="results-panel" id="resultsPanel">
+          <div class="results-panel-header">
+            <h3><i class="fas fa-utensils"></i> Search Results</h3>
+            <div class="panel-controls">
+              <button class="panel-control-btn" id="toggleResultsPanel">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </div>
+          </div>
+          <div class="results-container desktop-results" id="results">
+            <div class="empty-state">
+              <i class="fas fa-search"></i>
+              <h4>Start Your Food Journey</h4>
+              <p>
+                Search for restaurants, cafés, or any cuisine you're craving!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+      <button class="fab" id="mainFab">
+        <i class="fas fa-plus"></i>
       </button>
-    </div>
-    <div class="container mx-auto p-4 max-w-3xl" style="margin-top: 110px">
-      <h1
-        class="text-3xl font-bold text-center mb-6 text-primary-dark tracking-tight"
-      >
-        South Africa Travel: Find Restaurants & Stores
-      </h1>
-      <div class="flex justify-center mb-6 flex-wrap gap-3">
-        <button
-          id="findRestaurants"
-          class="action-btn bg-blue-500 hover:bg-blue-600 text-white px-5 py-2"
-        >
-          Find Restaurants
+      <div class="fab-menu" id="fabMenu">
+        <button class="fab-action" id="nearbyBtn">
+          <i class="fas fa-location-arrow"></i>
+          <span>Nearby</span>
         </button>
-        <button
-          id="findStores"
-          class="action-btn bg-green-500 hover:bg-green-600 text-white px-5 py-2"
-        >
-          Find Stores
+        <button class="fab-action" id="favoritesBtn">
+          <i class="fas fa-heart"></i>
+          <span>Favorites</span>
+        </button>
+        <button class="fab-action" id="shareLocationBtn">
+          <i class="fas fa-share-alt"></i>
+          <span>Share</span>
         </button>
       </div>
-      <div class="search-bar-container mb-6">
-        <input
-          type="text"
-          id="cuisine-type"
-          placeholder="Search cuisine or restaurant..."
-        />
-        <button id="search-restaurants">
-          <i class="fas fa-search mr-1"></i>Search
-        </button>
-        <button id="search-current">
-          <i class="fas fa-location-arrow mr-1"></i>Nearby
-        </button>
-      </div>
-      <div id="map" class="mb-6 fade-in"></div>
-      <div id="results" class="bg-white p-4 rounded shadow fade-in"></div>
     </div>
+
+    <!-- Bottom Sheet for Place Details -->
+    <div class="bottom-sheet" id="bottomSheet">
+      <div class="sheet-handle"></div>
+      <div class="sheet-content" id="sheetContent">
+        <!-- Dynamic content loaded here -->
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-784GHrzxkNJfJKZhF4cu9N87ESyk0ZM&libraries=places&callback=initMap"
+      async
+      defer
+    ></script>
+    <script src="js/food-finder.js"></script>
+
     <script>
+      // Core functionality preserved but enhanced
       let map,
         service,
         infowindow,
         userLocation,
         markers = [];
+      let currentSearchType = "restaurant";
+      let searchRadius = 5000;
+      let isMapInitialized = false;
+      let autocompleteService, placesService;
+      let searchTimeout;
+      let nearbyPlaces = [];
+
+      function showLoading() {
+        document.getElementById("loadingOverlay")?.classList.add("active");
+      }
+
+      function hideLoading() {
+        document.getElementById("loadingOverlay")?.classList.remove("active");
+      }
+
+      function showToast(message, type = "info") {
+        const toast = document.createElement("div");
+        toast.className = `toast toast-${type}`;
+        toast.innerHTML = `
+        <i class="fas fa-${type === "error" ? "exclamation-circle" : type === "success" ? "check-circle" : "info-circle"}"></i>
+        <span>${message}</span>
+      `;
+        document.getElementById("toastContainer")?.appendChild(toast);
+
+        setTimeout(() => toast.classList.add("active"), 100);
+        setTimeout(() => {
+          toast.classList.remove("active");
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+
+      function updateLocationIndicator(location) {
+        const indicator = document.getElementById("locationIndicator");
+        if (location === "getting") {
+          indicator.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Getting location...';
+        } else if (location === "error") {
+          indicator.innerHTML =
+            '<i class="fas fa-exclamation-triangle"></i> Location unavailable';
+        } else {
+          indicator.innerHTML =
+            '<i class="fas fa-map-marker-alt"></i> Current location';
+        }
+      }
 
       function clearMarkers() {
         markers.forEach((marker) => marker.setMap(null));
@@ -73,32 +388,49 @@
 
       function initMap() {
         const defaultLocation = { lat: -26.2041, lng: 28.0473 };
+
         map = new google.maps.Map(document.getElementById("map"), {
           center: defaultLocation,
-          zoom: 12,
+          zoom: 14,
           styles: [
-            { elementType: "geometry", stylers: [{ color: "#e0eafc" }] },
             {
-              elementType: "labels.text.stroke",
-              stylers: [{ color: "#ffffff" }],
-            },
-            {
-              elementType: "labels.text.fill",
-              stylers: [{ color: "#246071" }],
-            },
-            {
-              featureType: "poi",
-              elementType: "geometry",
-              stylers: [{ color: "#f7fbff" }],
+              featureType: "all",
+              elementType: "geometry.fill",
+              stylers: [{ color: "#f5f7fa" }],
             },
             {
               featureType: "road",
               elementType: "geometry",
-              stylers: [{ color: "#cfdef3" }],
+              stylers: [{ color: "#ffffff" }],
+            },
+            {
+              featureType: "road",
+              elementType: "geometry.stroke",
+              stylers: [{ color: "#e0e7ff" }],
+            },
+            {
+              featureType: "poi",
+              elementType: "geometry.fill",
+              stylers: [{ color: "#e8f4f8" }],
+            },
+            {
+              featureType: "water",
+              elementType: "geometry.fill",
+              stylers: [{ color: "#64b5f6" }],
             },
           ],
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: false,
         });
+
         infowindow = new google.maps.InfoWindow();
+        service = new google.maps.places.PlacesService(map);
+        autocompleteService = new google.maps.places.AutocompleteService();
+        placesService = new google.maps.places.PlacesService(map);
+        isMapInitialized = true;
+
+        updateLocationIndicator("getting");
 
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(
@@ -108,65 +440,506 @@
                 lng: position.coords.longitude,
               };
               map.setCenter(userLocation);
+
               new google.maps.Marker({
                 position: userLocation,
                 map: map,
                 title: "Your Location",
                 icon: {
-                  url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                  url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232196f3'%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3C/svg%3E",
+                  scaledSize: new google.maps.Size(20, 20),
                 },
               });
+
+              updateLocationIndicator("success");
+              hideLoading();
+              showToast("Location found successfully!", "success");
+
+              // Auto-search for nearby restaurants
+              setTimeout(() => {
+                searchPlaces("restaurant");
+                showToast("Searching for nearby restaurants...", "info");
+              }, 1000);
             },
-            () => {
+            (error) => {
               userLocation = defaultLocation;
               map.setCenter(userLocation);
+              updateLocationIndicator("error");
+              hideLoading();
+              showToast(
+                "Could not get your location. Using default location.",
+                "error",
+              );
+
+              // Search for restaurants at default location
+              setTimeout(() => {
+                searchPlaces("restaurant");
+                showToast(
+                  "Searching for restaurants in Johannesburg...",
+                  "info",
+                );
+              }, 1500);
             },
           );
         } else {
           userLocation = defaultLocation;
+          updateLocationIndicator("error");
+          hideLoading();
+          showToast("Geolocation not supported by this browser.", "error");
+
+          // Search for restaurants at default location
+          setTimeout(() => {
+            searchPlaces("restaurant");
+            showToast("Searching for restaurants in Johannesburg...", "info");
+          }, 1500);
         }
-        service = new google.maps.places.PlacesService(map);
       }
 
-      function searchPlaces(type) {
+      function searchPlaces(type, keyword = "") {
         if (!userLocation) {
-          alert("Location not yet available. Please wait...");
+          showToast("Location not available. Please wait...", "error");
           return;
         }
+
+        showLoading();
         clearMarkers();
+
         const request = {
           location: userLocation,
-          radius: 5000,
+          radius: searchRadius,
           type: type,
         };
+
+        if (keyword) {
+          request.keyword = keyword;
+        }
+
         service.nearbySearch(request, (results, status) => {
+          hideLoading();
+
           if (status === google.maps.places.PlacesServiceStatus.OK) {
+            // Store results for dropdown suggestions
+            nearbyPlaces = results;
+
             displayResults(results, type);
             addMarkers(results);
+            document.getElementById("resultsCount").textContent =
+              `${results.length} places found`;
+            showToast(`Found ${results.length} ${type}s nearby!`, "success");
           } else {
-            document.getElementById("results").innerHTML =
-              `<p class="text-red-500">No ${type}s found nearby.</p>`;
+            nearbyPlaces = [];
+            document.getElementById("results").innerHTML = getEmptyState();
+            document.getElementById("resultsCount").textContent =
+              "0 places found";
+            showToast(`No ${type}s found nearby.`, "error");
           }
         });
       }
 
+      function getEmptyState() {
+        return `
+        <div class="empty-state">
+          <i class="fas fa-search"></i>
+          <h4>No Results Found</h4>
+          <p>Try adjusting your search criteria or location.</p>
+        </div>
+      `;
+      }
+
       function displayResults(places, type) {
-        const resultsDiv = document.getElementById("results");
-        resultsDiv.innerHTML = `<h2 class="text-xl font-semibold mb-3 text-primary-dark">${type.charAt(0).toUpperCase() + type.slice(1)}s Nearby</h2>`;
+        const resultsDiv = document.getElementById("results"); // Desktop results
+        const mobileResultsDiv = document.getElementById("mobileResults"); // Mobile results
+
+        // Clear both containers
+        if (resultsDiv) resultsDiv.innerHTML = "";
+        if (mobileResultsDiv) mobileResultsDiv.innerHTML = "";
+
         if (!places.length) {
-          resultsDiv.innerHTML += `<p class="text-gray-500">No results found.</p>`;
+          const emptyState = getEmptyState();
+          if (resultsDiv) resultsDiv.innerHTML = emptyState;
+          if (mobileResultsDiv) mobileResultsDiv.innerHTML = emptyState;
           return;
         }
-        places.forEach((place) => {
-          const placeDiv = document.createElement("div");
-          placeDiv.className = "result-card fade-in";
-          placeDiv.innerHTML = `
-          <div class="result-title">${place.name}</div>
-          <div class="result-address"><i class="fas fa-map-marker-alt text-primary mr-1"></i> ${place.vicinity}</div>
-          <div class="result-rating"><i class="fas fa-star"></i> ${place.rating ? place.rating + "/5" : "N/A"}</div>
-        `;
-          resultsDiv.appendChild(placeDiv);
+
+        // Create results header with sorting options
+        const resultsHeader = document.createElement("div");
+        resultsHeader.className = "results-header";
+        resultsHeader.innerHTML = `
+        <div class="results-info">
+          <h3 class="results-title">
+            <i class="fas fa-utensils"></i>
+            Found ${places.length} ${type}${places.length !== 1 ? "s" : ""}
+          </h3>
+          <p class="results-subtitle">Showing results near your location</p>
+        </div>
+        <div class="results-controls">
+          <div class="sort-dropdown">
+            <button class="sort-btn" id="sortBtn">
+              <i class="fas fa-sort"></i>
+              <span>Sort by</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="sort-options" id="sortOptions">
+              <button class="sort-option active" data-sort="distance">
+                <i class="fas fa-location-arrow"></i>
+                Distance
+              </button>
+              <button class="sort-option" data-sort="rating">
+                <i class="fas fa-star"></i>
+                Rating
+              </button>
+              <button class="sort-option" data-sort="name">
+                <i class="fas fa-font"></i>
+                Name
+              </button>
+              <button class="sort-option" data-sort="price">
+                <i class="fas fa-dollar-sign"></i>
+                Price
+              </button>
+            </div>
+          </div>
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="grid" id="gridViewBtn">
+              <i class="fas fa-th"></i>
+            </button>
+            <button class="view-btn" data-view="list" id="listViewBtn">
+              <i class="fas fa-list"></i>
+            </button>
+          </div>
+        </div>
+      `;
+
+        // Create results grid container
+        const resultsGrid = document.createElement("div");
+        resultsGrid.className = "results-grid";
+        resultsGrid.id = "resultsGrid";
+
+        // Sort places by distance (default)
+        const sortedPlaces = [...places].sort((a, b) => {
+          if (userLocation) {
+            const distanceA = calculateDistance(
+              userLocation.lat,
+              userLocation.lng,
+              a.geometry.location.lat(),
+              a.geometry.location.lng(),
+            );
+            const distanceB = calculateDistance(
+              userLocation.lat,
+              userLocation.lng,
+              b.geometry.location.lat(),
+              b.geometry.location.lng(),
+            );
+            return distanceA - distanceB;
+          }
+          return 0;
         });
+
+        // Create place cards with enhanced information
+        sortedPlaces.forEach((place, index) => {
+          const placeCard = document.createElement("div");
+          placeCard.className = "place-card enhanced-card";
+          placeCard.style.animationDelay = `${index * 0.1}s`;
+          placeCard.dataset.placeId = place.place_id;
+
+          const rating = place.rating || 0;
+          const priceLevel = place.price_level || 0;
+          const isOpen = place.opening_hours?.open_now;
+          const totalRatings = place.user_ratings_total || 0;
+
+          // Calculate distance if user location is available
+          let distance = "";
+          if (userLocation) {
+            const dist = calculateDistance(
+              userLocation.lat,
+              userLocation.lng,
+              place.geometry.location.lat(),
+              place.geometry.location.lng(),
+            );
+            distance = `<div class="place-distance">
+            <i class="fas fa-walking"></i>
+            <span>${dist < 1 ? (dist * 1000).toFixed(0) + "m" : dist.toFixed(1) + "km"}</span>
+          </div>`;
+          }
+
+          // Generate price indicator
+          const priceIndicator =
+            priceLevel > 0
+              ? `<div class="price-indicator">
+            <span class="price-text">${"$".repeat(priceLevel)}</span>
+            <span class="price-label">${getPriceLabel(priceLevel)}</span>
+          </div>`
+              : "";
+
+          placeCard.innerHTML = `
+          <div class="place-image">
+            <img src="${place.photos?.[0]?.getUrl({ maxWidth: 400, maxHeight: 250 }) || "https://via.placeholder.com/400x250/ff6b35/ffffff?text=" + encodeURIComponent(place.name)}"
+                 alt="${place.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ff6b35/ffffff?text=Restaurant'">
+            <div class="place-badges">
+              ${
+                isOpen !== undefined
+                  ? `<span class="status-badge ${isOpen ? "open" : "closed"}">
+                <i class="fas fa-${isOpen ? "check" : "times"}-circle"></i>
+                ${isOpen ? "Open" : "Closed"}
+              </span>`
+                  : ""
+              }
+              ${priceLevel > 0 ? `<span class="price-badge">${"$".repeat(priceLevel)}</span>` : ""}
+            </div>
+            <div class="favorite-btn" onclick="toggleFavorite('${place.place_id}')">
+              <i class="far fa-heart"></i>
+            </div>
+          </div>
+          <div class="place-info">
+            <div class="place-header">
+              <h3 class="place-name" title="${place.name}">${place.name}</h3>
+              ${distance}
+            </div>
+
+            <div class="place-rating">
+              <div class="stars">
+                ${generateStars(rating)}
+              </div>
+              <span class="rating-text">${rating > 0 ? rating.toFixed(1) : "No rating"}</span>
+              ${totalRatings > 0 ? `<span class="rating-count">(${totalRatings})</span>` : ""}
+            </div>
+
+            <p class="place-address">
+              <i class="fas fa-map-marker-alt"></i>
+              <span title="${place.vicinity}">${place.vicinity}</span>
+            </p>
+
+            ${priceIndicator}
+
+            <div class="place-quick-info">
+              ${
+                place.types
+                  ? `
+                <div class="place-tags">
+                  ${place.types
+                    .slice(0, 2)
+                    .map(
+                      (type) =>
+                        `<span class="place-tag">${formatPlaceType(type)}</span>`,
+                    )
+                    .join("")}
+                </div>
+              `
+                  : ""
+              }
+            </div>
+
+            <div class="place-actions">
+              <button class="action-btn-primary" onclick="openPlaceDetails('${place.place_id}')">
+                <i class="fas fa-info-circle"></i>
+                <span>View Details</span>
+              </button>
+              <button class="action-btn-secondary" onclick="getDirections(${place.geometry.location.lat()}, ${place.geometry.location.lng()})">
+                <i class="fas fa-directions"></i>
+                <span>Directions</span>
+              </button>
+              <button class="action-btn-icon" onclick="sharePlace('${place.name}', '${place.vicinity}')" title="Share">
+                <i class="fas fa-share-alt"></i>
+              </button>
+            </div>
+          </div>
+        `;
+
+          resultsGrid.appendChild(placeCard);
+        });
+
+        // Append header and grid to desktop results container
+        if (resultsDiv) {
+          resultsDiv.appendChild(resultsHeader);
+          resultsDiv.appendChild(resultsGrid);
+        }
+
+        // Clone content for mobile container
+        if (mobileResultsDiv) {
+          const mobileHeader = resultsHeader.cloneNode(true);
+          const mobileGrid = resultsGrid.cloneNode(true);
+          mobileResultsDiv.appendChild(mobileHeader);
+          mobileResultsDiv.appendChild(mobileGrid);
+        }
+
+        // Setup sorting and view toggle functionality
+        setupResultsControls(sortedPlaces, type);
+      }
+
+      // Helper functions for enhanced display
+      function calculateDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radius of the earth in km
+        const dLat = deg2rad(lat2 - lat1);
+        const dLon = deg2rad(lon2 - lon1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(lat1)) *
+            Math.cos(deg2rad(lat2)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+      }
+
+      function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+      }
+
+      function getPriceLabel(priceLevel) {
+        const labels = [
+          "",
+          "Budget",
+          "Moderate",
+          "Expensive",
+          "Very Expensive",
+        ];
+        return labels[priceLevel] || "";
+      }
+
+      function formatPlaceType(type) {
+        return type.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+      }
+
+      function toggleFavorite(placeId) {
+        const favoriteBtn = event.target.closest(".favorite-btn");
+        const icon = favoriteBtn.querySelector("i");
+
+        if (icon.classList.contains("far")) {
+          icon.classList.remove("far");
+          icon.classList.add("fas");
+          favoriteBtn.classList.add("favorited");
+          showToast("Added to favorites!", "success");
+        } else {
+          icon.classList.remove("fas");
+          icon.classList.add("far");
+          favoriteBtn.classList.remove("favorited");
+          showToast("Removed from favorites", "info");
+        }
+      }
+
+      function setupResultsControls(places, type) {
+        // Sort dropdown functionality
+        const sortBtn = document.getElementById("sortBtn");
+        const sortOptions = document.getElementById("sortOptions");
+
+        if (sortBtn && sortOptions) {
+          sortBtn.addEventListener("click", () => {
+            sortOptions.classList.toggle("active");
+          });
+
+          document.addEventListener("click", (e) => {
+            if (!e.target.closest(".sort-dropdown")) {
+              sortOptions.classList.remove("active");
+            }
+          });
+
+          // Sort option handlers
+          sortOptions.querySelectorAll(".sort-option").forEach((option) => {
+            option.addEventListener("click", () => {
+              const sortType = option.dataset.sort;
+              sortResults(places, sortType, type);
+
+              // Update active state
+              sortOptions
+                .querySelectorAll(".sort-option")
+                .forEach((opt) => opt.classList.remove("active"));
+              option.classList.add("active");
+
+              // Update sort button text
+              sortBtn.querySelector("span").textContent =
+                option.textContent.trim();
+              sortOptions.classList.remove("active");
+            });
+          });
+        }
+
+        // View toggle functionality
+        const gridViewBtn = document.getElementById("gridViewBtn");
+        const listViewBtn = document.getElementById("listViewBtn");
+        const resultsGrid = document.getElementById("resultsGrid");
+
+        if (gridViewBtn && listViewBtn && resultsGrid) {
+          gridViewBtn.addEventListener("click", () => {
+            resultsGrid.classList.remove("list-view");
+            resultsGrid.classList.add("grid-view");
+            gridViewBtn.classList.add("active");
+            listViewBtn.classList.remove("active");
+          });
+
+          listViewBtn.addEventListener("click", () => {
+            resultsGrid.classList.remove("grid-view");
+            resultsGrid.classList.add("list-view");
+            listViewBtn.classList.add("active");
+            gridViewBtn.classList.remove("active");
+          });
+        }
+      }
+
+      function sortResults(places, sortType, type) {
+        let sortedPlaces = [...places];
+
+        switch (sortType) {
+          case "distance":
+            if (userLocation) {
+              sortedPlaces.sort((a, b) => {
+                const distA = calculateDistance(
+                  userLocation.lat,
+                  userLocation.lng,
+                  a.geometry.location.lat(),
+                  a.geometry.location.lng(),
+                );
+                const distB = calculateDistance(
+                  userLocation.lat,
+                  userLocation.lng,
+                  b.geometry.location.lat(),
+                  b.geometry.location.lng(),
+                );
+                return distA - distB;
+              });
+            }
+            break;
+          case "rating":
+            sortedPlaces.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+            break;
+          case "name":
+            sortedPlaces.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+          case "price":
+            sortedPlaces.sort(
+              (a, b) => (a.price_level || 0) - (b.price_level || 0),
+            );
+            break;
+        }
+
+        // Re-render results with new sorting
+        const resultsGrid = document.getElementById("resultsGrid");
+        if (resultsGrid) {
+          resultsGrid.innerHTML = "";
+          sortedPlaces.forEach((place, index) => {
+            // Re-create cards with new order (simplified version)
+            const existingCard = document.querySelector(
+              `[data-place-id="${place.place_id}"]`,
+            );
+            if (existingCard) {
+              const newCard = existingCard.cloneNode(true);
+              newCard.style.animationDelay = `${index * 0.05}s`;
+              resultsGrid.appendChild(newCard);
+            }
+          });
+        }
+      }
+
+      function generateStars(rating) {
+        let stars = "";
+        for (let i = 1; i <= 5; i++) {
+          if (i <= rating) {
+            stars += '<i class="fas fa-star"></i>';
+          } else if (i - 0.5 <= rating) {
+            stars += '<i class="fas fa-star-half-alt"></i>';
+          } else {
+            stars += '<i class="far fa-star"></i>';
+          }
+        }
+        return stars;
       }
 
       function addMarkers(places) {
@@ -176,71 +949,690 @@
             map: map,
             title: place.name,
             icon: {
-              url: "http://maps.google.com/mapfiles/ms/icons/orange-dot.png",
+              url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6b35'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
+              scaledSize: new google.maps.Size(30, 30),
             },
           });
+
           markers.push(marker);
+
           marker.addListener("click", () => {
-            infowindow.setContent(`
-            <div style="font-family:Quicksand,sans-serif;">
-              <strong>${place.name}</strong><br>
-              ${place.vicinity}<br>
-              <span style="color:#ff8c42;">Rating: ${place.rating ? place.rating + "/5" : "N/A"}</span>
-            </div>
-          `);
-            infowindow.open(map, marker);
+            openPlaceDetails(place.place_id);
           });
         });
       }
 
-      document
-        .getElementById("findRestaurants")
-        .addEventListener("click", () => searchPlaces("restaurant"));
-      document
-        .getElementById("findStores")
-        .addEventListener("click", () => searchPlaces("store"));
+      function openPlaceDetails(placeId) {
+        const request = { placeId: placeId };
 
-      document
-        .getElementById("search-restaurants")
-        .addEventListener("click", function () {
-          const cuisine = document.getElementById("cuisine-type").value.trim();
-          if (!userLocation || !cuisine) {
-            alert("Enter a cuisine and ensure location is available.");
-            return;
+        service.getDetails(request, (place, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            showPlaceDetails(place);
           }
-          clearMarkers();
-          const request = {
-            location: userLocation,
-            radius: 5000,
-            keyword: cuisine,
-            type: "restaurant",
-          };
-          service.nearbySearch(request, (results, status) => {
-            if (status === google.maps.places.PlacesServiceStatus.OK) {
-              displayResults(results, "restaurant");
-              addMarkers(results);
-            } else {
-              document.getElementById("results").innerHTML =
-                `<p class="text-red-500">No restaurants found for "${cuisine}".</p>`;
+        });
+      }
+
+      function showPlaceDetails(place) {
+        const bottomSheet = document.getElementById("bottomSheet");
+        const sheetContent = document.getElementById("sheetContent");
+
+        const photos = place.photos || [];
+        const rating = place.rating || 0;
+        const reviews = place.reviews || [];
+
+        sheetContent.innerHTML = `
+        <div class="place-details">
+          <div class="place-header">
+            <h2>${place.name}</h2>
+            <button class="close-sheet" onclick="closeBottomSheet()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          ${
+            photos.length > 0
+              ? `
+            <div class="place-photos">
+              ${photos
+                .slice(0, 3)
+                .map(
+                  (photo) =>
+                    `<img src="${photo.getUrl({ maxWidth: 400, maxHeight: 300 })}" alt="${place.name}">`,
+                )
+                .join("")}
+            </div>
+          `
+              : ""
+          }
+
+          <div class="place-meta">
+            <div class="rating-section">
+              <div class="stars">${generateStars(rating)}</div>
+              <span>${rating > 0 ? rating.toFixed(1) : "No rating"} (${place.user_ratings_total || 0} reviews)</span>
+            </div>
+
+            <div class="contact-info">
+              <p><i class="fas fa-map-marker-alt"></i> ${place.formatted_address}</p>
+              ${place.formatted_phone_number ? `<p><i class="fas fa-phone"></i> ${place.formatted_phone_number}</p>` : ""}
+              ${place.website ? `<p><i class="fas fa-globe"></i> <a href="${place.website}" target="_blank">Website</a></p>` : ""}
+            </div>
+
+            ${
+              place.opening_hours
+                ? `
+              <div class="hours-section">
+                <h4>Opening Hours</h4>
+                ${place.opening_hours.weekday_text.map((day) => `<p>${day}</p>`).join("")}
+              </div>
+            `
+                : ""
             }
+
+            <div class="action-buttons">
+              <button class="detail-action-btn primary" onclick="getDirections(${place.geometry.location.lat()}, ${place.geometry.location.lng()})">
+                <i class="fas fa-directions"></i> Get Directions
+              </button>
+              <button class="detail-action-btn secondary" onclick="sharePlace('${place.name}', '${place.formatted_address}')">
+                <i class="fas fa-share"></i> Share
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+        bottomSheet.classList.add("active");
+      }
+
+      function closeBottomSheet() {
+        document.getElementById("bottomSheet").classList.remove("active");
+      }
+
+      function getDirections(lat, lng) {
+        const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+        window.open(url, "_blank");
+      }
+
+      function sharePlace(name, address) {
+        if (navigator.share) {
+          navigator.share({
+            title: name,
+            text: `Check out ${name}`,
+            url: window.location.href,
+          });
+        } else {
+          navigator.clipboard.writeText(`${name} - ${address}`);
+          showToast("Place details copied to clipboard!", "success");
+        }
+      }
+
+      // Enhanced safe querySelector wrapper to prevent '#' errors
+      function safeQuerySelector(selector) {
+        try {
+          if (
+            !selector ||
+            selector === "#" ||
+            selector === "" ||
+            selector.length <= 1
+          ) {
+            console.warn("Invalid selector provided:", selector);
+            return null;
+          }
+          return document.querySelector(selector);
+        } catch (error) {
+          console.error("querySelector error:", error, "Selector:", selector);
+          return null;
+        }
+      }
+
+      // Global handler to catch and prevent anchor link errors
+      document.addEventListener("DOMContentLoaded", () => {
+        // Find and fix any problematic anchor links
+        document.querySelectorAll('a[href="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.warn("Prevented click on empty anchor link");
+            return false;
+          });
+        });
+      });
+
+      // Search Dropdown Functions
+      function showSearchDropdown() {
+        document.getElementById("searchDropdown").classList.add("active");
+      }
+
+      function hideSearchDropdown() {
+        document.getElementById("searchDropdown").classList.remove("active");
+      }
+
+      function showDefaultSuggestions() {
+        const locationSuggestions = document.getElementById(
+          "locationSuggestions",
+        );
+        const restaurantSuggestions = document.getElementById(
+          "restaurantSuggestions",
+        );
+
+        // Clear previous suggestions
+        locationSuggestions.innerHTML = "";
+        restaurantSuggestions.innerHTML = "";
+
+        // Show nearby places if available
+        if (nearbyPlaces.length > 0) {
+          displayRestaurantSuggestions(nearbyPlaces.slice(0, 5));
+        } else {
+          restaurantSuggestions.innerHTML =
+            '<div class="dropdown-empty"><i class="fas fa-search"></i><p>Start typing to find restaurants...</p></div>';
+        }
+
+        // Show location suggestions
+        if (userLocation) {
+          locationSuggestions.innerHTML = `
+          <div class="suggestion-item" data-type="location" data-value="near me">
+            <i class="fas fa-crosshairs"></i>
+            <span>Restaurants near me</span>
+          </div>
+        `;
+        }
+      }
+
+      function performSearch(query) {
+        const locationSuggestions = document.getElementById(
+          "locationSuggestions",
+        );
+        const restaurantSuggestions = document.getElementById(
+          "restaurantSuggestions",
+        );
+
+        // Show loading state
+        locationSuggestions.innerHTML =
+          '<div class="dropdown-loading"><div class="spinner"></div><p>Searching...</p></div>';
+        restaurantSuggestions.innerHTML =
+          '<div class="dropdown-loading"><div class="spinner"></div><p>Finding restaurants...</p></div>';
+
+        // Search for location predictions
+        if (autocompleteService) {
+          autocompleteService.getPlacePredictions(
+            {
+              input: query,
+              location: userLocation
+                ? new google.maps.LatLng(userLocation.lat, userLocation.lng)
+                : null,
+              radius: searchRadius,
+              types: ["establishment", "geocode"],
+            },
+            (predictions, status) => {
+              if (
+                status === google.maps.places.PlacesServiceStatus.OK &&
+                predictions
+              ) {
+                displayLocationSuggestions(predictions.slice(0, 5));
+              } else {
+                locationSuggestions.innerHTML =
+                  '<div class="dropdown-empty"><i class="fas fa-map-marker-alt"></i><p>No locations found</p></div>';
+              }
+            },
+          );
+        }
+
+        // Search for restaurant predictions specifically
+        if (autocompleteService) {
+          autocompleteService.getPlacePredictions(
+            {
+              input: query,
+              location: userLocation
+                ? new google.maps.LatLng(userLocation.lat, userLocation.lng)
+                : null,
+              radius: searchRadius,
+              types: ["establishment"],
+              componentRestrictions: { country: "ZA" }, // Adjust country as needed
+            },
+            (predictions, status) => {
+              if (
+                status === google.maps.places.PlacesServiceStatus.OK &&
+                predictions
+              ) {
+                // Filter for restaurants, cafes, etc.
+                const restaurantPredictions = predictions.filter((prediction) =>
+                  prediction.types.some((type) =>
+                    [
+                      "restaurant",
+                      "cafe",
+                      "bar",
+                      "food",
+                      "meal_takeaway",
+                      "meal_delivery",
+                    ].includes(type),
+                  ),
+                );
+                if (restaurantPredictions.length > 0) {
+                  displayPlaceSuggestions(restaurantPredictions.slice(0, 5));
+                } else {
+                  // Fallback to nearby search
+                  searchNearbyForDropdown(query);
+                }
+              } else {
+                searchNearbyForDropdown(query);
+              }
+            },
+          );
+        }
+      }
+
+      function displayLocationSuggestions(predictions) {
+        const locationSuggestions = document.getElementById(
+          "locationSuggestions",
+        );
+        locationSuggestions.innerHTML = "";
+
+        predictions.forEach((prediction) => {
+          const suggestionItem = document.createElement("div");
+          suggestionItem.className = "suggestion-item";
+          suggestionItem.dataset.type = "location";
+          suggestionItem.dataset.value = prediction.description;
+          suggestionItem.dataset.placeId = prediction.place_id;
+
+          suggestionItem.innerHTML = `
+          <i class="fas fa-map-marker-alt"></i>
+          <span>${prediction.description}</span>
+        `;
+
+          locationSuggestions.appendChild(suggestionItem);
+        });
+      }
+
+      function displayPlaceSuggestions(predictions) {
+        const restaurantSuggestions = document.getElementById(
+          "restaurantSuggestions",
+        );
+        restaurantSuggestions.innerHTML = "";
+
+        predictions.forEach((prediction) => {
+          const suggestionItem = document.createElement("div");
+          suggestionItem.className = "suggestion-item";
+          suggestionItem.dataset.type = "place";
+          suggestionItem.dataset.placeId = prediction.place_id;
+
+          suggestionItem.innerHTML = `
+          <div class="main-info">
+            <i class="fas fa-utensils"></i>
+            <span>${prediction.structured_formatting.main_text}</span>
+          </div>
+          <div class="sub-info">
+            <span class="distance">${prediction.structured_formatting.secondary_text || ""}</span>
+          </div>
+        `;
+
+          restaurantSuggestions.appendChild(suggestionItem);
+        });
+      }
+
+      function displayRestaurantSuggestions(places) {
+        const restaurantSuggestions = document.getElementById(
+          "restaurantSuggestions",
+        );
+        restaurantSuggestions.innerHTML = "";
+
+        places.forEach((place) => {
+          const suggestionItem = document.createElement("div");
+          suggestionItem.className = "suggestion-item";
+          suggestionItem.dataset.type = "place";
+          suggestionItem.dataset.placeId = place.place_id;
+
+          const rating = place.rating || 0;
+          const isOpen = place.opening_hours?.open_now;
+          const distance = userLocation
+            ? calculateDistanceForDropdown(
+                userLocation,
+                place.geometry.location,
+              )
+            : null;
+
+          suggestionItem.innerHTML = `
+          <div class="main-info">
+            <i class="fas fa-utensils"></i>
+            <span>${place.name}</span>
+            ${isOpen !== undefined ? `<span class="status ${isOpen ? "open" : "closed"}">${isOpen ? "Open" : "Closed"}</span>` : ""}
+          </div>
+          <div class="sub-info">
+            ${rating > 0 ? `<span class="rating"><i class="fas fa-star"></i> ${rating.toFixed(1)}</span>` : ""}
+            ${distance ? `<span class="distance">${distance.toFixed(1)} km</span>` : ""}
+          </div>
+        `;
+
+          restaurantSuggestions.appendChild(suggestionItem);
+        });
+      }
+
+      function searchNearbyForDropdown(query) {
+        if (!userLocation || !service) {
+          document.getElementById("restaurantSuggestions").innerHTML =
+            '<div class="dropdown-empty"><i class="fas fa-exclamation-triangle"></i><p>Location not available</p></div>';
+          return;
+        }
+
+        const request = {
+          location: userLocation,
+          radius: searchRadius,
+          type: ["restaurant", "cafe", "bar", "food"],
+          keyword: query,
+        };
+
+        service.nearbySearch(request, (results, status) => {
+          if (
+            status === google.maps.places.PlacesServiceStatus.OK &&
+            results.length > 0
+          ) {
+            displayRestaurantSuggestions(results.slice(0, 5));
+          } else {
+            document.getElementById("restaurantSuggestions").innerHTML =
+              '<div class="dropdown-empty"><i class="fas fa-utensils"></i><p>No restaurants found</p></div>';
+          }
+        });
+      }
+
+      function getPlaceDetailsAndShow(placeId) {
+        showLoading();
+
+        const request = {
+          placeId: placeId,
+          fields: [
+            "name",
+            "geometry",
+            "place_id",
+            "types",
+            "vicinity",
+            "rating",
+            "opening_hours",
+            "photos",
+          ],
+        };
+
+        placesService.getDetails(request, (place, status) => {
+          hideLoading();
+
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            // Center map on the place
+            map.setCenter(place.geometry.location);
+            map.setZoom(16);
+
+            // Clear existing markers
+            clearMarkers();
+
+            // Add marker for the place
+            const marker = new google.maps.Marker({
+              position: place.geometry.location,
+              map: map,
+              title: place.name,
+              animation: google.maps.Animation.DROP,
+              icon: {
+                url: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff6b35'%3E%3Cpath d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z'/%3E%3C/svg%3E",
+                scaledSize: new google.maps.Size(35, 35),
+              },
+            });
+
+            markers.push(marker);
+
+            // Show place details
+            showPlaceDetails(place);
+
+            // Update results
+            displayResults([place], currentSearchType);
+            document.getElementById("resultsCount").textContent =
+              "1 place found";
+
+            showToast(`Found ${place.name}!`, "success");
+          } else {
+            showToast("Could not get place details", "error");
+          }
+        });
+      }
+
+      function calculateDistanceForDropdown(from, to) {
+        const fromLat = from.lat;
+        const fromLng = from.lng;
+        const toLat = typeof to.lat === "function" ? to.lat() : to.lat;
+        const toLng = typeof to.lng === "function" ? to.lng() : to.lng;
+
+        const R = 6371; // Radius of the earth in km
+        const dLat = deg2rad(toLat - fromLat);
+        const dLon = deg2rad(toLng - fromLng);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(deg2rad(fromLat)) *
+            Math.cos(deg2rad(toLat)) *
+            Math.sin(dLon / 2) *
+            Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c;
+        return distance;
+      }
+
+      function deg2rad(deg) {
+        return deg * (Math.PI / 180);
+      }
+
+      // Initialize when page loads
+      window.onload = () => {
+        showLoading();
+        if (typeof initMap === "function") {
+          initMap();
+        }
+      };
+
+      // Event Listeners
+      document.addEventListener("DOMContentLoaded", () => {
+        // Category tabs
+        document.querySelectorAll(".category-tab").forEach((tab) => {
+          tab.addEventListener("click", () => {
+            document
+              .querySelectorAll(".category-tab")
+              .forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+            currentSearchType = tab.dataset.type;
+            searchPlaces(currentSearchType);
           });
         });
 
-      document
-        .getElementById("search-current")
-        .addEventListener("click", function () {
-          searchPlaces("restaurant");
+        // Action chips
+        document.querySelectorAll(".action-chip").forEach((chip) => {
+          chip.addEventListener("click", () => {
+            const cuisine = chip.dataset.cuisine;
+            searchPlaces("restaurant", cuisine);
+          });
         });
 
-      document
-        .getElementById("cuisine-type")
-        .addEventListener("keydown", function (e) {
-          if (e.key === "Enter") {
-            document.getElementById("search-restaurants").click();
+        // Enhanced Quick search with dropdown
+        const quickSearchInput = document.getElementById("quickSearch");
+        const searchDropdown = document.getElementById("searchDropdown");
+
+        // Show dropdown on focus
+        quickSearchInput.addEventListener("focus", () => {
+          showSearchDropdown();
+          if (quickSearchInput.value.trim()) {
+            performSearch(quickSearchInput.value.trim());
+          } else {
+            showDefaultSuggestions();
           }
         });
 
-      window.onload = initMap;
+        // Search as user types
+        quickSearchInput.addEventListener("input", (e) => {
+          const query = e.target.value.trim();
+
+          // Clear existing timeout
+          if (searchTimeout) {
+            clearTimeout(searchTimeout);
+          }
+
+          if (query.length > 0) {
+            // Debounce search for better performance
+            searchTimeout = setTimeout(() => {
+              performSearch(query);
+            }, 300);
+          } else {
+            showDefaultSuggestions();
+          }
+        });
+
+        // Handle Enter key
+        quickSearchInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            const query = e.target.value.trim();
+            if (query) {
+              hideSearchDropdown();
+              searchPlaces("restaurant", query);
+            }
+          }
+        });
+
+        // Hide dropdown when clicking outside
+        document.addEventListener("click", (e) => {
+          if (!e.target.closest(".search-input-wrapper")) {
+            hideSearchDropdown();
+          }
+        });
+
+        // Handle suggestion clicks
+        document.addEventListener("click", (e) => {
+          if (e.target.closest(".suggestion-item")) {
+            const suggestionItem = e.target.closest(".suggestion-item");
+            const type = suggestionItem.dataset.type;
+            const value = suggestionItem.dataset.value;
+            const placeId = suggestionItem.dataset.placeId;
+
+            hideSearchDropdown();
+
+            if (type === "place" && placeId) {
+              // Search for specific place
+              getPlaceDetailsAndShow(placeId);
+            } else if (type === "location" && value) {
+              // Set search input and search
+              quickSearchInput.value = value;
+              searchPlaces("restaurant", value);
+            } else if (type === "cuisine" && value) {
+              // Search for cuisine
+              quickSearchInput.value = value;
+              searchPlaces("restaurant", value);
+            }
+          }
+        });
+
+        // Filter panel
+        document.getElementById("menuToggle")?.addEventListener("click", () => {
+          document.getElementById("filterPanel")?.classList.add("active");
+        });
+
+        document
+          .getElementById("closeFilter")
+          ?.addEventListener("click", () => {
+            document.getElementById("filterPanel")?.classList.remove("active");
+          });
+
+        // Map controls
+        document
+          .getElementById("centerMapBtn")
+          .addEventListener("click", () => {
+            if (map && userLocation) {
+              map.setCenter(userLocation);
+              map.setZoom(14);
+            }
+          });
+
+        // FAB menu
+        document.getElementById("mainFab")?.addEventListener("click", () => {
+          document.getElementById("fabMenu")?.classList.toggle("active");
+        });
+
+        document.getElementById("nearbyBtn")?.addEventListener("click", () => {
+          searchPlaces(currentSearchType);
+          document.getElementById("fabMenu")?.classList.remove("active");
+        });
+
+        // Overlay toggle for mobile
+        const overlayToggle = document.getElementById("overlayToggle");
+        if (overlayToggle) {
+          overlayToggle.addEventListener("click", () => {
+            document.getElementById("mapOverlay").classList.toggle("expanded");
+          });
+        }
+
+        // Results panel toggle for desktop
+        const toggleResultsPanel =
+          document.getElementById("toggleResultsPanel");
+        if (toggleResultsPanel) {
+          toggleResultsPanel.addEventListener("click", () => {
+            const resultsPanel = document.getElementById("resultsPanel");
+            const toggleIcon = toggleResultsPanel.querySelector("i");
+
+            if (resultsPanel.classList.contains("collapsed")) {
+              resultsPanel.classList.remove("collapsed");
+              toggleIcon.className = "fas fa-chevron-left";
+            } else {
+              resultsPanel.classList.add("collapsed");
+              toggleIcon.className = "fas fa-chevron-right";
+            }
+          });
+        }
+
+        // Auto-search for nearby restaurants on load
+        if (userLocation) {
+          setTimeout(() => {
+            searchPlaces("restaurant");
+          }, 2000);
+        }
+
+        // Enhanced error prevention for querySelector operations
+        document.addEventListener("click", (e) => {
+          if (e.target.tagName === "A") {
+            const href = e.target.getAttribute("href");
+            if (!href || href === "#" || href === "javascript:void(0)") {
+              e.preventDefault();
+              console.warn("Prevented click on problematic anchor link:", href);
+              return false;
+            }
+          }
+        });
+
+        // Global error handler for unhandled errors
+        window.addEventListener("error", (e) => {
+          if (
+            e.message &&
+            e.message.includes("querySelector") &&
+            e.message.includes("not a valid selector")
+          ) {
+            console.error("Caught querySelector error:", e.message);
+            e.preventDefault(); // Prevent error from propagating
+            return true;
+          }
+        });
+
+        // Override any problematic smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const href = this.getAttribute("href");
+
+            // Skip if href is just '#' or empty
+            if (!href || href === "#" || href.length <= 1) {
+              e.preventDefault();
+              return false;
+            }
+
+            e.preventDefault();
+            try {
+              const target = document.querySelector(href);
+              if (target) {
+                target.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            } catch (error) {
+              console.warn("Invalid selector for smooth scrolling:", href);
+            }
+          });
+        });
+      });
     </script>
   </body>
 </html>

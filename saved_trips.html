@@ -1,39 +1,150 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Travique | Saved Trips</title>
-  <link rel="stylesheet" href="css/saved_trips.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <h2>Saved Trips</h2>
-    <button class="back-btn" onclick="location.href='dashboard.html'">Back to Dashboard</button>
-  </div>
- 
-  <main>
-    <div id="trips-container">Loading your trips...</div>
-  </main>
- 
-  <!-- Trip Details Modal -->
-  <div id="trip-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="close-modal">×</span>
-      <h2 id="modal-destination">Trip Details</h2>
-      <p><strong>Start Date:</strong> <span id="modal-start"></span></p>
-      <p><strong>End Date:</strong> <span id="modal-end"></span></p>
-      <p><strong>Activities:</strong> <span id="modal-activities"></span></p>
-      <p><strong>Notes:</strong> <span id="modal-notes">N/A</span></p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travique | Saved Trips</title>
+    <link rel="stylesheet" href="css/saved_trips.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="saved-trips-page">
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner">
+        <div class="spinner-ring"></div>
+        <div class="loading-text">Loading your saved trips...</div>
+      </div>
     </div>
-  </div>
- 
-  <footer>
-    <p>© 2025 Travique. All rights reserved.</p>
-  </footer>
- 
-  <script type="module" src="js/saved_trips.js"></script>
-</body>
+
+    <!-- Modern Header -->
+    <header class="modern-header">
+      <div class="header-content">
+        <button class="back-btn" onclick="location.href='dashboard.html'">
+          <i class="fas fa-arrow-left"></i>
+        </button>
+        <div class="header-title">
+          <h1><i class="fas fa-bookmark"></i> Saved Trips</h1>
+          <span class="header-subtitle"
+            >Your travel memories and future adventures</span
+          >
+        </div>
+        <div class="header-actions">
+          <a href="trip-planner.html" class="action-btn">
+            <i class="fas fa-plus"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Trip Filters -->
+      <div class="trip-filters">
+        <button class="filter-btn active" data-filter="all">
+          <i class="fas fa-globe"></i>
+          <span>All Trips</span>
+        </button>
+        <button class="filter-btn" data-filter="upcoming">
+          <i class="fas fa-calendar-alt"></i>
+          <span>Upcoming</span>
+        </button>
+        <button class="filter-btn" data-filter="completed">
+          <i class="fas fa-check-circle"></i>
+          <span>Completed</span>
+        </button>
+        <button class="filter-btn" data-filter="favorites">
+          <i class="fas fa-heart"></i>
+          <span>Favorites</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Trip Statistics Section -->
+      <section class="trip-stats-section">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <div class="stat-content">
+              <span class="stat-number" id="totalTrips">0</span>
+              <span class="stat-label">Total Trips</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-globe-europe"></i>
+            </div>
+            <div class="stat-content">
+              <span class="stat-number" id="countriesVisited">0</span>
+              <span class="stat-label">Countries</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-calendar-days"></i>
+            </div>
+            <div class="stat-content">
+              <span class="stat-number" id="daysTravel">0</span>
+              <span class="stat-label">Days Traveled</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-content">
+              <span class="stat-number" id="favoriteTrips">0</span>
+              <span class="stat-label">Favorites</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Trips Container -->
+      <section class="trips-section">
+        <div class="section-header">
+          <h2>Your Travel Collection</h2>
+          <div class="view-controls">
+            <button class="view-btn active" id="gridViewBtn">
+              <i class="fas fa-th-large"></i>
+            </button>
+            <button class="view-btn" id="listViewBtn">
+              <i class="fas fa-list"></i>
+            </button>
+          </div>
+        </div>
+        <div id="trips-container" class="trips-container">
+          <div class="loading-placeholder">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Loading your trips...</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Trip Details Modal -->
+    <div id="trip-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="close-modal">×</span>
+        <h2 id="modal-destination">Trip Details</h2>
+        <p><strong>Start Date:</strong> <span id="modal-start"></span></p>
+        <p><strong>End Date:</strong> <span id="modal-end"></span></p>
+        <p><strong>Activities:</strong> <span id="modal-activities"></span></p>
+        <p><strong>Notes:</strong> <span id="modal-notes">N/A</span></p>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2025 Travique. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="js/saved_trips.js"></script>
+  </body>
 </html>
