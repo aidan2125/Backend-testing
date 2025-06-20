@@ -1,4 +1,4 @@
-import { getCurrentUser, supabase } from './auth.js'; // Your auth helpers
+
  
 const form = document.getElementById('expense-form');
 const list = document.getElementById('expense-list');
@@ -28,6 +28,7 @@ const getDefaultTripId = async (profileID) => {
  
   return data.length > 0 ? data[0].trip_id : null;
 };
+
  
 // Add Expense Form Submit Handler
 document.addEventListener('DOMContentLoaded', function () {
@@ -77,6 +78,26 @@ document.addEventListener('DOMContentLoaded', function () {
 });
  
 // Render Expenses List + Total
+
+
+// Function to submit expense, automatically associate with trip if available
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Get expense details from the form
+  const name = document.getElementById('expense-name').value;
+  const amount = parseFloat(document.getElementById('expense-amount').value);
+  const category = document.getElementById('expense-category').value;
+
+  if (!name || isNaN(amount)) return;
+
+  const expense = { name, amount, category };
+  expenses.push(expense);
+  renderExpenses();
+  form.reset();
+});
+
+
 function renderExpenses() {
   list.innerHTML = '';
   let total = 0;
@@ -87,16 +108,64 @@ function renderExpenses() {
     const div = document.createElement('div');
     div.classList.add('expense-item');
     div.innerHTML = `
-      <strong>${item.name}</strong> ($${item.amount.toFixed(2)}) - ${item.category}
-      <button onclick="deleteExpense(${index})">❌</button>
+      <div class="expense-details">
+        <strong>${item.name}</strong> - <span class="expense-amount">$${item.amount.toFixed(2)}</span>
+        <span class="expense-category">${item.category}</span>
+        <span class="expense-date">${new Date(item.date).toLocaleDateString()}</span>
+      </div>
     `;
+
+    // DELETE Button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('btn', 'btn-delete');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.onclick = () => deleteExpense(index);
+    div.appendChild(deleteBtn);
+
+    // VIEW Button
+    const viewBtn = document.createElement('button');
+    viewBtn.classList.add('btn', 'btn-view');
+    viewBtn.textContent = 'View';
+    viewBtn.onclick = () => viewExpense(item);
+    div.appendChild(viewBtn);
+
     list.appendChild(div);
   });
  
   totalAmount.textContent = total.toFixed(2);
 }
+
  
 // Delete expense by index
+
+
+// Function to view the expense details in a modal
+function viewExpense(item) {
+  const modal = document.createElement('div');
+  modal.classList.add('expense-modal-overlay');
+
+  modal.innerHTML = `
+    <div class="expense-modal">
+      <h3>${item.name}</h3>
+      <p><strong>Amount:</strong> $${item.amount}</p>
+      <p><strong>Category:</strong> ${item.category}</p>
+      <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p>
+      <p><strong>Location:</strong> ${item.location || 'N/A'}</p>
+      <p><strong>Trip:</strong> ${item.trip_id || 'None'}</p>
+      <button class="btn btn-close">Close</button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Close modal when button clicked
+  modal.querySelector('.btn-close').onclick = () => {
+    modal.remove();
+  };
+}
+
+// Optional: Add delete functionality for expenses
+
 window.deleteExpense = async (index) => {
   const expense = expenses[index];
   if (!expense) return;
