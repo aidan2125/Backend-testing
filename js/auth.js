@@ -1,71 +1,85 @@
+import { auth, db } from './firebase.js';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js';
+import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js';
 
-// ✅ Get current logged-in user
-export const getCurrentUser = async () => {
-  const {
-    data: { session },
-    error
-  } = await supabase.auth.getSession();
-
-  if (error || !session) return null;
-
-  const user_id = session.user.id;
-
-  const { data: profile, error: profileError } = await supabase
-    .from('signup')
-    .select('profileID')
-    .eq('user_id', user_id)
-    .single();
-
-  if (profileError || !profile) {
-    console.error('Failed to fetch profileID from signup table:', profileError);
-    return null;
-  }
-
-  return { profileID: profile.profileID }; // This becomes the profileID to use everywhere else
+// Get current logged-in user profileID from Firestore
+export const getCurrentUser = () => {
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const docRef = doc(db, 'users', user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            resolve({ profileID: docSnap.id, ...docSnap.data() });
+          } else {
+            resolve(null);
+          }
+        } catch (error) {
+          console.error('Failed to fetch user profile:', error);
+          resolve(null);
+        }
+      } else {
+        resolve(null);
+      }
+    });
+  });
 };
 
-// ✅ Login
+// Login
 export const loginUser = async (email, password) => {
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  } catch (error) {
     console.error('Login error:', error.message);
     return null;
   }
-  return data.user;
 };
 
-// ✅ Sign up
-export const signupUser = async (email, password) => {
-  const { data, error } = await supabase.auth.signUp({ email, password });
+// Sign up
+export const signupUser = async (name, surname, phone, email, password) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-  if (error) {
+    // Send verification email here
+    await sendEmailVerification(user);
+
+    // Save additional profile info in Firestore
+    await setDoc(doc(db, 'users', user.uid), {
+      name,
+      surname,
+      phone_number: phone,
+      email,
+    });
+
+    return { user, message: 'Signup successful! Please verify your email before logging in.' };
+  } catch (error) {
     console.error('Sign-up error:', error.message);
-    return { user: null, message: 'Sign-up failed. Please try again.' };
+    return { user: null, message: error.message || 'Sign-up failed. Please try again.' };
   }
-
-  // User must verify email first
-  return {
-    user: null,
-    message: 'Sign-up successful! Please check your email to verify your account before logging in.',
-  };
 };
 
-// ✅ Logout
+// Logout
 export const logoutUser = async () => {
-  await supabase.auth.signOut();
+  await signOut(auth);
 };
 
 // Fetch trips associated with the logged-in user
 export const getUserTrips = async (profileID) => {
-  const { data, error } = await supabase
-    .from('trip_planner') // Correct table name
-    .select('trip_id, destination, start_date, end_date, activities') // Correct columns
-    .eq('profileID', profileID); // Correct field name
-
-  if (error) {
+  // Assuming trips are stored in Firestore under 'trips' collection with userId field
+  try {
+    const tripsRef = collection(db, 'trips');
+    const q = query(tripsRef, where('userId', '==', profileID));
+    const querySnapshot = await getDocs(q);
+    const trips = [];
+    querySnapshot.forEach((doc) => {
+      trips.push({ id: doc.id, ...doc.data() });
+    });
+    return trips;
+  } catch (error) {
     console.error('Error fetching trips:', error);
     return [];
   }
-
-  return data;
 };

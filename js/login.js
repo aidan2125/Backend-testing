@@ -1,46 +1,45 @@
+import { auth } from './firebase.js';
+import { loginUser } from './auth.js';
+import { getCurrentUser } from './auth.js';
 
 // Redirect to dashboard if user is already logged in
 const sessionCheck = async () => {
-  const { data, error } = await supabase.auth.getSession();
-  if (data?.session?.user) {
+  const user = await getCurrentUser();
+  if (user) {
+    localStorage.setItem('profileID', user.profileID);
     window.location.href = 'dashboard.html';
   }
 };
 sessionCheck();
- 
+
 // Handle login form submission
 document.getElementById('login-form')?.addEventListener('submit', async (e) => {
   e.preventDefault();
- 
+
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
- 
-  const { data: userData, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
- 
-  if (loginError) {
-    alert('Login failed: ' + loginError.message);
+
+  const user = await loginUser(email, password);
+
+  if (!user) {
+    alert('Login failed. Please check your credentials and try again.');
     return;
   }
- 
+
+  // Check email verification
+  if (!user.emailVerified) {
+    alert('Please verify your email before logging in.');
+    await auth.signOut(); // Sign out unverified user
+    return;
+  }
+
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    alert('Profile not found for this user.');
+    return;
+  }
+
+  localStorage.setItem('profileID', currentUser.profileID);
   alert('Login successful!');
- 
-  // Use email to fetch profileID from signup table
-  const { data: profileData, error: profileError } = await supabase
-    .from('signup')
-    .select('profileID')
-    .eq('email', email)
-    .maybeSingle();
- 
-  if (profileError) {
-    alert('Error fetching profileID: ' + profileError.message);
-    return;
-  }
-  if (!profileData) {
-    alert('Profile not found for this email.');
-    return;
-  } 
- 
-  console.log('ProfileID:', profileData.profileID);
-  localStorage.setItem('profileID', profileData.profileID);
   window.location.href = 'dashboard.html';
 });
