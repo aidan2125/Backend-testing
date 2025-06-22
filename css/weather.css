@@ -26,6 +26,7 @@
 }
 
 body {
+
   font-family: "Inter", sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: var(--text-dark);
@@ -95,6 +96,80 @@ body.stormy {
   height: 20px;
   background: rgba(173, 216, 230, 0.6);
   animation: rainFall 1s linear infinite;
+
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #74ebd5, #acb6e5);
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.nav .btn {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #0077b6;
+  font-weight: bold;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.weatherForm {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.cityInput {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  width: 250px;
+}
+
+.btn-submit {
+  padding: 0.75rem 1.5rem;
+  background-color: #0077b6;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: #005f8a;
+
 }
 
 .snowflake {
@@ -114,6 +189,7 @@ body.stormy {
     opacity: 0;
   }
 }
+
 
 @keyframes snowFall {
   0% {
@@ -225,6 +301,7 @@ body.stormy {
   margin-left: auto;
   margin-right: auto;
 }
+
 
 .weather-container {
   display: flex;
